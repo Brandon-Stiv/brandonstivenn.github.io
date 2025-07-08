@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Los 1000 Saberes</title>
+  <style>
+    :root {
+      --blanco: #ffffff;
+      --gris-claro: #f0f0f0;
+      --gris: #999999;
+      --negro: #111111;
+      --transparente: rgba(255, 255, 255, 0.1);
+      --degradado: linear-gradient(135deg, #ffffff, #eeeeee, #999999, #111111);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1c1c1c, #2a2a2a);
+      color: var(--blanco);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      background-size: 300% 300%;
+      animation: backgroundShift 15s ease infinite;
+    }
+
+    header {
+      background: var(--transparente);
+      padding: 30px;
+      width: 100%;
+      text-align: center;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1.5s ease-in-out;
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    header::before {
+      content: "\2728";
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      animation: rotateStar 5s linear infinite;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: var(--blanco);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      animation: typewriter 3s steps(20) 1 normal both;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--blanco);
+    }
+
+    .introduccion {
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 40px;
+      backdrop-filter: blur(8px);
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--gris-claro);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .grid-categorias {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 1200px;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .categoria {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--blanco);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      transform: scale(1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .categoria:hover {
+      transform: scale(1.05) rotate(-1deg);
+      box-shadow: 0 12px 30px rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .categoria h2 {
+      font-size: 1.3rem;
+      margin-top: 10px;
+    }
+
+    .icono {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: var(--gris);
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes typewriter {
+      0% { width: 0; }
+      100% { width: 100%; }
+    }
+
+    @keyframes rotateStar {
+      0% { transform: translateY(-50%) rotate(0deg); }
+      100% { transform: translateY(-50%) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Los 1000 Saberes</h1>
+  </header>
+
+  <div class="introduccion">
+    Bienvenidos a Los 1000 Saberes. Aquí encontrarán contenidos, proyectos, artículos y curiosidades sobre todas las materias que estudiamos en clase. Cada sección fue realizada con esfuerzo, creatividad y mucho aprendizaje por parte de los estudiantes.
+  </div>
+
+  <div class="grid-categorias">
+    <div class="categoria"><div class="icono">💻</div><h2>Tecnología</h2></div>
+    <div class="categoria"><div class="icono">➗</div><h2>Matemáticas</h2></div>
+    <div class="categoria"><div class="icono">📊</div><h2>Estadística</h2></div>
+    <div class="categoria"><div class="icono">🇺🇸</div><h2>Inglés</h2></div>
+    <div class="categoria"><div class="icono">🌍</div><h2>Sociales</h2></div>
+    <div class="categoria"><div class="icono">📚</div><h2>Lenguaje</h2></div>
+    <div class="categoria"><div class="icono">🧪</div><h2>Ciencias Naturales</h2></div>
+    <div class="categoria"><div class="icono">⚽</div><h2>Educación Física</h2></div>
+    <div class="categoria"><div class="icono">🎨</div><h2>Artística</h2></div>
+    <div class="categoria"><div class="icono">🧬</div><h2>Biología</h2></div>
+    <div class="categoria"><div class="icono">🧠</div><h2>Ética</h2></div>
+    <div class="categoria"><div class="icono">📖</div><h2>Religión</h2></div>
+    <div class="categoria"><div class="icono">🌎</div><h2>Geografía</h2></div>
+    <div class="categoria"><div class="icono">📐</div><h2>Geometría</h2></div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 LOS 1000 SABERES. Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>
