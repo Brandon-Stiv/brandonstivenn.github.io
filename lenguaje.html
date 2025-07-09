@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lenguaje - Teatro Renacentista</title>
+  <style>
+    :root {
+      --blanco: #ffffff;
+      --rosado: #ff80b5;
+      --rosado-claro: #ffcce0;
+      --gris: #cccccc;
+      --transparente: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1c1c1c, #2a2a2a);
+      color: var(--blanco);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-size: 300% 300%;
+      animation: fondoMovimiento 15s ease infinite;
+    }
+
+    header {
+      background: var(--transparente);
+      padding: 30px;
+      width: 100%;
+      text-align: center;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: var(--rosado);
+      text-shadow: 0 0 10px rgba(255, 128, 181, 0.4);
+    }
+
+    .contenido {
+      max-width: 1000px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 30px;
+      backdrop-filter: blur(8px);
+      color: var(--gris);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      animation: aparecer 1s ease forwards;
+    }
+
+    .contenido h2, .contenido h3 {
+      color: var(--rosado);
+      margin-bottom: 15px;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: var(--gris);
+      text-align: center;
+    }
+
+    .infografia {
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255,255,255,0.05);
+      border-left: 5px solid var(--rosado);
+      border-radius: 10px;
+    }
+
+    .pregunta-interactiva {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+    }
+
+    .pregunta-interactiva p {
+      margin-bottom: 10px;
+    }
+
+    .pregunta-interactiva input[type="text"] {
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      width: 60%;
+    }
+
+    .pregunta-interactiva button {
+      padding: 8px 12px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 6px;
+      background-color: var(--rosado);
+      color: var(--blanco);
+      cursor: pointer;
+    }
+
+    .respuesta {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    @keyframes fondoMovimiento {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lenguaje - Teatro Renacentista</h1>
+  </header>
+
+  <div class="contenido">
+    <h2>Infografía del Teatro Renacentista</h2>
+    <p>
+      Durante el Renacimiento, el teatro experimentó una transformación fundamental. Inspirado en el teatro clásico grecorromano,
+      se centró en temas humanos, valores individuales y equilibrio estético. El teatro renacentista destacó por:
+    </p>
+    <div class="infografia">
+      <ul>
+        <li>Rescate de la estructura clásica: cinco actos, coros, unidad de tiempo y lugar.</li>
+        <li>Personajes con conflictos internos y dilemas morales.</li>
+        <li>Elementos mitológicos y filosóficos.</li>
+        <li>Decorados y escenografías más elaboradas gracias al avance técnico.</li>
+      </ul>
+    </div>
+
+    <h3>Autores destacados:</h3>
+    <p>
+      Entre los autores más importantes del teatro renacentista se encuentran <strong>William Shakespeare</strong> en Inglaterra y
+      <strong>Lope de Vega</strong> en España.
+    </p>
+
+    <div class="pregunta-interactiva">
+      <p><strong>Pregunta interactiva:</strong> ¿Quién fue el dramaturgo inglés más importante del Renacimiento?</p>
+      <input type="text" id="respuesta" placeholder="Escribe tu respuesta aquí...">
+      <button onclick="verificarRespuesta()">Verificar</button>
+      <div class="respuesta" id="mensaje"></div>
+    </div>
+
+    <p style="margin-top:20px">Puedes regresar a la <a href="index.html">página principal</a>.</p>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    function verificarRespuesta() {
+      const valor = document.getElementById("respuesta").value.trim().toLowerCase();
+      const mensaje = document.getElementById("mensaje");
+      if (valor.includes("shakespeare")) {
+        mensaje.textContent = "¡Correcto! William Shakespeare fue el dramaturgo más destacado.";
+        mensaje.style.color = "#7ef07e";
+      } else {
+        mensaje.textContent = "Respuesta incorrecta. Intenta de nuevo.";
+        mensaje.style.color = "#ff9999";
+      }
+    }
+  </script>
+</body>
+</html>

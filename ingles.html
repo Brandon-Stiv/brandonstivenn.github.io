@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inglés - Los Mil Saberes</title>
+  <style>
+    :root {
+      --blanco: #ffffff;
+      --gris-claro: #f0f0f0;
+      --gris: #999999;
+      --negro: #111111;
+      --transparente: rgba(255, 255, 255, 0.1);
+      --azul: #3fa9f5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1c1c1c, #2a2a2a);
+      color: var(--blanco);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-size: 300% 300%;
+      animation: backgroundShift 15s ease infinite;
+    }
+
+    header {
+      background: var(--transparente);
+      padding: 30px;
+      width: 100%;
+      text-align: center;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1.5s ease-in-out;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: var(--azul);
+      text-shadow: 0 0 10px rgba(63, 169, 245, 0.6);
+    }
+
+    .contenido {
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 30px;
+      backdrop-filter: blur(8px);
+      font-size: 1.2rem;
+      color: var(--gris-claro);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .contenido h2, .contenido h3 {
+      color: var(--azul);
+      margin-bottom: 15px;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: var(--gris);
+      text-align: center;
+    }
+
+    a {
+      color: var(--gris-claro);
+      text-decoration: underline;
+    }
+
+    code {
+      background: rgba(63,169,245,0.2);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-weight: bold;
+      color: var(--azul);
+    }
+
+    .quiz {
+      margin-top: 30px;
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--azul);
+    }
+
+    .quiz input {
+      padding: 6px;
+      border-radius: 5px;
+      border: none;
+      margin-right: 10px;
+    }
+
+    .quiz button {
+      background-color: var(--azul);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .resultado {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Inglés</h1>
+  </header>
+
+  <div class="contenido">
+    <h2>El Futuro con <code>will</code></h2>
+    <p>
+      En inglés, usamos <code>will</code> para hablar de acciones futuras, predicciones, decisiones espontáneas, promesas o cosas que creemos que sucederán.
+    </p>
+
+    <h3>Forma afirmativa:</h3>
+    <p>Sujeto + <code>will</code> + verbo base</p>
+    <ul>
+      <li>I <code>will travel</code> to London next year.</li>
+      <li>She <code>will be</code> a great teacher.</li>
+    </ul>
+
+    <h3>Forma negativa:</h3>
+    <p>Sujeto + <code>will not</code> (o <code>won't</code>) + verbo base</p>
+    <ul>
+      <li>They <code>won't arrive</code> on time.</li>
+    </ul>
+
+    <h3>Forma interrogativa:</h3>
+    <p><code>Will</code> + sujeto + verbo base + ?</p>
+    <ul>
+      <li><code>Will</code> you help me?</li>
+      <li><code>Will</code> it rain tomorrow?</li>
+    </ul>
+
+    <h3>Usos comunes:</h3>
+    <ul>
+      <li>Predicciones: It <code>will snow</code> tomorrow.</li>
+      <li>Decisiones espontáneas: I <code>will call</code> you later.</li>
+      <li>Promesas: I <code>will always love</code> you.</li>
+    </ul>
+
+    <div class="quiz">
+      <h3>¿Puedes completar la oración con <code>will</code>?</h3>
+      <p>He ______ (go) to the park tomorrow.</p>
+      <input type="text" id="respuesta" placeholder="Escribe aquí">
+      <button onclick="verificarRespuesta()">Verificar</button>
+      <div class="resultado" id="resultado"></div>
+    </div>
+
+    <p style="margin-top: 20px">
+      Puedes regresar a la <a href="index.html">página principal</a> para explorar más materias.
+    </p>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    function verificarRespuesta() {
+      const entrada = document.getElementById('respuesta').value.trim().toLowerCase();
+      const resultado = document.getElementById('resultado');
+      if (entrada === 'will go') {
+        resultado.textContent = '¡Correcto! ✅';
+        resultado.style.color = 'lightgreen';
+      } else {
+        resultado.textContent = 'Intenta de nuevo. ❌';
+        resultado.style.color = 'salmon';
+      }
+    }
+  </script>
+</body>
+</html>
