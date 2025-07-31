@@ -1,200 +1,389 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inglés - Los Mil Saberes</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inglés — Future with will</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
-    :root {
-      --blanco: #ffffff;
-      --gris-claro: #f0f0f0;
-      --gris: #999999;
-      --negro: #111111;
-      --transparente: rgba(255, 255, 255, 0.1);
-      --azul: #3fa9f5;
+    :root{
+      --blanco:#ffffff;
+      --gris-claro:#e8ecf7;
+      --gris:#bfc7da;
+      --negro:#0d0f12;
+      --azul:#0057ff;
+      --acento:#3aa0ff;
+      --vidrio: rgba(255,255,255,.06);
+      --borde: rgba(255,255,255,.10);
+      --texto-suave:#cfd7ff;
+      --ok:#76e39a;
+      --err:#ff8b8b;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    *{ box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif }
+
+    body{
+      min-height:100vh; color:var(--blanco);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      display:flex; flex-direction:column; align-items:center;
+      padding:28px 18px 60px;
     }
 
-    body {
-      background: linear-gradient(135deg, #1c1c1c, #2a2a2a);
-      color: var(--blanco);
-      min-height: 100vh;
-      padding: 40px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-size: 300% 300%;
-      animation: backgroundShift 15s ease infinite;
-    }
-
-    header {
-      background: var(--transparente);
-      padding: 30px;
-      width: 100%;
-      text-align: center;
-      border-radius: 20px;
+    /* Barra superior */
+    .topbar{
+      width:min(1200px, 100%);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px; border-radius:18px;
+      background:var(--vidrio);
+      border:1px solid var(--borde);
       backdrop-filter: blur(10px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 1.5s ease-in-out;
-      margin-bottom: 30px;
+      box-shadow:0 8px 28px rgba(0,0,0,.35);
+      margin-bottom:22px;
+    }
+    .logo{ display:flex; gap:12px; align-items:center; }
+    .logo-badge{
+      width:38px; height:38px; border-radius:12px;
+      background:linear-gradient(135deg, var(--azul), var(--acento));
+      display:grid; place-items:center; font-weight:800;
+      box-shadow:0 6px 20px rgba(0,87,255,.45);
+    }
+    .logo-text{ font-weight:700; letter-spacing:.3px; color:#e9f0ff }
+
+    .nav{ display:flex; gap:8px; flex-wrap:wrap; }
+    .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;
+      background:rgba(255,255,255,.08); color:#eaeaea; border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(6px);
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform:translateY(-2px) }
+
+    /* Hero */
+    header.hero{
+      width:min(1200px, 100%);
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      border-radius:22px;
+      padding:28px 24px;
+      box-shadow:0 12px 36px rgba(0,0,0,.38);
+      position:relative;
+      overflow:hidden;
+      margin-bottom:28px;
+    }
+    .edicion-badge{
+      position:absolute; top:16px; right:16px;
+      font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; color:#d1ddff;
+      background:rgba(0,87,255,.18); border:1px solid rgba(0,87,255,.35);
+      padding:8px 12px; border-radius:999px;
+    }
+    header.hero h1{
+      font-size: clamp(1.9rem, 4.8vw, 2.8rem);
+      color:#bcd4ff; text-shadow:0 8px 28px rgba(0,0,0,.6);
+    }
+    .sub{
+      margin-top:8px; color:var(--texto-suave);
     }
 
-    header h1 {
-      font-size: 2.8rem;
-      color: var(--azul);
-      text-shadow: 0 0 10px rgba(63, 169, 245, 0.6);
+    /* Layout principal */
+    .contenedor{
+      width:min(1200px, 100%);
+      display:grid; gap:22px;
+      grid-template-columns: 1.15fr .85fr;
+    }
+    @media (max-width: 980px){
+      .contenedor{ grid-template-columns: 1fr; }
     }
 
-    .contenido {
-      max-width: 900px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      padding: 30px;
+    .card{
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      border-radius:20px;
+      padding:22px;
       backdrop-filter: blur(8px);
-      font-size: 1.2rem;
-      color: var(--gris-claro);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-      animation: fadeInUp 1s ease forwards;
+      box-shadow:0 6px 18px rgba(0,0,0,.30);
     }
-
-    .contenido h2, .contenido h3 {
-      color: var(--azul);
-      margin-bottom: 15px;
-    }
-
-    footer {
-      margin-top: 60px;
-      color: var(--gris);
-      text-align: center;
-    }
-
-    a {
-      color: var(--gris-claro);
-      text-decoration: underline;
-    }
-
-    code {
-      background: rgba(63,169,245,0.2);
+    .card h2, .card h3{ color:#cfe3ff; margin-bottom:10px }
+    .card p, .card li{ color:var(--gris-claro) }
+    .card ul{ padding-left:18px; line-height:1.6 }
+    code{
+      background: rgba(0,87,255,.18);
       padding: 2px 6px;
       border-radius: 6px;
-      font-weight: bold;
-      color: var(--azul);
+      font-weight: 700;
+      color:#bcd4ff;
     }
 
-    .quiz {
-      margin-top: 30px;
-      background: rgba(255,255,255,0.05);
-      padding: 20px;
-      border-radius: 10px;
-      border: 1px solid var(--azul);
+    /* Cuadros informativos y tablas */
+    .infobox{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-left:4px solid var(--acento);
+      border-radius:12px; padding:14px; color:#e9f1ff; margin-top:10px
+    }
+    .grid-2{ display:grid; gap:18px; grid-template-columns:1fr 1fr }
+    @media (max-width: 800px){ .grid-2{ grid-template-columns:1fr } }
+    .tabla{
+      width:100%; border-collapse:collapse; margin-top:8px
+    }
+    .tabla th, .tabla td{
+      border:1px solid rgba(255,255,255,.10);
+      padding:8px; text-align:left
+    }
+    .tabla th{ background:rgba(0,87,255,.15); color:#e9f1ff }
+
+    /* Quiz */
+    .quiz .q{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:12px; padding:12px; margin-top:10px
+    }
+    .quiz input[type="text"]{
+      width:100%; max-width:420px; padding:10px; border-radius:8px; border:none;
+      background:rgba(255,255,255,.1); color:#fff
+    }
+    .quiz .opcion{ display:block; margin:6px 0; color:#e9f1ff }
+    .resultado{ font-weight:700; margin-top:6px }
+    .ok{ color:var(--ok) } .mal{ color:var(--err) }
+
+    footer{
+      width:min(1200px, 100%);
+      text-align:center; color:#bfbfbf; margin-top:32px;
     }
 
-    .quiz input {
-      padding: 6px;
-      border-radius: 5px;
-      border: none;
-      margin-right: 10px;
-    }
-
-    .quiz button {
-      background-color: var(--azul);
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .resultado {
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    @keyframes backgroundShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* Foco accesible */
+    .btn:focus, a:focus, input:focus{ outline:2px solid #9fc0ff; outline-offset:2px; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Inglés</h1>
+  <!-- Barra superior -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-badge">MS</div>
+      <div class="logo-text">Los Mil Saberes</div>
+    </div>
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="btn" href="portada.html">Inicio</a>
+      <a class="btn" href="index.html">Categorías</a>
+    </nav>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <span class="edicion-badge">Inglés</span>
+    <h1>Future with <span style="color:#cfe3ff">will</span></h1>
+    <p class="sub">Cómo formar, cuándo usarlo y en qué se diferencia de <em>be going to</em>.</p>
   </header>
 
-  <div class="contenido">
-    <h2>El Futuro con <code>will</code></h2>
-    <p>
-      En inglés, usamos <code>will</code> para hablar de acciones futuras, predicciones, decisiones espontáneas, promesas o cosas que creemos que sucederán.
-    </p>
+  <!-- Contenido -->
+  <section class="contenedor">
+    <!-- Columna 1: teoría -->
+    <article class="card">
+      <h2>1) Estructura básica</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Afirmativa</h3>
+          <p><code>Sujeto + will + verbo base</code></p>
+          <ul>
+            <li><code>I will study</code> tonight.</li>
+            <li><code>She will be</code> a great engineer.</li>
+          </ul>
+          <div class="infobox"><strong>Contracción:</strong> <code>I'll, you'll, he'll, she'll, it'll, we'll, they'll</code></div>
+        </div>
+        <div>
+          <h3>Negativa</h3>
+          <p><code>Sujeto + will not + verbo</code> = <code>won't + verbo</code></p>
+          <ul>
+            <li><code>They won't arrive</code> on time.</li>
+          </ul>
+          <div class="infobox"><strong>Nota:</strong> <code>will not</code> → <code>won't</code> (no *willn't*).</div>
+        </div>
+      </div>
+      <h3>Interrogativa</h3>
+      <p><code>Will + sujeto + verbo + ?</code> — <code>Will you help me?</code></p>
 
-    <h3>Forma afirmativa:</h3>
-    <p>Sujeto + <code>will</code> + verbo base</p>
-    <ul>
-      <li>I <code>will travel</code> to London next year.</li>
-      <li>She <code>will be</code> a great teacher.</li>
-    </ul>
+      <h2 style="margin-top:16px">2) Usos principales</h2>
+      <ul>
+        <li><strong>Decisiones espontáneas</strong> (en el momento): <em>I'm thirsty — I <code>will get</code> some water.</em></li>
+        <li><strong>Ofertas y promesas</strong>: <em>I <code>will help</code> you with your homework.</em></li>
+        <li><strong>Predicciones basadas en opinión</strong> o creencias: <em>I think it <code>will rain</code> later.</em></li>
+        <li><strong>Avisos/amenazas</strong>: <em>You <code>will regret</code> it.</em></li>
+        <li><strong>Futuro inevitable</strong> o expectativas generales: <em>People <code>will live</code> longer in the future.</em></li>
+      </ul>
 
-    <h3>Forma negativa:</h3>
-    <p>Sujeto + <code>will not</code> (o <code>won't</code>) + verbo base</p>
-    <ul>
-      <li>They <code>won't arrive</code> on time.</li>
-    </ul>
+      <h2 style="margin-top:16px">3) <em>Will</em> vs. <em>Be going to</em></h2>
+      <table class="tabla" aria-label="Comparación will vs going to">
+        <thead><tr><th>Situación</th><th>Preferible</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Decisión tomada ahora (espontánea)</td><td><strong>will</strong></td><td>I'm cold — I <code>will close</code> the window.</td></tr>
+          <tr><td>Plan/intención previa</td><td><strong>going to</strong></td><td>I am <code>going to visit</code> my grandma this weekend.</td></tr>
+          <tr><td>Predicción con evidencia visible</td><td><strong>going to</strong></td><td>Look at those clouds! It is <code>going to rain</code>.</td></tr>
+          <tr><td>Promesa/oferta</td><td><strong>will</strong></td><td>I <code>will call</code> you tonight.</td></tr>
+        </tbody>
+      </table>
 
-    <h3>Forma interrogativa:</h3>
-    <p><code>Will</code> + sujeto + verbo base + ?</p>
-    <ul>
-      <li><code>Will</code> you help me?</li>
-      <li><code>Will</code> it rain tomorrow?</li>
-    </ul>
+      <h2 style="margin-top:16px">4) Expresiones de tiempo frecuentes</h2>
+      <p><code>tomorrow, next (week/month/year), in a minute/hour, soon, later, in the future</code></p>
 
-    <h3>Usos comunes:</h3>
-    <ul>
-      <li>Predicciones: It <code>will snow</code> tomorrow.</li>
-      <li>Decisiones espontáneas: I <code>will call</code> you later.</li>
-      <li>Promesas: I <code>will always love</code> you.</li>
-    </ul>
+      <h2 style="margin-top:16px">5) Respuestas cortas & etiquetas</h2>
+      <ul>
+        <li><strong>Short answers:</strong> <code>Yes, I will / No, I won't.</code></li>
+        <li><strong>Question tags:</strong> <code>She will pass, won't she?</code> — <code>They won't fail, will they?</code></li>
+      </ul>
 
-    <div class="quiz">
-      <h3>¿Puedes completar la oración con <code>will</code>?</h3>
-      <p>He ______ (go) to the park tomorrow.</p>
-      <input type="text" id="respuesta" placeholder="Escribe aquí">
-      <button onclick="verificarRespuesta()">Verificar</button>
-      <div class="resultado" id="resultado"></div>
-    </div>
+      <h2 style="margin-top:16px">6) Pronunciación & contracciones</h2>
+      <ul>
+        <li><strong>will</strong> suele reducirse a sonido débil /wɪl/ o /l/ en habla rápida: <code>I'll</code> ≈ “ail”.</li>
+        <li><code>won't</code> se pronuncia /woʊnt/.</li>
+      </ul>
 
-    <p style="margin-top: 20px">
-      Puedes regresar a la <a href="index.html">página principal</a> para explorar más materias.
-    </p>
-  </div>
+      <h2 style="margin-top:16px">7) Errores comunes</h2>
+      <ul>
+        <li>❌ <em>He will goes</em> → ✅ <em>He will go</em> (el verbo va en base).</li>
+        <li>❌ <em>I won't to go</em> → ✅ <em>I won't go</em> (sin “to”).</li>
+        <li>❌ <em>Will not = willn't</em> → ✅ <em>won't</em>.</li>
+      </ul>
+    </article>
+
+    <!-- Columna 2: ejemplos, tip & quiz -->
+    <aside class="card">
+      <h2>Ejemplos modelo</h2>
+      <ul>
+        <li><strong>Predicción:</strong> <em>I'm sure our team <code>will win</code>.</em></li>
+        <li><strong>Promesa:</strong> <em>I <code>will always support</code> you.</em></li>
+        <li><strong>Decisión ahora:</strong> <em>That’s heavy — I <code>will carry</code> it.</em></li>
+        <li><strong>Oferta:</strong> <em><code>Will</code> you <code>help</code> me with this?</em></li>
+        <li><strong>Plan previo (contraste):</strong> <em>We are <code>going to</code> visit Bogotá next month.</em></li>
+      </ul>
+
+      <div class="infobox">
+        <strong>TIP:</strong> con verbos de estado (<em>believe, think, know</em>) las predicciones suelen ir con <code>will</code>:
+        <em>I think it <code>will</code> be fine.</em>
+      </div>
+
+      <h3 style="margin-top:14px">Mini‑quiz</h3>
+      <div class="quiz">
+        <!-- Q1: fill-in -->
+        <div class="q">
+          <p><strong>1)</strong> Complete: “I think it ___ (rain) later.”</p>
+          <input type="text" id="q1" placeholder="respuesta…">
+          <div class="resultado" id="r1"></div>
+        </div>
+
+        <!-- Q2: MC -->
+        <div class="q">
+          <p><strong>2)</strong> Decisión espontánea: “I'm hungry — I ___ a sandwich.”</p>
+          <label class="opcion"><input type="radio" name="q2" value="a"> am going to make</label>
+          <label class="opcion"><input type="radio" name="q2" value="b"> will make</label>
+          <label class="opcion"><input type="radio" name="q2" value="c"> makes</label>
+          <div class="resultado" id="r2"></div>
+        </div>
+
+        <!-- Q3: MC -->
+        <div class="q">
+          <p><strong>3)</strong> Predicción con evidencia (nubes negras): “Look! It ___ soon.”</p>
+          <label class="opcion"><input type="radio" name="q3" value="a"> will rain</label>
+          <label class="opcion"><input type="radio" name="q3" value="b"> is going to rain</label>
+          <label class="opcion"><input type="radio" name="q3" value="c"> rains</label>
+          <div class="resultado" id="r3"></div>
+        </div>
+
+        <!-- Q4: short answers -->
+        <div class="q">
+          <p><strong>4)</strong> Short answer: “Will she pass the exam?” → Escribe <em>Yes/No</em> + sujeto + <em>will/won't</em>.</p>
+          <input type="text" id="q4" placeholder="ej. Yes, she will.">
+          <div class="resultado" id="r4"></div>
+        </div>
+
+        <!-- Q5: error correction -->
+        <div class="q">
+          <p><strong>5)</strong> Corrige el error: “He <u>will goes</u> to school.”</p>
+          <input type="text" id="q5" placeholder="respuesta correcta…">
+          <div class="resultado" id="r5"></div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:8px">
+          <button class="btn" id="btnCheck" type="button">Verificar</button>
+          <button class="btn" id="btnReset" type="button">Limpiar</button>
+        </div>
+      </div>
+
+      <p style="margin-top:14px">Volver a la <a class="btn" href="index.html" style="padding:6px 10px">página principal</a>.</p>
+    </aside>
+  </section>
 
   <footer>
     <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
   </footer>
 
   <script>
-    function verificarRespuesta() {
-      const entrada = document.getElementById('respuesta').value.trim().toLowerCase();
-      const resultado = document.getElementById('resultado');
-      if (entrada === 'will go') {
-        resultado.textContent = '¡Correcto! ✅';
-        resultado.style.color = 'lightgreen';
+    // Normaliza espacios y minúsculas
+    const norm = s => (s || '').trim().toLowerCase().replace(/\s+/g,' ');
+
+    const btnCheck = document.getElementById('btnCheck');
+    const btnReset = document.getElementById('btnReset');
+
+    function verificar(){
+      // Q1
+      const q1 = norm(document.getElementById('q1').value);
+      const r1 = document.getElementById('r1');
+      if (q1 === 'will rain' || q1 === "it will rain" || q1 === "will" || q1 === "will  rain") {
+        r1.textContent = '✅ Correcto: will rain.'; r1.className='resultado ok';
+      } else if (q1.length === 0) {
+        r1.textContent = 'Escribe la forma con will.'; r1.className='resultado';
       } else {
-        resultado.textContent = 'Intenta de nuevo. ❌';
-        resultado.style.color = 'salmon';
+        r1.textContent = '❌ Revisa: “I think it will rain later.”'; r1.className='resultado mal';
+      }
+
+      // Q2
+      const r2 = document.getElementById('r2');
+      const q2sel = document.querySelector('input[name="q2"]:checked');
+      if (!q2sel){ r2.textContent = 'Selecciona una opción.'; r2.className='resultado'; }
+      else if (q2sel.value === 'b'){ r2.textContent = '✅ Correcto: will make (decisión ahora).'; r2.className='resultado ok';}
+      else { r2.textContent = '❌ No es la mejor opción para decisión espontánea.'; r2.className='resultado mal';}
+
+      // Q3
+      const r3 = document.getElementById('r3');
+      const q3sel = document.querySelector('input[name="q3"]:checked');
+      if (!q3sel){ r3.textContent = 'Selecciona una opción.'; r3.className='resultado'; }
+      else if (q3sel.value === 'b'){ r3.textContent = '✅ Correcto: evidence → is going to rain.'; r3.className='resultado ok';}
+      else { r3.textContent = '❌ Con evidencia visible se usa “going to”.'; r3.className='resultado mal';}
+
+      // Q4
+      const r4 = document.getElementById('r4');
+      const q4 = norm(document.getElementById('q4').value);
+      if (q4 === 'yes, she will.' || q4 === 'yes she will' || q4 === 'no, she won\'t.' || q4 === 'no she won\'t' || q4 === 'no, she will not.' || q4 === 'no she will not') {
+        r4.textContent = '✅ Bien: short answer correcta.'; r4.className='resultado ok';
+      } else if (q4.length === 0){
+        r4.textContent = 'Escribe una short answer (ej. Yes, she will.)'; r4.className='resultado';
+      } else {
+        r4.textContent = '❌ Recuerda: Yes/No + sujeto + will/won’t.'; r4.className='resultado mal';
+      }
+
+      // Q5
+      const r5 = document.getElementById('r5');
+      const q5 = norm(document.getElementById('q5').value);
+      if (q5 === 'he will go to school.' || q5 === 'he will go to school') {
+        r5.textContent = '✅ Correcto: He will go to school.'; r5.className='resultado ok';
+      } else if (q5.length === 0){
+        r5.textContent = 'Escribe la corrección.'; r5.className='resultado';
+      } else {
+        r5.textContent = '❌ El verbo va en base: will + go.'; r5.className='resultado mal';
       }
     }
+
+    function limpiar(){
+      document.querySelectorAll('input[type="text"]').forEach(i => i.value='');
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked=false);
+      document.querySelectorAll('.resultado').forEach(x => { x.textContent=''; x.className='resultado'; });
+    }
+
+    btnCheck.addEventListener('click', verificar);
+    btnReset.addEventListener('click', limpiar);
   </script>
 </body>
 </html>

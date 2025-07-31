@@ -1,226 +1,182 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Los Mil Saberes</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Los Mil Saberes — Índice</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
-    :root {
-      --blanco: #ffffff;
-      --gris-claro: #f0f0f0;
-      --gris: #999999;
-      --negro: #111111;
-      --transparente: rgba(255, 255, 255, 0.1);
-      --degradado: linear-gradient(135deg, #ffffff, #eeeeee, #999999, #111111);
+    :root{
+      --blanco:#ffffff;
+      --gris-claro:#d1d1d1;
+      --gris:#bfbfbf;
+      --negro:#0d0f12;
+      --azul:#0057ff;
+      --vidrio: rgba(255,255,255,.08);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    *{ box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif }
+
+    body{
+      min-height:100vh; color:var(--blanco);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      display:flex; flex-direction:column; align-items:center;
+      padding:28px 18px 60px;
     }
 
-    body {
-      background: linear-gradient(135deg, #1c1c1c, #2a2a2a);
-      color: var(--blanco);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-      background-size: 300% 300%;
-      animation: backgroundShift 15s ease infinite;
-    }
-
-    header {
-      background: var(--transparente);
-      padding: 30px;
-      width: 100%;
-      text-align: center;
-      border-radius: 20px;
+    /* Barra superior estilo portada */
+    .topbar{
+      width:min(1200px, 100%);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px; border-radius:18px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
       backdrop-filter: blur(10px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 1.5s ease-in-out;
-      position: relative;
-      margin-bottom: 30px;
+      box-shadow:0 8px 28px rgba(0,0,0,.35);
+      margin-bottom:22px;
+    }
+    .logo{
+      display:flex; gap:12px; align-items:center;
+    }
+    .logo-badge{
+      width:38px; height:38px; border-radius:12px;
+      background:linear-gradient(135deg, var(--azul), #3aa0ff);
+      display:grid; place-items:center; font-weight:800;
+      box-shadow:0 6px 20px rgba(0,87,255,.45);
+    }
+    .logo-text{ font-weight:700; letter-spacing:.3px; color:#e9f0ff }
+
+    .nav{
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;
+      background:rgba(255,255,255,.08); color:#eaeaea; border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(6px);
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform:translateY(-2px) }
+    .btn-primary{
+      background:linear-gradient(135deg, var(--azul), #3aa0ff);
+      color:#fff; border:none;
+      box-shadow:0 12px 28px rgba(0,87,255,.35);
     }
 
-    header::before {
-      content: "\2728";
-      position: absolute;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 2rem;
-      animation: rotateStar 5s linear infinite;
+    /* Encabezado principal */
+    header.hero{
+      width:min(1200px, 100%);
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      border-radius:22px;
+      padding:28px 24px;
+      box-shadow:0 12px 36px rgba(0,0,0,.38);
+      position:relative;
+      overflow:hidden;
+      margin-bottom:28px;
+    }
+    .edicion-badge{
+      position:absolute; top:16px; right:16px;
+      font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; color:#d1ddff;
+      background:rgba(0,87,255,.18); border:1px solid rgba(0,87,255,.35);
+      padding:8px 12px; border-radius:999px;
+    }
+    header.hero h1{
+      font-size: clamp(2rem, 5vw, 3rem);
+      color:#bcd4ff; text-shadow:0 8px 28px rgba(0,0,0,.6);
+    }
+    .autores{
+      margin-top:6px; font-size:1rem; color:#cfd7ff; font-style:italic;
+    }
+    .intro{
+      margin-top:12px; color:var(--gris-claro); line-height:1.5;
+      max-width:70ch;
     }
 
-    header h1 {
-      font-size: 3rem;
-      color: var(--blanco);
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-      animation: typewriter 3s steps(20) 1 normal both;
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 2px solid var(--blanco);
+    /* Categorías (tarjetas vidrio) */
+    #categorias{
+      width:min(1200px, 100%);
+      display:grid; gap:22px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      margin-top:26px;
+    }
+    .categoria{
+      display:flex; flex-direction:column; align-items:center; text-align:center;
+      padding:28px 18px; border-radius:20px; text-decoration:none; color:var(--blanco);
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      box-shadow:0 6px 18px rgba(0,0,0,.30);
+      transition: transform .2s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+    }
+    .categoria:hover{
+      transform: translateY(-4px);
+      box-shadow:0 16px 40px rgba(0,87,255,.30);
+      background: rgba(0,87,255,.15);
+      border-color: rgba(0,87,255,.45);
+    }
+    .icono{ font-size:2rem; opacity:.95; margin-bottom:10px }
+    .categoria h2{ font-size:1.15rem; color:#f5f7ff }
+
+    /* Pie */
+    footer{
+      width:min(1200px, 100%);
+      text-align:center; color:#bfbfbf; margin-top:40px;
     }
 
-    .introduccion {
-      max-width: 800px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      padding: 25px;
-      margin-bottom: 40px;
-      backdrop-filter: blur(8px);
-      text-align: center;
-      font-size: 1.2rem;
-      color: var(--gris-claro);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-      animation: fadeIn 1.5s ease-in-out;
-    }
-
-    .grid-categorias {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      width: 100%;
-      max-width: 1200px;
-      animation: fadeInUp 1s ease forwards;
-    }
-
-    .categoria {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      padding: 40px 20px;
-      text-align: center;
-      color: var(--blanco);
-      transition: all 0.4s ease;
-      cursor: pointer;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-      transform: scale(1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .categoria:hover {
-      transform: scale(1.05) rotate(-1deg);
-      box-shadow: 0 12px 30px rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .categoria h2 {
-      font-size: 1.3rem;
-      margin-top: 10px;
-    }
-
-    .icono {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      opacity: 0.8;
-    }
-
-    footer {
-      margin-top: 60px;
-      color: var(--gris);
-      text-align: center;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes backgroundShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes typewriter {
-      0% { width: 0; }
-      100% { width: 100%; }
-    }
-
-    @keyframes rotateStar {
-      0% { transform: translateY(-50%) rotate(0deg); }
-      100% { transform: translateY(-50%) rotate(360deg); }
+    /* Accesibilidad y foco */
+    .btn:focus, .categoria:focus{
+      outline:2px solid #9fc0ff; outline-offset:2px;
     }
   </style>
 </head>
 <body>
-  <header>
+  <!-- Barra superior -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-badge">MS</div>
+      <div class="logo-text">Los Mil Saberes</div>
+    </div>
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="btn" href="portada.html">Inicio</a>
+      <a class="btn" href="#categorias">Categorías</a>
+      
+    </nav>
+  </div>
+
+  <!-- Hero / encabezado -->
+  <header class="hero">
+    <span class="edicion-badge">Edición 2025</span>
     <h1>Los Mil Saberes</h1>
+    <p class="autores">Autores: Brandon Stiven Gil, Joan Felipe Escobar, Juan Felipe Bravo, Kevin David Landazury</p>
+    <p class="intro">
+      Bienvenidos a <strong>Los Mil Saberes</strong>, una revista digital hecha por estudiantes y para estudiantes.
+      Explora proyectos, artículos y curiosidades de múltiples áreas —presentados con creatividad y dedicación— con un diseño claro y moderno.
+    </p>
   </header>
 
-  <div class="introduccion">
-    Bienvenidos a Los Mil Saberes. Aquí encontrarán contenidos, proyectos, artículos y curiosidades sobre todas las materias que estudiamos en clase. Cada sección fue realizada con esfuerzo, creatividad y mucho aprendizaje por parte de los estudiantes.
-  </div>
+  <!-- Categorías -->
+  <main id="categorias">
+    <a href="naturales.html" class="categoria"><div class="icono" aria-hidden="true">🧪</div><h2>Ciencias Naturales</h2></a>
+    <a href="sociales.html" class="categoria"><div class="icono" aria-hidden="true">🌍</div><h2>Sociales</h2></a>
+    <a href="filosofia.html" class="categoria"><div class="icono" aria-hidden="true">🧠</div><h2>Filosofía</h2></a>
+    <a href="matematicas.html" class="categoria"><div class="icono" aria-hidden="true">➗</div><h2>Matemáticas</h2></a>
+    <a href="estadistica.html" class="categoria"><div class="icono" aria-hidden="true">📊</div><h2>Estadística</h2></a>
+    <a href="ingles.html" class="categoria"><div class="icono" aria-hidden="true">🇺🇸</div><h2>Inglés</h2></a>
+    <a href="lenguaje.html" class="categoria"><div class="icono" aria-hidden="true">📚</div><h2>Lenguaje</h2></a>
+    <a href="religion.html" class="categoria"><div class="icono" aria-hidden="true">📖</div><h2>Religión</h2></a>
+    <a href="#" class="categoria"><div class="icono" aria-hidden="true">👥</div><h2>Ética</h2></a>
+    <a href="#" class="categoria"><div class="icono" aria-hidden="true">💥</div><h2>Física</h2></a>
+    <a href="artistica.html" class="categoria"><div class="icono" aria-hidden="true">🎨</div><h2>Artística</h2></a>
+    <a href="#" class="categoria"><div class="icono" aria-hidden="true">⚽</div><h2>Educación Física</h2></a>
+    <a href="#" class="categoria"><div class="icono" aria-hidden="true">💸</div><h2>Emprendimiento</h2></a>
+  </main>
 
-    <div class="grid-categorias">
-      <a href="ciencias-naturales.html" class="categoria">
-        <div class="icono">🧪</div><h2>Ciencias Naturales</h2>
-      </a>
-
-      <a href="sociales.html" class="categoria">
-        <div class="icono">🌍</div><h2>Sociales</h2>
-      </a>
-
-      <a href="filosofia.html" class="categoria">
-        <div class="icono">🧠</div><h2>Sociales</h2>
-      </a>
-
-      <a href="matematicas.html" class="categoria">
-        <div class="icono">➗</div><h2>Matemáticas</h2>
-      </a>
-
-      <a href="estadistica.html" class="categoria">
-        <div class="icono">📊</div><h2>Estadística</h2>
-      </a>
-
-      <a href="ingles.html" class="categoria">
-        <div class="icono">🇺🇸</div><h2>Inglés</h2>
-      </a>
-
-      <a href="lenguaje.html" class="categoria">
-        <div class="icono">📚</div><h2>Lenguaje</h2>
-      </a>
-
-      <a href="religion.html" class="categoria">
-        <div class="icono">📖</div><h2>Religión</h2>
-      </a>
-
-      <a href="etica.html" class="categoria">
-        <div class="icono">👥</div><h2>Ética</h2>
-      </a>
-
-      <a href="fisica.html" class="categoria">
-        <div class="icono">⛓️‍💥</div><h2>Fisica</h2>
-      </a>
-
-      <a href="artistica.html" class="categoria">
-        <div class="icono">🎨</div><h2>Artística</h2>
-      </a>
-
-      <a href="educacion-fisica.html" class="categoria">
-        <div class="icono">⚽</div><h2>Educación Física</h2>
-      </a>
-
-      <a href="emprendimiento.html" class="categoria">
-        <div class="icono">💸</div><h2>Emprendimiento</h2>
-      </a>
-
-    </div>
-  
-  </div>
-
+  <!-- Pie -->
   <footer>
     <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
   </footer>

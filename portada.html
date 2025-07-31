@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portada — Los Mil Saberes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <style>
+    :root{
+      --blanco:#ffffff; --gris:#cfcfcf; --negro:#0d0f12; --azul:#0057ff;
+      --vidrio: rgba(255,255,255,.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif}
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      color:var(--blanco);
+      display:flex;align-items:center;justify-content:center;padding:32px;
+      overflow:hidden;
+    }
+    .marco{
+      width:min(1100px,94vw);
+      aspect-ratio:3/4; /* sensación de tapa de revista */
+      border-radius:28px;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 30px 80px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.06);
+      background:
+        url('portada.jpg') center/cover no-repeat,
+        linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.6));
+    }
+    /* capa de vidrio para legibilidad del título */
+    .vidrio{
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.65) 65%, rgba(0,0,0,.85) 100%);
+    }
+    header{
+      position:absolute; top:28px; left:28px; right:28px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .edicion{
+      font-size:.95rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gris);
+      background:rgba(0,0,0,.35); padding:8px 12px; border-radius:999px; backdrop-filter:blur(6px);
+      border:1px solid rgba(255,255,255,.08)
+    }
+    .logo{
+      display:flex; gap:12px; align-items:center;
+    }
+    .logo-badge{
+      width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg, var(--azul), #00b2ff);
+      box-shadow:0 6px 20px rgba(0,87,255,.45); display:grid; place-items:center; font-weight:800;
+    }
+    .logo-text{font-weight:700; letter-spacing:.4px; color:#e9f0ff}
+    .contenido{
+      position:absolute; left:10%; right:10%; bottom:11%;
+    }
+    h1{
+      font-size: clamp(2.1rem, 4.5vw, 4rem);
+      line-height:1.05;
+      text-shadow:0 8px 28px rgba(0,0,0,.6);
+    }
+    .resaltado{ color:#bcd4ff }
+    .sub{
+      margin-top:10px; color:#d7d7d7; max-width:48ch; line-height:1.45;
+    }
+    .autores{
+      margin-top:18px; font-style:italic; color:#cfd7ff;
+    }
+    .cta{
+      margin-top:28px; display:flex; gap:14px; flex-wrap:wrap;
+    }
+    .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      padding:14px 20px; border-radius:14px; font-weight:700; letter-spacing:.2px;
+      transition:transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn-entrar{
+      background:linear-gradient(135deg, var(--azul), #3aa0ff);
+      color:white;
+      box-shadow:0 12px 30px rgba(0,87,255,.35);
+    }
+    .btn-entrar:hover{ transform:translateY(-2px) }
+    .btn-indice{
+      background:rgba(255,255,255,.08); color:#eaeaea; border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(6px);
+    }
+    footer{
+      position:absolute; left:0; right:0; bottom:10px; text-align:center; color:#bfbfbf; font-size:.9rem;
+      text-shadow:0 2px 10px rgba(0,0,0,.5)
+    }
+    @media (max-width: 640px){
+      .marco{ aspect-ratio:auto; height:92vh }
+      .contenido{ left:7%; right:7%; bottom:8% }
+    }
+  </style>
+</head>
+<body>
+  <main class="marco" role="img" aria-label="Portada de la revista Los Mil Saberes">
+    <div class="vidrio"></div>
+
+    <header>
+      <div class="logo">
+        <div class="logo-badge">MS</div>
+        <div class="logo-text">Los Mil Saberes</div>
+      </div>
+      <div class="edicion">Edición 2025 • Colegiatura</div>
+    </header>
+
+    <section class="contenido">
+      <h1><span class="resaltado">Los Mil Saberes</span><br/>Revista digital hecha por estudiantes</h1>
+      <p class="sub">Proyectos, artículos y curiosidades de múltiples áreas: Matemáticas, Ciencias, Sociales, Lenguaje, Artística y más.</p>
+      <p class="autores">Autores: Brandon Stiven Gil, Joan Felipe Escobar, Juan Felipe Bravo, Kevin David Landazury</p>
+
+      <div class="cta">
+        <a class="btn btn-entrar" href="index.html">Entrar a la revista</a>
+        <a class="btn btn-indice" href="index.html#categorias">Ver categorías</a>
+      </div>
+    </section>
+
+    <footer>&copy; 2025 Los Mil Saberes — Todos los derechos reservados.</footer>
+  </main>
+</body>
+</html>

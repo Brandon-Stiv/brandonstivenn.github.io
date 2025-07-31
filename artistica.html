@@ -3,182 +3,376 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Artística - Arte del Siglo XX</title>
+  <title>Artística — Arte del Siglo XX</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
-    :root {
-      --blanco: #ffffff;
-      --azul: #72c4ff;
-      --azul-claro: #cfeeff;
-      --gris: #cccccc;
-      --transparente: rgba(255, 255, 255, 0.1);
+    :root{
+      --blanco:#ffffff;
+      --gris-claro:#e8ecf7;
+      --gris:#bfc7da;
+      --negro:#0d0f12;
+      --azul:#0057ff;
+      --acento:#3aa0ff;
+      --vidrio: rgba(255,255,255,.06);
+      --borde: rgba(255,255,255,.10);
+      --texto-suave:#cfd7ff;
+      --ok:#76e39a;
+      --err:#ff8b8b;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    *{ box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif }
+
+    body{
+      min-height:100vh; color:var(--blanco);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      display:flex; flex-direction:column; align-items:center;
+      padding:28px 18px 60px;
     }
 
-    body {
-      background: linear-gradient(135deg, #1a1a1a, #2e2e2e);
-      color: var(--blanco);
-      min-height: 100vh;
-      padding: 40px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-size: 300% 300%;
-      animation: fondoMovimiento 15s ease infinite;
-    }
-
-    header {
-      background: var(--transparente);
-      padding: 30px;
-      width: 100%;
-      text-align: center;
-      border-radius: 20px;
+    /* Barra superior */
+    .topbar{
+      width:min(1200px, 100%);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px; border-radius:18px;
+      background:var(--vidrio);
+      border:1px solid var(--borde);
       backdrop-filter: blur(10px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      margin-bottom: 30px;
+      box-shadow:0 8px 28px rgba(0,0,0,.35);
+      margin-bottom:22px;
+    }
+    .logo{ display:flex; gap:12px; align-items:center; }
+    .logo-badge{
+      width:38px; height:38px; border-radius:12px;
+      background:linear-gradient(135deg, var(--azul), var(--acento));
+      display:grid; place-items:center; font-weight:800;
+      box-shadow:0 6px 20px rgba(0,87,255,.45);
+    }
+    .logo-text{ font-weight:700; letter-spacing:.3px; color:#e9f0ff }
+
+    .nav{ display:flex; gap:8px; flex-wrap:wrap; }
+    .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;
+      background:rgba(255,255,255,.08); color:#eaeaea; border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(6px);
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform:translateY(-2px) }
+
+    /* Hero */
+    header.hero{
+      width:min(1200px, 100%);
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      border-radius:22px;
+      padding:28px 24px;
+      box-shadow:0 12px 36px rgba(0,0,0,.38);
+      position:relative;
+      overflow:hidden;
+      margin-bottom:28px;
+    }
+    .edicion-badge{
+      position:absolute; top:16px; right:16px;
+      font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; color:#d1ddff;
+      background:rgba(0,87,255,.18); border:1px solid rgba(0,87,255,.35);
+      padding:8px 12px; border-radius:999px;
+    }
+    header.hero h1{
+      font-size: clamp(1.9rem, 4.8vw, 2.8rem);
+      color:#bcd4ff; text-shadow:0 8px 28px rgba(0,0,0,.6);
+    }
+    .sub{
+      margin-top:8px; color:var(--texto-suave);
     }
 
-    header h1 {
-      font-size: 2.8rem;
-      color: var(--azul);
-      text-shadow: 0 0 10px rgba(114, 196, 255, 0.4);
+    /* Layout principal */
+    .contenedor{
+      width:min(1200px, 100%);
+      display:grid; gap:22px;
+      grid-template-columns: 1.15fr .85fr;
+    }
+    @media (max-width: 980px){
+      .contenedor{ grid-template-columns: 1fr; }
     }
 
-    .contenido {
-      max-width: 1000px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      padding: 30px;
+    .card{
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      border-radius:20px;
+      padding:22px;
       backdrop-filter: blur(8px);
-      color: var(--gris);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-      animation: aparecer 1s ease forwards;
+      box-shadow:0 6px 18px rgba(0,0,0,.30);
+    }
+    .card h2, .card h3{ color:#cfe3ff; margin-bottom:10px }
+    .card p, .card li{ color:var(--gris-claro) }
+    .card ul{ padding-left:18px; line-height:1.6 }
+    .grid-2{ display:grid; gap:18px; grid-template-columns:1fr 1fr }
+    @media (max-width: 800px){ .grid-2{ grid-template-columns:1fr } }
+
+    .infobox{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-left:4px solid var(--acento);
+      border-radius:12px; padding:14px; color:#e9f1ff; margin-top:10px
     }
 
-    .contenido h2, .contenido h3 {
-      color: var(--azul);
-      margin-bottom: 15px;
+    /* Timeline */
+    .timeline{ position:relative; padding-left:20px; margin-top:6px }
+    .timeline::before{
+      content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:rgba(160,180,220,.35)
+    }
+    .t-item{ position:relative; margin:10px 0 14px 0 }
+    .t-item::before{
+      content:''; position:absolute; left:-1px; top:4px; width:10px; height:10px; border-radius:50%;
+      background:linear-gradient(135deg, var(--azul), var(--acento));
+      box-shadow:0 0 0 4px rgba(58,160,255,.2)
+    }
+    .t-year{ font-weight:800; color:#e9f1ff }
+    .t-desc{ color:#d7e1ff }
+
+    /* Quiz */
+    .quiz .q{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:12px; padding:12px; margin-top:10px
+    }
+    .quiz input[type="text"]{
+      width:100%; max-width:420px; padding:10px; border-radius:8px; border:none;
+      background:rgba(255,255,255,.1); color:#fff
+    }
+    .quiz .opcion{ display:block; margin:6px 0; color:#e9f1ff }
+    .resultado{ font-weight:700; margin-top:6px }
+    .ok{ color:var(--ok) } .mal{ color:var(--err) }
+
+    footer{
+      width:min(1200px, 100%);
+      text-align:center; color:#bfbfbf; margin-top:32px;
     }
 
-    footer {
-      margin-top: 60px;
-      color: var(--gris);
-      text-align: center;
-    }
-
-    .movimiento {
-      margin: 15px 0;
-      padding: 15px;
-      background: rgba(255,255,255,0.05);
-      border-left: 5px solid var(--azul);
-      border-radius: 10px;
-    }
-
-    .quiz {
-      margin-top: 30px;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-    }
-
-    .quiz p {
-      margin-bottom: 10px;
-    }
-
-    .quiz input[type="text"] {
-      padding: 8px;
-      border-radius: 6px;
-      border: none;
-      width: 60%;
-    }
-
-    .quiz button {
-      padding: 8px 12px;
-      margin-left: 10px;
-      border: none;
-      border-radius: 6px;
-      background-color: var(--azul);
-      color: var(--blanco);
-      cursor: pointer;
-    }
-
-    .respuesta {
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    @keyframes fondoMovimiento {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* Foco accesible */
+    .btn:focus, a:focus, input:focus{ outline:2px solid #9fc0ff; outline-offset:2px; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Artística - Arte del Siglo XX</h1>
+  <!-- Barra superior -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-badge">MS</div>
+      <div class="logo-text">Los Mil Saberes</div>
+    </div>
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="btn" href="portada.html">Inicio</a>
+      <a class="btn" href="index.html">Categorías</a>
+    </nav>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <span class="edicion-badge">Artística</span>
+    <h1>Arte del Siglo XX</h1>
+    <p class="sub">Del color salvaje y la abstracción a la idea como obra: un siglo de rupturas y nuevas miradas.</p>
   </header>
 
-  <div class="contenido">
-    <h2>Explorando el Arte del Siglo XX</h2>
-    <p>
-      El siglo XX fue una época revolucionaria para el arte, con la aparición de nuevos movimientos y estilos que rompieron con las tradiciones anteriores.
-      Fue una etapa de exploración, protesta, experimentación y expresión individual.
-    </p>
+  <!-- Contenido -->
+  <section class="contenedor">
+    <!-- Columna 1: panorama, rasgos, movimientos -->
+    <article class="card">
+      <h2>1) Panorama general</h2>
+      <p>
+        El siglo XX transformó radicalmente el arte. La <strong>ruptura con la tradición</strong>, el impacto de
+        <em>guerras mundiales</em>, la expansión de los <em>medios de comunicación</em> y el avance tecnológico
+        impulsaron movimientos muy diversos. La pregunta central dejó de ser “¿cómo representar la realidad?”
+        para convertirse en “¿qué es el arte y cómo puede pensarse, vivirse o intervenirse?”.
+      </p>
 
-    <div class="movimiento">
-      <h3>Fauvismo</h3>
-      <p>Colores intensos y formas simplificadas. Henri Matisse fue su máximo exponente.</p>
-    </div>
-    <div class="movimiento">
-      <h3>Expresionismo</h3>
-      <p>Transmitía emociones intensas y subjetivas. Muy usado en Alemania con artistas como Edvard Munch.</p>
-    </div>
-    <div class="movimiento">
-      <h3>Surrealismo</h3>
-      <p>Explora el mundo de los sueños, lo inconsciente y lo irracional. Salvador Dalí fue un representante destacado.</p>
-    </div>
-    <div class="movimiento">
-      <h3>Pop Art</h3>
-      <p>Inspirado en la cultura popular y la publicidad. Andy Warhol fue una de sus figuras principales.</p>
-    </div>
+      <div class="grid-2">
+        <div class="infobox">
+          <h3>Rasgos comunes</h3>
+          <ul>
+            <li><strong>Experimentación</strong> en forma, color y material.</li>
+            <li><strong>Abstracción</strong> frente a la mímesis tradicional.</li>
+            <li><strong>Interdisciplinariedad</strong>: pintura, escultura, diseño, teatro, cine.</li>
+            <li><strong>Nuevos soportes</strong>: collage, readymade, instalación, performance, videoarte.</li>
+          </ul>
+        </div>
+        <div class="infobox">
+          <h3>Técnicas y materiales</h3>
+          <ul>
+            <li><em>Collage</em>, <em>fotomontaje</em>, <em>assemblage</em>.</li>
+            <li>Óleo y acrílico; tintas, aerógrafo, serigrafía.</li>
+            <li>Objetos cotidianos y materiales industriales.</li>
+          </ul>
+        </div>
+      </div>
 
-    <div class="quiz">
-      <p><strong>Mini reto:</strong> ¿Cuál de estos movimientos artísticos se asocia con los sueños y lo irracional?</p>
-      <input type="text" id="respuestaArte" placeholder="Escribe tu respuesta aquí...">
-      <button onclick="verificarArte()">Verificar</button>
-      <div class="respuesta" id="mensajeArte"></div>
-    </div>
+      <h2 style="margin-top:16px">2) Movimientos clave (muy breve)</h2>
+      <ul>
+        <li><strong>Fauvismo</strong> (c. 1905): color intenso y libre; <em>Henri Matisse</em>.</li>
+        <li><strong>Expresionismo</strong> (1905–1920): emoción y subjetividad; <em>Kirchner</em>, <em>Kandinsky</em>.</li>
+        <li><strong>Cubismo</strong> (1907–1914): formas fragmentadas, múltiples puntos de vista; <em>Picasso</em>, <em>Braque</em>.</li>
+        <li><strong>Futurismo</strong> (1909–1916): velocidad, máquinas, dinamismo.</li>
+        <li><strong>Dadaísmo</strong> (1916–1922): anti‑arte, azar, <em>readymade</em>; <em>Duchamp</em>.</li>
+        <li><strong>Surrealismo</strong> (1924–1940s): onírico e inconsciente; <em>Dalí</em>, <em>Magritte</em>, <em>Miró</em>.</li>
+        <li><strong>De Stijl / Bauhaus</strong> (1917–1933): síntesis arte‑diseño, geometría y función; <em>Mondrian</em>, <em>Gropius</em>.</li>
+        <li><strong>Expresionismo abstracto</strong> (años 40–50): gesto y campo de color; <em>Pollock</em>, <em>Rothko</em>.</li>
+        <li><strong>Pop Art</strong> (años 50–60): cultura popular y medios; <em>Warhol</em>, <em>Lichtenstein</em>.</li>
+        <li><strong>Minimalismo</strong> (años 60): reducción formal, repetición; <em>Judd</em>.</li>
+        <li><strong>Conceptual</strong> (años 60–70): la idea es la obra; <em>Kosuth</em>.</li>
+        <li><strong>Land Art</strong>, <strong>Op Art</strong>, <strong>Cinético</strong> (Venezuela): entorno, óptica y movimiento.</li>
+        <li><strong>Latinoamérica</strong>: muralismo mexicano (Rivera, Orozco, Siqueiros); modernismo brasileño, arte concreto, cinético.</li>
+      </ul>
+    </article>
 
-    <p style="margin-top:20px">Puedes regresar a la <a href="index.html">página principal</a>.</p>
-  </div>
+    <!-- Columna 2: línea de tiempo + análisis + quiz -->
+    <aside class="card">
+      <h2>Línea de tiempo rápida</h2>
+      <div class="timeline" aria-label="Hitos del arte del siglo XX">
+        <div class="t-item"><span class="t-year">1905</span> — <span class="t-desc">Fauvismo: color puro y “salvaje”.</span></div>
+        <div class="t-item"><span class="t-year">1907–1914</span> — <span class="t-desc">Cubismo: ruptura de la perspectiva única.</span></div>
+        <div class="t-item"><span class="t-year">1916</span> — <span class="t-desc">Dada en Zúrich: provocación y anti‑arte.</span></div>
+        <div class="t-item"><span class="t-year">1924</span> — <span class="t-desc">Manifiesto surrealista.</span></div>
+        <div class="t-item"><span class="t-year">1919–1933</span> — <span class="t-desc">Bauhaus: unir arte, artesanía y tecnología.</span></div>
+        <div class="t-item"><span class="t-year">1940s–1950s</span> — <span class="t-desc">Expresionismo abstracto en EE. UU.</span></div>
+        <div class="t-item"><span class="t-year">1960s</span> — <span class="t-desc">Pop Art, Minimalismo y Arte Conceptual.</span></div>
+      </div>
+
+      <div class="infobox" style="margin-top:14px">
+        <strong>Cómo analizar una obra (guía rápida)</strong>
+        <ol style="margin-left:18px;line-height:1.6">
+          <li><em>Observa</em>: ¿qué ves? (líneas, formas, colores, textura).</li>
+          <li><em>Interpreta</em>: ¿qué sugiere? ¿hay símbolos o metáforas?</li>
+          <li><em>Contextualiza</em>: ¿cuándo/dónde/por qué se hizo? movimiento y autor.</li>
+          <li><em>Evalúa</em>: ¿qué impacto produce? técnica e innovación.</li>
+        </ol>
+      </div>
+
+      <h3 style="margin-top:16px">Mini‑quiz</h3>
+      <div class="quiz" id="quiz">
+        <!-- P1 -->
+        <div class="q">
+          <p><strong>1)</strong> Movimiento asociado con los <em>sueños</em> y lo <em>inconsciente</em>:</p>
+          <input type="text" id="p1" placeholder="Escribe el movimiento…">
+          <div class="resultado" id="r1"></div>
+        </div>
+
+        <!-- P2 -->
+        <div class="q">
+          <p><strong>2)</strong> El <em>readymade</em> (objeto cotidiano como obra) se relaciona con…</p>
+          <label class="opcion"><input type="radio" name="p2" value="a"> Expresionismo</label>
+          <label class="opcion"><input type="radio" name="p2" value="b"> Dadaísmo</label>
+          <label class="opcion"><input type="radio" name="p2" value="c"> Minimalismo</label>
+          <div class="resultado" id="r2"></div>
+        </div>
+
+        <!-- P3 -->
+        <div class="q">
+          <p><strong>3)</strong> ¿Qué movimiento explora la <em>cultura popular</em> y la publicidad?</p>
+          <label class="opcion"><input type="radio" name="p3" value="a"> Pop Art</label>
+          <label class="opcion"><input type="radio" name="p3" value="b"> Cubismo</label>
+          <label class="opcion"><input type="radio" name="p3" value="c"> Futurismo</label>
+          <div class="resultado" id="r3"></div>
+        </div>
+
+        <!-- P4 -->
+        <div class="q">
+          <p><strong>4)</strong> Escribe una <em>técnica</em> típica del siglo XX (p. ej., collage, serigrafía).</p>
+          <input type="text" id="p4" placeholder="Tu respuesta…">
+          <div class="resultado" id="r4"></div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:8px">
+          <button class="btn" id="btnCheck" type="button">Verificar</button>
+          <button class="btn" id="btnReset" type="button">Limpiar</button>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Cierre con actividades y glosario -->
+  <section class="card" style="width:min(1200px,100%); margin-top:22px">
+    <h2>3) Actividades y glosario</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Actividades sugeridas</h3>
+        <ul>
+          <li>Realiza un <strong>collage</strong> sobre un tema social actual (revistas, textos, texturas).</li>
+          <li>Diseña un <strong>afiche pop</strong> de un objeto cotidiano con colores planos y repetición.</li>
+          <li>Escribe un breve <strong>manifiesto</strong> artístico de 5 líneas: ¿qué cambiarías del arte?</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Glosario básico</h3>
+        <ul>
+          <li><strong>Abstracción</strong>: elimina la representación literal para enfatizar formas y color.</li>
+          <li><strong>Readymade</strong>: objeto prefabricado presentado como obra (Duchamp).</li>
+          <li><strong>Instalación</strong>: montaje espacial que envuelve al espectador.</li>
+          <li><strong>Performance</strong>: acción artística en vivo.</li>
+          <li><strong>Serigrafía</strong>: técnica de impresión por plantillas (pop art).</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:14px">Volver a la <a class="btn" href="index.html" style="padding:6px 10px">página principal</a>.</p>
+  </section>
 
   <footer>
     <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
   </footer>
 
   <script>
-    function verificarArte() {
-      const valor = document.getElementById("respuestaArte").value.trim().toLowerCase();
-      const mensaje = document.getElementById("mensajeArte");
-      if (valor.includes("surrealismo")) {
-        mensaje.textContent = "¡Correcto! El surrealismo explora el mundo de los sueños.";
-        mensaje.style.color = "#7ef07e";
+    // Utilidades
+    const norm = s => (s || '').trim().toLowerCase().replace(/\s+/g,' ');
+
+    const btnCheck = document.getElementById('btnCheck');
+    const btnReset = document.getElementById('btnReset');
+
+    function verificar(){
+      // P1
+      const r1 = document.getElementById('r1');
+      const v1 = norm(document.getElementById('p1').value);
+      if (v1.includes('surrealismo')){
+        r1.textContent = '✅ Correcto: Surrealismo.'; r1.className='resultado ok';
+      } else if (v1.length === 0){
+        r1.textContent = 'Escribe el nombre del movimiento.'; r1.className='resultado';
       } else {
-        mensaje.textContent = "Respuesta incorrecta. Intenta con el nombre de un movimiento artístico.";
-        mensaje.style.color = "#ff9999";
+        r1.textContent = '❌ Pista: sueños, irracional, inconsciente.'; r1.className='resultado mal';
       }
+
+      // P2
+      const r2 = document.getElementById('r2');
+      const p2sel = document.querySelector('input[name="p2"]:checked');
+      if (!p2sel){ r2.textContent = 'Selecciona una opción.'; r2.className='resultado'; }
+      else if (p2sel.value === 'b'){ r2.textContent = '✅ Bien: el readymade es propio del dadaísmo.'; r2.className='resultado ok'; }
+      else { r2.textContent = '❌ Revisa: readymade → Dadaísmo (Duchamp).'; r2.className='resultado mal'; }
+
+      // P3
+      const r3 = document.getElementById('r3');
+      const p3sel = document.querySelector('input[name="p3"]:checked');
+      if (!p3sel){ r3.textContent = 'Selecciona una opción.'; r3.className='resultado'; }
+      else if (p3sel.value === 'a'){ r3.textContent = '✅ Correcto: Pop Art.'; r3.className='resultado ok'; }
+      else { r3.textContent = '❌ Piensa en publicidad, cómics y cultura de masas.'; r3.className='resultado mal'; }
+
+      // P4 (válida varias técnicas)
+      const r4 = document.getElementById('r4');
+      const v4 = norm(document.getElementById('p4').value);
+      const tecnicas = ['collage','serigrafia','serigrafía','fotomontaje','assemblage','instalacion','instalación','acrilico','acrílico','aerografo','aerógrafo'];
+      if (v4.length === 0){ r4.textContent = 'Escribe una técnica.'; r4.className='resultado'; }
+      else if (tecnicas.includes(v4)){ r4.textContent = '✅ ¡Bien! Técnica del siglo XX.'; r4.className='resultado ok'; }
+      else { r4.textContent = '✔️ Puede ser válida si justificas por qué es típica del siglo XX.'; r4.className='resultado'; }
     }
+
+    function limpiar(){
+      document.querySelectorAll('input[type="text"]').forEach(i => i.value='');
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked=false);
+      document.querySelectorAll('.resultado').forEach(x => { x.textContent=''; x.className='resultado'; });
+    }
+
+    btnCheck.addEventListener('click', verificar);
+    btnReset.addEventListener('click', limpiar);
   </script>
 </body>
 </html>
+

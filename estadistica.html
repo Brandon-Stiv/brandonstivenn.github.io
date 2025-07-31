@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Estadística — Probabilidad condicional</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root{
+      --blanco:#ffffff;
+      --gris-claro:#e8ecf7;
+      --gris:#bfc7da;
+      --negro:#0d0f12;
+      --azul:#0057ff;
+      --acento:#3aa0ff;
+      --vidrio: rgba(255,255,255,.06);
+      --borde: rgba(255,255,255,.10);
+      --texto-suave:#cfd7ff;
+      --ok:#76e39a;
+      --err:#ff8b8b;
+      --warn:#ffd27a;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif }
+
+    body{
+      min-height:100vh; color:var(--blanco);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      display:flex; flex-direction:column; align-items:center;
+      padding:28px 18px 60px;
+    }
+
+    /* Barra superior */
+    .topbar{
+      width:min(1200px, 100%);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px; border-radius:18px;
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      box-shadow:0 8px 28px rgba(0,0,0,.35);
+      margin-bottom:22px;
+    }
+    .logo{ display:flex; gap:12px; align-items:center; }
+    .logo-badge{
+      width:38px; height:38px; border-radius:12px;
+      background:linear-gradient(135deg, var(--azul), var(--acento));
+      display:grid; place-items:center; font-weight:800;
+      box-shadow:0 6px 20px rgba(0,87,255,.45);
+    }
+    .logo-text{ font-weight:700; letter-spacing:.3px; color:#e9f0ff }
+
+    .nav{ display:flex; gap:8px; flex-wrap:wrap; }
+    .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;
+      background:rgba(255,255,255,.08); color:#eaeaea; border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(6px);
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform:translateY(-2px) }
+
+    /* Hero */
+    header.hero{
+      width:min(1200px, 100%);
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      border-radius:22px;
+      padding:28px 24px;
+      box-shadow:0 12px 36px rgba(0,0,0,.38);
+      position:relative;
+      overflow:hidden;
+      margin-bottom:28px;
+    }
+    .edicion-badge{
+      position:absolute; top:16px; right:16px;
+      font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; color:#d1ddff;
+      background:rgba(0,87,255,.18); border:1px solid rgba(0,87,255,.35);
+      padding:8px 12px; border-radius:999px;
+    }
+    header.hero h1{
+      font-size: clamp(1.9rem, 4.8vw, 2.8rem);
+      color:#bcd4ff; text-shadow:0 8px 28px rgba(0,0,0,.6);
+    }
+    .sub{
+      margin-top:8px; color:var(--texto-suave);
+    }
+
+    /* Layout principal */
+    .contenedor{
+      width:min(1200px, 100%);
+      display:grid; gap:22px;
+      grid-template-columns: 1.15fr .85fr;
+    }
+    @media (max-width: 980px){
+      .contenedor{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      border-radius:20px;
+      padding:22px;
+      backdrop-filter: blur(8px);
+      box-shadow:0 6px 18px rgba(0,0,0,.30);
+    }
+    .card h2, .card h3{ color:#cfe3ff; margin-bottom:10px }
+    .card p, .card li{ color:var(--gris-claro) }
+    .card ul{ padding-left:18px; line-height:1.6 }
+
+    code{
+      background: rgba(0,87,255,.18);
+      padding: 2px 6px; border-radius: 6px; font-weight: 700; color:#bcd4ff;
+    }
+
+    .infobox{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-left:4px solid var(--acento);
+      border-radius:12px; padding:14px; color:#e9f1ff; margin-top:10px
+    }
+
+    .grid-2{ display:grid; gap:18px; grid-template-columns:1fr 1fr }
+    @media (max-width: 800px){ .grid-2{ grid-template-columns:1fr } }
+
+    .tabla{
+      width:100%; border-collapse:collapse; margin-top:8px
+    }
+    .tabla th, .tabla td{
+      border:1px solid rgba(255,255,255,.10);
+      padding:8px; text-align:left; vertical-align:top
+    }
+    .tabla th{ background:rgba(0,87,255,.15); color:#e9f1ff }
+
+    /* Quiz / inputs */
+    .quiz .q{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:12px; padding:12px; margin-top:10px
+    }
+    .quiz input[type="text"], .quiz input[type="number"]{
+      width:100%; max-width:520px; padding:10px; border-radius:8px; border:none;
+      background:rgba(255,255,255,.1); color:#fff
+    }
+    .quiz .opcion{ display:block; margin:6px 0; color:#e9f1ff }
+    .resultado{ font-weight:700; margin-top:6px }
+    .ok{ color:var(--ok) } .mal{ color:var(--err) }
+
+    /* SVG árbol */
+    .tree-wrap{
+      width:100%; overflow:auto; border-radius:14px; border:1px solid var(--borde);
+      background:rgba(255,255,255,.05); padding:10px;
+    }
+    svg text{ fill:#e9f1ff; font-size:12px }
+    svg .edge{ stroke:#9fb7ff; stroke-width:2 }
+    svg .node{ fill:#0e1a3b; stroke:#5a7cff; stroke-width:1.2 }
+    svg .label{ fill:#cfe3ff; font-weight:600 }
+    svg .highlight{ fill:#76e39a; font-weight:700 }
+  </style>
+</head>
+<body>
+  <!-- Barra superior -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-badge">MS</div>
+      <div class="logo-text">Los Mil Saberes</div>
+    </div>
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="btn" href="portada.html">Inicio</a>
+      <a class="btn" href="index.html">Categorías</a>
+    </nav>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <span class="edicion-badge">Estadística</span>
+    <h1>Probabilidad condicional</h1>
+    <p class="sub">Cómo calcular \(P(A\mid B)\), cuándo usarla y su relación con independencia y Bayes.</p>
+  </header>
+
+  <!-- Contenido -->
+  <section class="contenedor">
+    <!-- Columna 1: teoría -->
+    <article class="card">
+      <h2>1) ¿Qué es la probabilidad condicional?</h2>
+      <p>
+        La <strong>probabilidad condicional</strong> de un evento <code>A</code> dado que ocurrió <code>B</code>, se escribe
+        <code>P(A|B)</code> y se lee “probabilidad de A <em>dado</em> B”. Mide cuán probable es <code>A</code> si
+        <em>restringimos el universo</em> a los casos donde <code>B</code> sucede.
+      </p>
+
+      <div class="infobox">
+        <strong>Fórmula básica:</strong>
+        <div style="margin-top:6px">
+          <code>P(A|B) = \dfrac{P(A \cap B)}{P(B)}</code>, &nbsp;si <code>P(B) &gt; 0</code>.
+        </div>
+        <div style="margin-top:6px">
+          También: <code>P(A \cap B) = P(B)\,P(A|B) = P(A)\,P(B|A)</code>.
+        </div>
+      </div>
+
+      <h2 style="margin-top:16px">2) Independencia</h2>
+      <p>
+        A y B son <strong>independientes</strong> si conocer B no cambia la probabilidad de A:
+        <code>P(A|B) = P(A)</code> (equivalentemente, <code>P(A∩B) = P(A)P(B)</code>).
+      </p>
+
+      <h2 style="margin-top:16px">3) Teorema de Bayes</h2>
+      <div class="infobox">
+        <code>P(A|B) = \dfrac{P(B|A)\,P(A)}{P(B)}</code>, &nbsp;donde&nbsp;
+        <code>P(B) = \sum_i P(B|A_i)P(A_i)</code> si <code>{A_i}</code> es una partición.
+      </div>
+
+      <!-- >>> BLOQUE AÑADIDO: explicación paso a paso de la fórmula de Bayes -->
+      <div class="infobox">
+        <strong>¿Qué significa cada término?</strong>
+        <ul style="margin-top:8px">
+          <li><code>P(A|B)</code>: Lo que queremos saber: probabilidad de <strong>A</strong> sabiendo que ocurrió <strong>B</strong>.</li>
+          <li><code>P(B|A)</code>: Qué tan probable es <strong>B</strong> si <strong>A</strong> fuera cierto (suele ser el dato que conocemos).</li>
+          <li><code>P(A)</code>: Probabilidad inicial de <strong>A</strong> (antes de tener la información de <strong>B</strong>).</li>
+          <li><code>P(B)</code>: Probabilidad total de <strong>B</strong> en general (sirve para “ajustar” y que todo sume 1).</li>
+        </ul>
+        <p style="margin-top:8px">
+          <strong>¿Para qué sirve?</strong> El teorema de Bayes permite <em>dar la vuelta a la condición</em>:
+          si no podemos calcular directamente <code>P(A|B)</code>, usamos <code>P(B|A)</code>, <code>P(A)</code> y <code>P(B)</code> para obtenerla.
+        </p>
+      </div>
+      <!-- <<< FIN BLOQUE AÑADIDO -->
+
+      <h2 style="margin-top:16px">4) Cómo resolver: dos enfoques comunes</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Tabla \(2\times2\)</h3>
+          <ul>
+            <li>Rellena frecuencias: <em>a</em> (A∩B), <em>b</em> (¬A∩B), <em>c</em> (A∩¬B), <em>d</em> (¬A∩¬B).</li>
+            <li>Total en la columna de B es <code>a+b</code>; entonces <code>P(A|B)=a/(a+b)</code>.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Árbol de probabilidad</h3>
+          <ul>
+            <li>Rama 1: P(A), rama 2: P(¬A).</li>
+            <li>Luego condiciona B: P(B|A), P(¬B|A) y P(B|¬A), P(¬B|¬A).</li>
+            <li>Multiplica por caminos y suma si hace falta (probabilidad total).</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 style="margin-top:16px">5) Ejemplo resuelto</h2>
+      <p>
+        En una escuela, el 30% juega fútbol (<code>A</code>). De quienes juegan fútbol, el 40% también toca guitarra (<code>B</code>).
+        Entre quienes no juegan fútbol, el 10% toca guitarra. ¿Cuál es <code>P(A|B)</code>?
+      </p>
+      <ul>
+        <li><code>P(A)=0.30</code>, <code>P(B|A)=0.40</code>, <code>P(B|¬A)=0.10</code>, <code>P(¬A)=0.70</code>.</li>
+        <li><code>P(B)=P(B|A)P(A)+P(B|¬A)P(¬A)=0.4·0.3 + 0.1·0.7 = 0.12 + 0.07 = 0.19</code>.</li>
+        <li><strong>Bayes:</strong> <code>P(A|B)=P(B|A)P(A)/P(B)=0.4·0.3/0.19 ≈ 0.6316</code> (≈63.16%).</li>
+      </ul>
+    </article>
+
+    <!-- Columna 2: calculadora + quiz -->
+    <aside class="card">
+      <h2>Calculadora 2×2: \(P(A|B)\), \(P(B|A)\) e independencia</h2>
+      <p class="sub">Ingresa frecuencias (enteros) en la tabla. La calculadora normaliza y muestra probabilidades.</p>
+
+      <table class="tabla" aria-label="Tabla de contingencia">
+        <thead>
+          <tr><th></th><th>B</th><th>¬B</th><th>Total</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>A</th>
+            <td><input type="number" id="a" min="0" value="20"></td>
+            <td><input type="number" id="c" min="0" value="10"></td>
+            <td><span id="rowA">30</span></td>
+          </tr>
+          <tr>
+            <th>¬A</th>
+            <td><input type="number" id="b" min="0" value="30"></td>
+            <td><input type="number" id="d" min="0" value="40"></td>
+            <td><span id="rowNoA">70</span></td>
+          </tr>
+          <tr>
+            <th>Total</th>
+            <td><span id="colB">50</span></td>
+            <td><span id="colNoB">50</span></td>
+            <td><span id="tot">100</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="display:flex; gap:10px; margin-top:10px">
+        <button class="btn" id="btnCalc" type="button">Calcular</button>
+        <button class="btn" id="btnReset" type="button">Limpiar</button>
+      </div>
+
+      <div class="infobox" id="salidas" style="margin-top:12px">
+        <div><strong>P(A|B):</strong> <span id="pA_given_B">—</span></div>
+        <div><strong>P(B|A):</strong> <span id="pB_given_A">—</span></div>
+        <div><strong>P(A):</strong> <span id="pA">—</span> &nbsp;•&nbsp; <strong>P(B):</strong> <span id="pB">—</span></div>
+        <div><strong>Independencia:</strong> <span id="indep">—</span></div>
+      </div>
+
+      <h3 style="margin-top:14px">Mini‑quiz</h3>
+      <div class="quiz">
+        <!-- Q1 -->
+        <div class="q">
+          <p><strong>1)</strong> Si <code>P(B)=0</code>, ¿está definida <code>P(A|B)</code>?</p>
+          <label class="opcion"><input type="radio" name="q1" value="si"> Sí, siempre</label>
+          <label class="opcion"><input type="radio" name="q1" value="no"> No, porque dividirías por 0</label>
+          <div class="resultado" id="r1"></div>
+        </div>
+        <!-- Q2 -->
+        <div class="q">
+          <p><strong>2)</strong> Si A y B son independientes, entonces <code>P(A∩B)=</code> ___.</p>
+          <input type="text" id="q2" placeholder="Escribe en función de P(A) y P(B)…">
+          <div class="resultado" id="r2"></div>
+        </div>
+        <!-- Q3 -->
+        <div class="q">
+          <p><strong>3)</strong> Con a=25, b=25, c=25, d=25, ¿cuánto vale <code>P(A|B)</code>?</p>
+          <label class="opcion"><input type="radio" name="q3" value="0.25">0.25</label>
+          <label class="opcion"><input type="radio" name="q3" value="0.5">0.5</label>
+          <label class="opcion"><input type="radio" name="q3" value="0.75">0.75</label>
+          <div class="resultado" id="r3"></div>
+        </div>
+      </div>
+
+      <p style="margin-top:14px">Volver a la <a class="btn" href="index.html" style="padding:6px 10px">página principal</a>.</p>
+    </aside>
+  </section>
+
+  <!-- Árbol interactivo -->
+  <section class="card" style="width:min(1200px,100%); margin-top:22px">
+    <h2>Árbol interactivo de probabilidades</h2>
+    <p class="sub">Define \(P(A)\), \(P(B|A)\) y \(P(B|\neg A)\). Se calcula \(P(B)\) y \(P(A|B)\) y se dibuja el árbol.</p>
+
+    <div class="grid-2">
+      <div>
+        <div class="quiz">
+          <div class="q">
+            <label> \(P(A)\) &nbsp;<input type="number" id="PA" step="0.01" min="0" max="1" value="0.30"></label>
+          </div>
+          <div class="q">
+            <label> \(P(B|A)\) &nbsp;<input type="number" id="PBgA" step="0.01" min="0" max="1" value="0.40"></label>
+          </div>
+          <div class="q">
+            <label> \(P(B|\u00AC A)\) &nbsp;<input type="number" id="PBgnA" step="0.01" min="0" max="1" value="0.10"></label>
+          </div>
+          <div style="display:flex; gap:10px; margin-top:8px">
+            <button class="btn" id="btnTree" type="button">Dibujar árbol</button>
+            <button class="btn" id="btnTreeReset" type="button">Valores por defecto</button>
+          </div>
+          <div class="infobox" style="margin-top:10px">
+            <div><strong>P(B)=</strong> <span id="PB_out">—</span></div>
+            <div><strong>P(A∩B)=</strong> <span id="PAintB_out">—</span></div>
+            <div><strong>P(A|B)=</strong> <span id="PAgB_out">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tree-wrap">
+        <svg id="treeSvg" viewBox="0 0 760 360" role="img" aria-label="Árbol de probabilidad">
+          <!-- Se dibuja por JS -->
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Errores comunes -->
+  <section class="card" style="width:min(1200px,100%); margin-top:22px">
+    <h2>Errores comunes</h2>
+    <ul>
+      <li><strong>Confundir</strong> <code>P(A|B)</code> con <code>P(B|A)</code> (falacia del fiscal).</li>
+      <li>Olvidar dividir por <code>P(B)</code> al usar Bayes.</li>
+      <li>Usar <code>P(A∩B) = P(A)P(B)</code> sin verificar independencia.</li>
+      <li>No restringir el “universo” al calcular condicionales en una tabla.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // ---------- Utilidades ----------
+    const fmt = x => isFinite(x) ? (Math.round(x*10000)/10000).toString() : '—';
+
+    // ---------- Calculadora 2x2 ----------
+    const aEl = document.getElementById('a');
+    const bEl = document.getElementById('b');
+    const cEl = document.getElementById('c');
+    const dEl = document.getElementById('d');
+
+    const rowA = document.getElementById('rowA');
+    const rowNoA = document.getElementById('rowNoA');
+    const colB = document.getElementById('colB');
+    const colNoB = document.getElementById('colNoB');
+    const tot = document.getElementById('tot');
+
+    const pA_given_B = document.getElementById('pA_given_B');
+    const pB_given_A = document.getElementById('pB_given_A');
+    const pA = document.getElementById('pA');
+    const pB = document.getElementById('pB');
+    const indep = document.getElementById('indep');
+
+    function updateTotals(){
+      const a = +aEl.value||0, b = +bEl.value||0, c = +cEl.value||0, d = +dEl.value||0;
+      const rA = a + c, rNoA = b + d, cB = a + b, cNoB = c + d, T = rA + rNoA;
+      rowA.textContent = rA; rowNoA.textContent = rNoA;
+      colB.textContent = cB; colNoB.textContent = cNoB; tot.textContent = T;
+    }
+
+    function calcular(){
+      const a = +aEl.value||0, b = +bEl.value||0, c = +cEl.value||0, d = +dEl.value||0;
+      const T = a+b+c+d;
+      updateTotals();
+      if (T === 0){ 
+        pA_given_B.textContent = '—';
+        pB_given_A.textContent = '—';
+        pA.textContent = '—';
+        pB.textContent = '—';
+        indep.textContent = '—';
+        return;
+      }
+      const pA_val = (a+c)/T;
+      const pB_val = (a+b)/T;
+      const pAandB = a/T;
+
+      const pAgB_val = (a+b) > 0 ? a/(a+b) : NaN;
+      const pBgA_val = (a+c) > 0 ? a/(a+c) : NaN;
+
+      pA_given_B.textContent = fmt(pAgB_val);
+      pB_given_A.textContent = fmt(pBgA_val);
+      pA.textContent = fmt(pA_val);
+      pB.textContent = fmt(pB_val);
+
+      // Chequeo de independencia con tolerancia
+      const prod = pA_val * pB_val;
+      const diff = Math.abs(pAandB - prod);
+      indep.textContent = diff < 1e-9 ? 'Sí (P(A∩B)≈P(A)P(B))' : 'No (dependientes)';
+    }
+
+    function limpiar(){
+      aEl.value = 0; bEl.value = 0; cEl.value = 0; dEl.value = 0;
+      updateTotals(); calcular();
+      // limpiar quiz
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked=false);
+      document.querySelectorAll('.resultado').forEach(x => { x.textContent=''; x.className='resultado'; });
+      document.getElementById('q2').value = '';
+    }
+
+    document.getElementById('btnCalc').addEventListener('click', calcular);
+    document.getElementById('btnReset').addEventListener('click', limpiar);
+    ['input','change'].forEach(evt=>{
+      [aEl,bEl,cEl,dEl].forEach(el=>el.addEventListener(evt, updateTotals));
+    });
+    updateTotals(); calcular();
+
+    // ---------- Mini-quiz (verificación sencilla) ----------
+    function verificarQuiz(){
+      // Q1
+      const r1 = document.getElementById('r1');
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      if (!q1){ r1.textContent = 'Selecciona una opción.'; r1.className='resultado'; }
+      else if (q1.value === 'no'){ r1.textContent = '✅ Correcto: P(A|B) no está definida si P(B)=0.'; r1.className='resultado ok'; }
+      else { r1.textContent = '❌ No: dividirías por 0.'; r1.className='resultado mal'; }
+
+      // Q2
+      const r2 = document.getElementById('r2');
+      const v2 = (document.getElementById('q2').value || '').trim().toLowerCase().replace(/\s+/g,'');
+      if (!v2){ r2.textContent = 'Escribe la expresión.'; r2.className='resultado'; }
+      else if (v2 === 'p(a)p(b)' || v2 === 'p(a)*p(b)' || v2 === 'p(a)·p(b)' ){
+        r2.textContent = '✅ Correcto: P(A∩B) = P(A)P(B).'; r2.className='resultado ok';
+      } else {
+        r2.textContent = '❌ Revisa: independencia → producto de probabilidades.'; r2.className='resultado mal';
+      }
+
+      // Q3
+      const r3 = document.getElementById('r3');
+      const q3 = document.querySelector('input[name="q3"]:checked');
+      if (!q3){ r3.textContent = 'Selecciona una opción.'; r3.className='resultado'; }
+      else if (q3.value === '0.5'){ r3.textContent = '✅ Correcto: P(A|B)=a/(a+b)=25/50=0.5.'; r3.className='resultado ok'; }
+      else { r3.textContent = '❌ Revisa a/(a+b) con a=b=25.'; r3.className='resultado mal'; }
+    }
+    document.getElementById('btnCalc').addEventListener('click', verificarQuiz);
+
+    // ---------- Árbol interactivo (SVG) ----------
+    const PA_in = document.getElementById('PA');
+    const PBgA_in = document.getElementById('PBgA');
+    const PBgnA_in = document.getElementById('PBgnA');
+
+    const PB_out = document.getElementById('PB_out');
+    const PAintB_out = document.getElementById('PAintB_out');
+    const PAgB_out = document.getElementById('PAgB_out');
+
+    const svg = document.getElementById('treeSvg');
+
+    function clamp01(x){ return Math.max(0, Math.min(1, x)); }
+
+    function drawTree(){
+      let PA = parseFloat(PA_in.value);
+      let PBgA = parseFloat(PBgA_in.value);
+      let PBgnA = parseFloat(PBgnA_in.value);
+
+      if (![PA,PBgA,PBgnA].every(x => isFinite(x))){
+        alert('Verifica que los valores sean números entre 0 y 1.');
+        return;
+      }
+      PA = clamp01(PA); PBgA = clamp01(PBgA); PBgnA = clamp01(PBgnA);
+
+      const PnA = 1 - PA;
+      const PB = PBgA*PA + PBgnA*PnA;
+      const PAandB = PBgA*PA;
+      const PAgB = PB > 0 ? (PAandB / PB) : NaN;
+
+      PB_out.textContent = fmt(PB);
+      PAintB_out.textContent = fmt(PAandB);
+      PAgB_out.textContent = fmt(PAgB);
+
+      // limpiar svg
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+      // coordenadas
+      const root = {x:60, y:180};
+      const A = {x:260, y:100}, nA = {x:260, y:260};
+      const AB = {x:520, y:60}, AnB = {x:520, y:140};
+      const nAB = {x:520, y:220}, nAnB = {x:520, y:300};
+
+      // función helpers
+      const addLine = (p1,p2,label) => {
+        const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+        l.setAttribute('x1',p1.x); l.setAttribute('y1',p1.y);
+        l.setAttribute('x2',p2.x); l.setAttribute('y2',p2.y);
+        l.setAttribute('class','edge'); svg.appendChild(l);
+        if (label){
+          const tx = document.createElementNS('http://www.w3.org/2000/svg','text');
+          tx.setAttribute('x',(p1.x+p2.x)/2); tx.setAttribute('y',(p1.y+p2.y)/2 - 6);
+          tx.setAttribute('class','label');
+          tx.textContent = label;
+          svg.appendChild(tx);
+        }
+      };
+      const addNode = (p,text) => {
+        const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        c.setAttribute('cx',p.x); c.setAttribute('cy',p.y); c.setAttribute('r',10);
+        c.setAttribute('class','node'); svg.appendChild(c);
+        const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+        t.setAttribute('x',p.x + 14); t.setAttribute('y',p.y + 4);
+        t.textContent = text; svg.appendChild(t);
+      };
+      const addProb = (p, text, highlight=false) => {
+        const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+        t.setAttribute('x',p.x + 14); t.setAttribute('y',p.y + 20);
+        t.setAttribute('class', highlight ? 'highlight' : 'label');
+        t.textContent = text; svg.appendChild(t);
+      };
+
+      // dibujar
+      addNode(root,'Inicio');
+
+      // Ramas A / ¬A
+      addLine(root, A, `P(A) = ${fmt(PA)}`);
+      addLine(root, nA, `P(¬A) = ${fmt(PnA)}`);
+
+      addNode(A,'A');
+      addNode(nA,'¬A');
+
+      // Desde A: B / ¬B
+      addLine(A, AB, `P(B|A) = ${fmt(PBgA)}`);
+      addLine(A, AnB, `P(¬B|A) = ${fmt(1-PBgA)}`);
+
+      addNode(AB,'A∩B'); addProb(AB, `P = ${fmt(PA*PBgA)}`, true);
+      addNode(AnB,'A∩¬B'); addProb(AnB, `P = ${fmt(PA*(1-PBgA))}`);
+
+      // Desde ¬A: B / ¬B
+      addLine(nA, nAB, `P(B|¬A) = ${fmt(PBgnA)}`);
+      addLine(nA, nAnB, `P(¬B|¬A) = ${fmt(1-PBgnA)}`);
+
+      addNode(nAB,'¬A∩B'); addProb(nAB, `P = ${fmt(PnA*PBgnA)}`, true);
+      addNode(nAnB,'¬A∩¬B'); addProb(nAnB, `P = ${fmt(PnA*(1-PBgnA))}`);
+
+      // Resumen a la derecha
+      const summaryX = 620, summaryY = 40;
+      const legend = [
+        `P(B) = ${fmt(PB)} = P(B|A)P(A) + P(B|¬A)P(¬A)`,
+        `P(A∩B) = ${fmt(PAandB)}`,
+        `P(A|B) = ${fmt(PAgB)}`
+      ];
+      legend.forEach((txt,i)=>{
+        const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+        t.setAttribute('x', summaryX); t.setAttribute('y', summaryY + i*18);
+        t.setAttribute('class','label'); t.textContent = txt; svg.appendChild(t);
+      });
+    }
+
+    document.getElementById('btnTree').addEventListener('click', drawTree);
+    document.getElementById('btnTreeReset').addEventListener('click', () => {
+      PA_in.value = 0.30; PBgA_in.value = 0.40; PBgnA_in.value = 0.10; drawTree();
+    });
+
+    // primer render
+    drawTree();
+  </script>
+</body>
+</html>

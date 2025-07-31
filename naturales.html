@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ciencias Naturales — ADN y ARN</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root{
+      --blanco:#ffffff;
+      --gris-claro:#e8ecf7;
+      --gris:#bfc7da;
+      --negro:#0d0f12;
+      --azul:#0057ff;
+      --acento:#3aa0ff;
+      --vidrio: rgba(255,255,255,.06);
+      --borde: rgba(255,255,255,.10);
+      --texto-suave:#cfd7ff;
+      --ok:#76e39a;
+      --err:#ff8b8b;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif }
+
+    body{
+      min-height:100vh; color:var(--blanco);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      display:flex; flex-direction:column; align-items:center;
+      padding:28px 18px 60px;
+    }
+
+    /* Barra superior */
+    .topbar{
+      width:min(1200px, 100%);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px; border-radius:18px;
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      box-shadow:0 8px 28px rgba(0,0,0,.35);
+      margin-bottom:22px;
+    }
+    .logo{ display:flex; gap:12px; align-items:center; }
+    .logo-badge{
+      width:38px; height:38px; border-radius:12px;
+      background:linear-gradient(135deg, var(--azul), var(--acento));
+      display:grid; place-items:center; font-weight:800;
+      box-shadow:0 6px 20px rgba(0,87,255,.45);
+    }
+    .logo-text{ font-weight:700; letter-spacing:.3px; color:#e9f0ff }
+
+    .nav{ display:flex; gap:8px; flex-wrap:wrap; }
+    .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;
+      background:rgba(255,255,255,.08); color:#eaeaea; border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(6px);
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform:translateY(-2px) }
+
+    /* Hero */
+    header.hero{
+      width:min(1200px, 100%);
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      border-radius:22px;
+      padding:28px 24px;
+      box-shadow:0 12px 36px rgba(0,0,0,.38);
+      position:relative;
+      overflow:hidden;
+      margin-bottom:28px;
+    }
+    .edicion-badge{
+      position:absolute; top:16px; right:16px;
+      font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; color:#d1ddff;
+      background:rgba(0,87,255,.18); border:1px solid rgba(0,87,255,.35);
+      padding:8px 12px; border-radius:999px;
+    }
+    header.hero h1{
+      font-size: clamp(1.9rem, 4.8vw, 2.8rem);
+      color:#bcd4ff; text-shadow:0 8px 28px rgba(0,0,0,.6);
+    }
+    .sub{
+      margin-top:8px; color:var(--texto-suave);
+    }
+
+    /* Layout principal */
+    .contenedor{
+      width:min(1200px, 100%);
+      display:grid; gap:22px;
+      grid-template-columns: 1.15fr .85fr;
+    }
+    @media (max-width: 980px){
+      .contenedor{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      border-radius:20px;
+      padding:22px;
+      backdrop-filter: blur(8px);
+      box-shadow:0 6px 18px rgba(0,0,0,.30);
+    }
+    .card h2, .card h3{ color:#cfe3ff; margin-bottom:10px }
+    .card p, .card li{ color:var(--gris-claro) }
+    .card ul{ padding-left:18px; line-height:1.6 }
+
+    .grid-2{ display:grid; gap:18px; grid-template-columns:1fr 1fr }
+    @media (max-width: 800px){ .grid-2{ grid-template-columns:1fr } }
+
+    .tabla{
+      width:100%; border-collapse:collapse; margin-top:8px
+    }
+    .tabla th, .tabla td{
+      border:1px solid rgba(255,255,255,.10);
+      padding:8px; text-align:left; vertical-align:top
+    }
+    .tabla th{ background:rgba(0,87,255,.15); color:#e9f1ff }
+
+    .infobox{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-left:4px solid var(--acento);
+      border-radius:12px; padding:14px; color:#e9f1ff; margin-top:10px
+    }
+
+    .timeline{ position:relative; padding-left:20px; margin-top:6px }
+    .timeline::before{
+      content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:rgba(160,180,220,.35)
+    }
+    .t-item{ position:relative; margin:10px 0 14px 0 }
+    .t-item::before{
+      content:''; position:absolute; left:-1px; top:4px; width:10px; height:10px; border-radius:50%;
+      background:linear-gradient(135deg, var(--azul), var(--acento));
+      box-shadow:0 0 0 4px rgba(58,160,255,.2)
+    }
+    .t-year{ font-weight:800; color:#e9f1ff }
+    .t-desc{ color:#d7e1ff }
+
+    /* Quiz */
+    .quiz .q{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:12px; padding:12px; margin-top:10px
+    }
+    .quiz input[type="text"]{
+      width:100%; max-width:520px; padding:10px; border-radius:8px; border:none;
+      background:rgba(255,255,255,.1); color:#fff
+    }
+    .quiz .opcion{ display:block; margin:6px 0; color:#e9f1ff }
+    .resultado{ font-weight:700; margin-top:6px }
+    .ok{ color:var(--ok) } .mal{ color:var(--err) }
+
+    footer{
+      width:min(1200px, 100%);
+      text-align:center; color:#bfbfbf; margin-top:32px;
+    }
+
+    /* Foco accesible */
+    .btn:focus, a:focus, input:focus, textarea:focus{ outline:2px solid #9fc0ff; outline-offset:2px; }
+
+    /* Tooltips/leyendas para las bases */
+    abbr[title]{
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(255,255,255,.35);
+      cursor: help;
+    }
+    .badge-base{
+      display:inline-block; margin:2px 6px 2px 0; padding:4px 8px;
+      border-radius:10px; background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra superior -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-badge">MS</div>
+      <div class="logo-text">Los Mil Saberes</div>
+    </div>
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="btn" href="portada.html">Inicio</a>
+      <a class="btn" href="index.html">Categorías</a>
+    </nav>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <span class="edicion-badge">Ciencias Naturales</span>
+    <h1>ADN y ARN</h1>
+    <p class="sub">La molécula de la vida y su mensajero: estructura, funciones y del gen al rasgo.</p>
+  </header>
+
+  <!-- Contenido -->
+  <section class="contenedor">
+    <!-- Columna 1: teoría + comparativo -->
+    <article class="card">
+      <h2>1) Estructura y función</h2>
+
+      <!-- Leyenda de bases -->
+      <div class="infobox" style="margin-bottom:10px">
+        <strong>Leyenda de bases nitrogenadas (nucleótidos)</strong><br>
+        <span class="badge-base"><abbr title="Adenina">A</abbr> — Adenina (purina)</span>
+        <span class="badge-base"><abbr title="Timina">T</abbr> — Timina (pirimidina) — solo en ADN</span>
+        <span class="badge-base"><abbr title="Citosina">C</abbr> — Citosina (pirimidina)</span>
+        <span class="badge-base"><abbr title="Guanina">G</abbr> — Guanina (purina)</span>
+        <span class="badge-base"><abbr title="Uracilo">U</abbr> — Uracilo (pirimidina) — solo en ARN</span>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>ADN (ácido desoxirribonucleico)</h3>
+          <ul>
+            <li>Doble hélice; dos cadenas antiparalelas.</li>
+            <li>Azúcar: <em>desoxirribosa</em>.</li>
+            <li>Bases: <abbr title="Adenina">A</abbr>, <abbr title="Timina">T</abbr>, <abbr title="Citosina">C</abbr>, <abbr title="Guanina">G</abbr> (A↔T; C↔G).</li>
+            <li>Función: almacenar información genética y hereditaria.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>ARN (ácido ribonucleico)</h3>
+          <ul>
+            <li>Generalmente monocatenario.</li>
+            <li>Azúcar: <em>ribosa</em>.</li>
+            <li>Bases: <abbr title="Adenina">A</abbr>, <abbr title="Uracilo">U</abbr>, <abbr title="Citosina">C</abbr>, <abbr title="Guanina">G</abbr> (A↔U; C↔G).</li>
+            <li>Función: expresión genética (transcripción y traducción), regulación.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 style="margin-top:16px">2) Diferencias clave (tabla)</h2>
+      <table class="tabla" aria-label="Comparativo ADN vs ARN">
+        <thead><tr><th>Característica</th><th>ADN</th><th>ARN</th></tr></thead>
+        <tbody>
+          <tr><td>Azúcar</td><td>Desoxirribosa</td><td>Ribosa</td></tr>
+          <tr><td>Bases</td><td>A, T, C, G</td><td>A, U, C, G</td></tr>
+          <tr>
+            <td>Nombres de bases</td>
+            <td>Adenina, Timina, Citosina, Guanina</td>
+            <td>Adenina, Uracilo, Citosina, Guanina</td>
+          </tr>
+          <tr><td>Forma</td><td>Doble hélice estable</td><td>Cadena simple flexible</td></tr>
+          <tr><td>Ubicación (eucariotas)</td><td>Núcleo (y mitocondrias)</td><td>Núcleo y citoplasma (ribosomas)</td></tr>
+          <tr><td>Función</td><td>Almacén de información</td><td>Mensajería, traducción, regulación, catálisis (ribozimas)</td></tr>
+        </tbody>
+      </table>
+
+      <h2 style="margin-top:16px">3) Tipos de ARN</h2>
+      <ul>
+        <li><strong>ARNm</strong> (mensajero): copia la info de un gen para sintetizar proteínas.</li>
+        <li><strong>ARNt</strong> (transferente): lleva aminoácidos al ribosoma.</li>
+        <li><strong>ARNr</strong> (ribosomal): componente estructural y catalítico del ribosoma.</li>
+        <li><strong>microARN</strong> y <strong>siARN</strong>: regulan la expresión génica (silenciamiento).</li>
+        <li><strong>snRNA/snoRNA</strong>: procesamiento de ARNm y ARN ribosomal.</li>
+      </ul>
+
+      <h2 style="margin-top:16px">4) Dogma central</h2>
+      <div class="infobox">
+        <strong>ADN</strong> —(replicación)→ <strong>ADN</strong> —(transcripción)→ <strong>ARNm</strong> —(traducción)→ <strong>Proteína</strong> → rasgo.<br>
+        *En retrovirus:* <strong>ARN</strong> —(transcriptasa reversa)→ <strong>ADN</strong>.
+      </div>
+
+      <h2 style="margin-top:16px">5) Mutaciones (muy breve)</h2>
+      <ul>
+        <li><strong>Puntuales</strong>: sustituciones (silenciosa, missense, nonsense).</li>
+        <li><strong>Indeles</strong>: inserciones/deleciones (frameshift o desplazamiento del marco).</li>
+        <li><strong>Efectos</strong>: neutros, perjudiciales o beneficiosos; base de la variabilidad genética.</li>
+      </ul>
+    </article>
+
+    <!-- Columna 2: línea de tiempo + aplicaciones + herramienta -->
+    <aside class="card">
+      <h2>6) Descubrimientos clave</h2>
+      <div class="timeline" aria-label="Hitos del ADN/ARN">
+        <div class="t-item"><span class="t-year">1944</span> — <span class="t-desc">Avery: el ADN es el material hereditario.</span></div>
+        <div class="t-item"><span class="t-year">1953</span> — <span class="t-desc">Watson & Crick: modelo de doble hélice.</span></div>
+        <div class="t-item"><span class="t-year">1961</span> — <span class="t-desc">Nirenberg: descifrado del código genético.</span></div>
+        <div class="t-item"><span class="t-year">1983</span> — <span class="t-desc">PCR (Mullis): amplificación de ADN.</span></div>
+        <div class="t-item"><span class="t-year">2012</span> — <span class="t-desc">CRISPR‑Cas9: edición genética de precisión.</span></div>
+      </div>
+
+      <h3 style="margin-top:14px">7) Aplicaciones</h3>
+      <ul>
+        <li><strong>PCR</strong> y <strong>secuenciación</strong> (diagnóstico, investigación, medicina forense).</li>
+        <li><strong>Biotecnología</strong>: proteínas recombinantes, cultivos transgénicos.</li>
+        <li><strong>Edición génica</strong>: CRISPR para corregir mutaciones o investigar funciones.</li>
+      </ul>
+
+      <h3 style="margin-top:14px">8) Taller interactivo: transcribe y traduce</h3>
+      <p class="sub">Escribe una secuencia de <strong>ADN cadena codificante</strong> (solo A, T, C, G). Obtén el <strong>ARNm</strong> y la <strong>traducción</strong> (primeros codones desde el AUG más cercano).</p>
+      <div class="quiz">
+        <div class="q">
+          <input type="text" id="dnaInput" placeholder="Ej.: ATG GAA TTT TGA" />
+          <div style="display:flex; gap:10px; margin-top:8px">
+            <button class="btn" id="btnTrans" type="button">Transcribir & traducir</button>
+            <button class="btn" id="btnClear" type="button">Limpiar</button>
+          </div>
+          <div class="resultado" id="resARN"></div>
+          <div class="resultado" id="resAA"></div>
+          <p class="sub" style="margin-top:6px">Nota: T→U; usa el marco desde <code>AUG</code>. Se detiene en un codón <code>STOP</code>.</p>
+        </div>
+      </div>
+
+      <p style="margin-top:14px">Volver a la <a class="btn" href="index.html" style="padding:6px 10px">página principal</a>.</p>
+    </aside>
+  </section>
+
+  <!-- Mini‑quiz reducido (3 preguntas) -->
+  <section class="card" style="width:min(1200px,100%); margin-top:22px">
+    <h2>9) Mini‑quiz</h2>
+    <div class="quiz" id="quiz">
+      <!-- Q1 -->
+      <div class="q">
+        <p><strong>1)</strong> En el ARN, la base complementaria de <code>A</code> es…</p>
+        <label class="opcion"><input type="radio" name="q1" value="t"> T</label>
+        <label class="opcion"><input type="radio" name="q1" value="u"> U</label>
+        <label class="opcion"><input type="radio" name="q1" value="c"> C</label>
+        <div class="resultado" id="r1"></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="q">
+        <p><strong>2)</strong> ¿Cuál <em>no</em> es un tipo principal de ARN para la síntesis de proteínas?</p>
+        <label class="opcion"><input type="radio" name="q2" value="mrna"> ARNm</label>
+        <label class="opcion"><input type="radio" name="q2" value="trna"> ARNt</label>
+        <label class="opcion"><input type="radio" name="q2" value="rrna"> ARNr</label>
+        <label class="opcion"><input type="radio" name="q2" value="dna"> ADN</label>
+        <div class="resultado" id="r2"></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="q">
+        <p><strong>3)</strong> Orden correcto del flujo de información genética en células:</p>
+        <label class="opcion"><input type="radio" name="q3" value="a"> ADN → traducción → ARN → proteína</label>
+        <label class="opcion"><input type="radio" name="q3" value="b"> ADN → transcripción → ARNm → traducción → proteína</label>
+        <label class="opcion"><input type="radio" name="q3" value="c"> ARNm → ADN → proteína</label>
+        <div class="resultado" id="r3"></div>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:8px">
+        <button class="btn" id="btnCheck" type="button">Verificar</button>
+        <button class="btn" id="btnReset" type="button">Limpiar</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // ---------- UTILIDADES ----------
+    const norm = s => (s || '').trim().toUpperCase().replace(/[^ATCG]/g,'');
+    const chunk = (s, n) => s.match(new RegExp('.{1,'+n+'}','g')) || [];
+
+    // ---------- TRANSCRIPCIÓN Y TRADUCCIÓN ----------
+    const codonTable = {
+      UUU:'F', UUC:'F', UUA:'L', UUG:'L',
+      CUU:'L', CUC:'L', CUA:'L', CUG:'L',
+      AUU:'I', AUC:'I', AUA:'I', AUG:'M',
+      GUU:'V', GUC:'V', GUA:'V', GUG:'V',
+      UCU:'S', UCC:'S', UCA:'S', UCG:'S',
+      CCU:'P', CCC:'P', CCA:'P', CCG:'P',
+      ACU:'T', ACC:'T', ACA:'T', ACG:'T',
+      GCU:'A', GCC:'A', GCA:'A', GCG:'A',
+      UAU:'Y', UAC:'Y', UAA:'*', UAG:'*',
+      CAU:'H', CAC:'H', CAA:'Q', CAG:'Q',
+      AAU:'N', AAC:'N', AAA:'K', AAG:'K',
+      GAU:'D', GAC:'D', GAA:'E', GAG:'E',
+      UGU:'C', UGC:'C', UGA:'*', UGG:'W',
+      CGU:'R', CGC:'R', CGA:'R', CGG:'R',
+      AGU:'S', AGC:'S', AGA:'R', AGG:'R',
+      GGU:'G', GGC:'G', GGA:'G', GGG:'G'
+    };
+
+    function transcribir(dnaCoding){
+      // Cadena codificante DNA -> mRNA (T->U)
+      return dnaCoding.replace(/T/g,'U');
+    }
+
+    function traducir(mrna){
+      // Busca AUG y traduce hasta STOP o final
+      const start = mrna.indexOf('AUG');
+      if (start === -1) return [];
+      const codones = chunk(mrna.slice(start), 3).filter(c => c.length === 3);
+      const aas = [];
+      for (const c of codones){
+        const aa = codonTable[c] || '?';
+        if (aa === '*' ) break;
+        aas.push(aa);
+      }
+      return aas;
+    }
+
+    const btnTrans = document.getElementById('btnTrans');
+    const btnClear = document.getElementById('btnClear');
+    const resARN = document.getElementById('resARN');
+    const resAA  = document.getElementById('resAA');
+
+    btnTrans.addEventListener('click', () => {
+      const raw = document.getElementById('dnaInput').value;
+      const dna = norm(raw);
+      if (!dna){
+        resARN.textContent = 'Escribe una secuencia (solo A,T,C,G).';
+        resARN.className = 'resultado';
+        resAA.textContent = '';
+        return;
+      }
+      const mrna = transcribir(dna);
+      const aa = traducir(mrna);
+      // Mostrar formateado en grupos de 3
+      const mrnaTrip = chunk(mrna,3).join(' ');
+      resARN.textContent = `ARNm: ${mrnaTrip}`;
+      resARN.className = 'resultado';
+      if (aa.length){
+        resAA.textContent = `Traducción (1‑letra): ${aa.join('-')}`;
+        resAA.className = 'resultado ok';
+      } else {
+        resAA.textContent = 'No se encontró codón de inicio AUG para traducir.';
+        resAA.className = 'resultado mal';
+      }
+    });
+
+    btnClear.addEventListener('click', () => {
+      document.getElementById('dnaInput').value = '';
+      resARN.textContent = '';
+      resARN.className = 'resultado';
+      resAA.textContent = '';
+      resAA.className = 'resultado';
+    });
+
+    // ---------- MINI-QUIZ (3 preguntas) ----------
+    const btnCheck = document.getElementById('btnCheck');
+    const btnReset = document.getElementById('btnReset');
+
+    function verificar(){
+      // Q1
+      const r1 = document.getElementById('r1');
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      if (!q1){ r1.textContent = 'Selecciona una opción.'; r1.className='resultado'; }
+      else if (q1.value === 'u'){ r1.textContent = '✅ Correcto: A en ARN se aparea con U.'; r1.className='resultado ok'; }
+      else { r1.textContent = '❌ En ARN no hay T; la pareja de A es U.'; r1.className='resultado mal'; }
+
+      // Q2
+      const r2 = document.getElementById('r2');
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      if (!q2){ r2.textContent = 'Selecciona una opción.'; r2.className='resultado'; }
+      else if (q2.value === 'dna'){ r2.textContent = '✅ Correcto: ADN no es un tipo de ARN para la traducción.'; r2.className='resultado ok'; }
+      else { r2.textContent = '❌ ARNm/ARNt/ARNr sí participan en la síntesis de proteínas.'; r2.className='resultado mal'; }
+
+      // Q3
+      const r3 = document.getElementById('r3');
+      const q3 = document.querySelector('input[name="q3"]:checked');
+      if (!q3){ r3.textContent = 'Selecciona una opción.'; r3.className='resultado'; }
+      else if (q3.value === 'b'){ r3.textContent = '✅ Correcto: ADN → transcripción → ARNm → traducción → proteína.'; r3.className='resultado ok'; }
+      else { r3.textContent = '❌ Revisa el orden del dogma central.'; r3.className='resultado mal'; }
+    }
+
+    function limpiar(){
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked=false);
+      document.querySelectorAll('.resultado').forEach(x => { x.textContent=''; x.className='resultado'; });
+    }
+
+    btnCheck.addEventListener('click', verificar);
+    btnReset.addEventListener('click', limpiar);
+  </script>
+</body>
+</html>

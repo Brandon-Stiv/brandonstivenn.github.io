@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Filosofía — Falacias</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root{
+      --blanco:#ffffff;
+      --gris-claro:#e8ecf7;
+      --gris:#bfc7da;
+      --negro:#0d0f12;
+      --azul:#0057ff;
+      --acento:#3aa0ff;
+      --vidrio: rgba(255,255,255,.06);
+      --borde: rgba(255,255,255,.10);
+      --texto-suave:#cfd7ff;
+      --ok:#76e39a;
+      --err:#ff8b8b;
+      --warn:#ffd27a;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif }
+
+    body{
+      min-height:100vh; color:var(--blanco);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      display:flex; flex-direction:column; align-items:center;
+      padding:28px 18px 60px;
+    }
+
+    /* Barra superior */
+    .topbar{
+      width:min(1200px, 100%);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px; border-radius:18px;
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      box-shadow:0 8px 28px rgba(0,0,0,.35);
+      margin-bottom:22px;
+    }
+    .logo{ display:flex; gap:12px; align-items:center; }
+    .logo-badge{
+      width:38px; height:38px; border-radius:12px;
+      background:linear-gradient(135deg, var(--azul), var(--acento));
+      display:grid; place-items:center; font-weight:800;
+      box-shadow:0 6px 20px rgba(0,87,255,.45);
+    }
+    .logo-text{ font-weight:700; letter-spacing:.3px; color:#e9f0ff }
+
+    .nav{ display:flex; gap:8px; flex-wrap:wrap; }
+    .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;
+      background:rgba(255,255,255,.08); color:#eaeaea; border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(6px);
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform:translateY(-2px) }
+
+    /* Hero */
+    header.hero{
+      width:min(1200px, 100%);
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      border-radius:22px;
+      padding:28px 24px;
+      box-shadow:0 12px 36px rgba(0,0,0,.38);
+      position:relative;
+      overflow:hidden;
+      margin-bottom:28px;
+    }
+    .edicion-badge{
+      position:absolute; top:16px; right:16px;
+      font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; color:#d1ddff;
+      background:rgba(0,87,255,.18); border:1px solid rgba(0,87,255,.35);
+      padding:8px 12px; border-radius:999px;
+    }
+    header.hero h1{
+      font-size: clamp(1.9rem, 4.8vw, 2.8rem);
+      color:#bcd4ff; text-shadow:0 8px 28px rgba(0,0,0,.6);
+    }
+    .sub{ margin-top:8px; color:var(--texto-suave) }
+
+    /* Layout principal */
+    .contenedor{
+      width:min(1200px, 100%);
+      display:grid; gap:22px;
+      grid-template-columns: 1.15fr .85fr;
+    }
+    @media (max-width: 980px){
+      .contenedor{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      border-radius:20px;
+      padding:22px;
+      backdrop-filter: blur(8px);
+      box-shadow:0 6px 18px rgba(0,0,0,.30);
+    }
+    .card h2, .card h3{ color:#cfe3ff; margin-bottom:10px }
+    .card p, .card li{ color:var(--gris-claro) }
+    .card ul{ padding-left:18px; line-height:1.6 }
+    code{
+      background: rgba(0,87,255,.18);
+      padding: 2px 6px; border-radius: 6px; font-weight: 700; color:#bcd4ff;
+    }
+
+    .grid-2{ display:grid; gap:18px; grid-template-columns:1fr 1fr }
+    @media (max-width: 800px){ .grid-2{ grid-template-columns:1fr } }
+
+    .infobox{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-left:4px solid var(--acento);
+      border-radius:12px; padding:14px; color:#e9f1ff; margin-top:10px
+    }
+
+    .tabla{
+      width:100%; border-collapse:collapse; margin-top:8px
+    }
+    .tabla th, .tabla td{
+      border:1px solid rgba(255,255,255,.10);
+      padding:8px; text-align:left; vertical-align:top
+    }
+    .tabla th{ background:rgba(0,87,255,.15); color:#e9f1ff }
+
+    /* Quiz */
+    .quiz .q{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:12px; padding:12px; margin-top:10px
+    }
+    .quiz input[type="text"]{
+      width:100%; max-width:480px; padding:10px; border-radius:8px; border:none;
+      background:rgba(255,255,255,.1); color:#fff
+    }
+    .quiz .opcion{ display:block; margin:6px 0; color:#e9f1ff }
+    .resultado{ font-weight:700; margin-top:6px }
+    .ok{ color:var(--ok) } .mal{ color:var(--err) }
+
+    footer{
+      width:min(1200px, 100%);
+      text-align:center; color:#bfbfbf; margin-top:32px;
+    }
+
+    /* Foco accesible */
+    .btn:focus, a:focus, input:focus{ outline:2px solid #9fc0ff; outline-offset:2px; }
+  </style>
+</head>
+<body>
+  <!-- Barra superior -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-badge">MS</div>
+      <div class="logo-text">Los Mil Saberes</div>
+    </div>
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="btn" href="portada.html">Inicio</a>
+      <a class="btn" href="index.html">Categorías</a>
+    </nav>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <span class="edicion-badge">Filosofía</span>
+    <h1>Falacias</h1>
+    <p class="sub">Cómo reconocer errores de razonamiento para argumentar mejor.</p>
+  </header>
+
+  <!-- Contenido -->
+  <section class="contenedor">
+    <!-- Columna 1: teoría -->
+    <article class="card">
+      <h2>1) ¿Qué es una falacia y por qué importa?</h2>
+      <p>
+        Una <strong>falacia</strong> es un error de razonamiento que <em>parece</em> convincente pero no justifica su conclusión.
+        Detectarlas ayuda a pensar con claridad, evitar manipulaciones y construir argumentos sólidos.
+      </p>
+
+      <div class="grid-2" style="margin-top:10px">
+        <div class="infobox">
+          <h3>Tipos generales</h3>
+          <ul>
+            <li><strong>Formales</strong>: el error está en la <em>estructura lógica</em> (p. ej., afirmar el consecuente).</li>
+            <li><strong>Informales</strong>: el error está en el <em>contenido</em> o el <em>uso del lenguaje</em> (p. ej., atacar a la persona).</li>
+          </ul>
+        </div>
+        <div class="infobox">
+          <h3>Señales de alerta</h3>
+          <ul>
+            <li>Conclusión más fuerte que la evidencia ofrecida.</li>
+            <li>Cambio de tema o caricaturización de la postura contraria.</li>
+            <li>Apelar a emociones en lugar de razones.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 style="margin-top:16px">2) Formales vs. informales (resumen)</h2>
+      <table class="tabla" aria-label="Comparación de falacias">
+        <thead><tr><th>Tipo</th><th>Descripción</th><th>Ejemplo breve</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Formal</strong></td>
+            <td>Conclusión no se sigue de las premisas por error estructural.</td>
+            <td><em>Afirmar el consecuente</em>:<br>Si llueve, la calle se moja. La calle está mojada, luego llueve. ❌</td>
+          </tr>
+          <tr>
+            <td><strong>Informal</strong></td>
+            <td>Problema de relevancia, ambigüedad o insuficiencia.</td>
+            <td><em>Ad hominem</em>: "Tu argumento es falso porque tú eres irresponsable". ❌</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 style="margin-top:16px">3) Falacias informales frecuentes</h2>
+      <ul>
+        <li><strong>Ad hominem</strong>: atacar a la persona en vez del argumento.</li>
+        <li><strong>Hombre de paja</strong>: distorsionar la postura rival para refutarla fácil.</li>
+        <li><strong>Apelación a la autoridad</strong> (abuso): usar una “autoridad” no competente o fuera de contexto.</li>
+        <li><strong>Falso dilema</strong>: presentar solo dos opciones cuando hay más.</li>
+        <li><strong>Pendiente resbaladiza</strong>: afirmar que un paso llevará inevitablemente a extremos sin evidencia.</li>
+        <li><strong>Generalización apresurada</strong>: concluir a partir de pocos casos.</li>
+        <li><strong>Post hoc</strong> (falsa causa): confundir secuencia temporal con causalidad.</li>
+        <li><strong>Petición de principio</strong> (circularidad): la conclusión se presupone en las premisas.</li>
+        <li><strong>Apelación a la ignorancia</strong>: “no se ha probado falso, así que es verdadero”.</li>
+        <li><strong>Equivocación</strong>: usar la misma palabra con sentidos distintos.</li>
+        <li><strong>Apelación a la emoción</strong>: sustituir razones por miedo, lástima, etc.</li>
+      </ul>
+
+      <h2 style="margin-top:16px">4) ¿Cómo detectarlas y corregirlas?</h2>
+      <div class="grid-2">
+        <div>
+          <ul>
+            <li>Identifica <strong>conclusión</strong> y <strong>premisas</strong>.</li>
+            <li>Pregunta: “¿La conclusión <em>se sigue</em> realmente?”</li>
+            <li>Busca <strong>términos ambiguos</strong> o cambios de tema.</li>
+            <li>Verifica que la <strong>muestra</strong> sea suficiente.</li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li>Ofrece <strong>mejor evidencia</strong> (datos, fuentes competentes).</li>
+            <li>Reformula en <strong>forma válida</strong> (evita circularidad y falsas causas).</li>
+            <li>Usa definiciones claras y <strong>evita ambigüedad</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- Columna 2: ejemplos guiados + prácticas -->
+    <aside class="card">
+      <h2>Ejemplos guiados</h2>
+      <div class="infobox">
+        <strong>Hombre de paja:</strong><br>
+        A: “Debemos regular el uso de autos en el centro”.<br>
+        B: “Mi oponente quiere prohibir los autos para siempre”.<br>
+        <em>Corrección:</em> Repite fielmente la postura de A antes de criticarla.
+      </div>
+      <div class="infobox">
+        <strong>Falso dilema:</strong><br>
+        “O estás conmigo o contra mí”.<br>
+        <em>Corrección:</em> Expón terceras opciones o matices posibles.
+      </div>
+      <div class="infobox">
+        <strong>Post hoc:</strong><br>
+        “Me puse esta pulsera y gané el partido; la pulsera da suerte”.<br>
+        <em>Corrección:</em> Distingue correlación de causalidad; pide evidencia adicional.
+      </div>
+
+      <h3 style="margin-top:14px">Diagnóstico rápido</h3>
+      <p class="sub" style="margin:6px 0 8px 0">Lee el argumento y elige si es falaz; si lo es, selecciona la falacia.</p>
+      <div class="quiz">
+        <div class="q">
+          <p id="argTexto"><strong>Arg 1:</strong> “Si estudias, aprobarás. Aprobaste, así que estudiaste”.</p>
+          <label class="opcion"><input type="radio" name="arg" value="valido"> No es falacia (válido)</label>
+          <label class="opcion"><input type="radio" name="arg" value="afirmar"> Falacia formal: afirmar el consecuente</label>
+          <label class="opcion"><input type="radio" name="arg" value="adHominem"> Ad hominem</label>
+          <div class="resultado" id="argRes"></div>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Quiz principal -->
+  <section class="card" style="width:min(1200px,100%); margin-top:22px">
+    <h2>5) Mini‑quiz</h2>
+    <div class="quiz" id="quiz">
+      <!-- Q1 -->
+      <div class="q">
+        <p><strong>1)</strong> “No escuches su propuesta sobre educación: ni siquiera terminó la universidad”.</p>
+        <label class="opcion"><input type="radio" name="q1" value="a"> Hombre de paja</label>
+        <label class="opcion"><input type="radio" name="q1" value="b"> Ad hominem</label>
+        <label class="opcion"><input type="radio" name="q1" value="c"> Apelación a la autoridad</label>
+        <div class="resultado" id="r1"></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="q">
+        <p><strong>2)</strong> “Nadie ha demostrado que los ovnis <em>no</em> existan; por lo tanto, existen”.</p>
+        <label class="opcion"><input type="radio" name="q2" value="a"> Apelación a la ignorancia</label>
+        <label class="opcion"><input type="radio" name="q2" value="b"> Petición de principio</label>
+        <label class="opcion"><input type="radio" name="q2" value="c"> Falso dilema</label>
+        <div class="resultado" id="r2"></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="q">
+        <p><strong>3)</strong> “Después de instalar cámaras, bajaron los robos; así que <em>solo</em> las cámaras causaron la baja”.</p>
+        <label class="opcion"><input type="radio" name="q3" value="a"> Post hoc (falsa causa)</label>
+        <label class="opcion"><input type="radio" name="q3" value="b"> Equivocación</label>
+        <label class="opcion"><input type="radio" name="q3" value="c"> Pendiente resbaladiza</label>
+        <div class="resultado" id="r3"></div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="q">
+        <p><strong>4)</strong> “Si legalizamos X, pronto legalizaremos Y y Z, y la sociedad colapsará”.</p>
+        <label class="opcion"><input type="radio" name="q4" value="a"> Generalización apresurada</label>
+        <label class="opcion"><input type="radio" name="q4" value="b"> Pendiente resbaladiza</label>
+        <label class="opcion"><input type="radio" name="q4" value="c"> Hombre de paja</label>
+        <div class="resultado" id="r4"></div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="q">
+        <p><strong>5)</strong> Completa con el nombre de la falacia: “Los verdaderos patriotas apoyan esta ley; si no la apoyas, no eres patriota”.</p>
+        <input type="text" id="q5" placeholder="Escribe el nombre (p. ej., falso dilema)…">
+        <div class="resultado" id="r5"></div>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:8px">
+        <button class="btn" id="btnCheck" type="button">Verificar</button>
+        <button class="btn" id="btnReset" type="button">Limpiar</button>
+      </div>
+
+      <p style="margin-top:10px;color:var(--texto-suave)">Consejo: si dudas, pregúntate si la conclusión está justificada por las premisas sin introducir trucos retóricos.</p>
+    </div>
+
+    <p style="margin-top:14px">Volver a la <a class="btn" href="index.html" style="padding:6px 10px">página principal</a>.</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // Utilidades
+    const norm = s => (s || '').trim().toLowerCase().replace(/\s+/g,' ');
+
+    // Diagnóstico rápido
+    const argRes = document.getElementById('argRes');
+    document.querySelectorAll('input[name="arg"]').forEach(r => {
+      r.addEventListener('change', () => {
+        if (r.value === 'afirmar'){
+          argRes.textContent = '✅ Correcto: error formal “afirmar el consecuente”.';
+          argRes.className = 'resultado ok';
+        } else if (r.value === 'valido'){
+          argRes.textContent = '❌ No: la forma es inválida. “Si P entonces Q; Q; por lo tanto P” es falaz.';
+          argRes.className = 'resultado mal';
+        } else {
+          argRes.textContent = '❌ No es un ataque personal (ad hominem).';
+          argRes.className = 'resultado mal';
+        }
+      });
+    });
+
+    // Mini-quiz
+    const btnCheck = document.getElementById('btnCheck');
+    const btnReset = document.getElementById('btnReset');
+
+    function verificar(){
+      // Q1
+      const r1 = document.getElementById('r1');
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      if (!q1){ r1.textContent = 'Selecciona una opción.'; r1.className='resultado'; }
+      else if (q1.value === 'b'){ r1.textContent = '✅ Ad hominem: se ataca a la persona, no a la propuesta.'; r1.className='resultado ok'; }
+      else { r1.textContent = '❌ Revisa: aquí no se deforma la postura, se ataca a quien habla.'; r1.className='resultado mal'; }
+
+      // Q2
+      const r2 = document.getElementById('r2');
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      if (!q2){ r2.textContent = 'Selecciona una opción.'; r2.className='resultado'; }
+      else if (q2.value === 'a'){ r2.textContent = '✅ Apelación a la ignorancia.'; r2.className='resultado ok'; }
+      else { r2.textContent = '❌ Pista: “no se ha probado lo contrario”.'; r2.className='resultado mal'; }
+
+      // Q3
+      const r3 = document.getElementById('r3');
+      const q3 = document.querySelector('input[name="q3"]:checked');
+      if (!q3){ r3.textContent = 'Selecciona una opción.'; r3.className='resultado'; }
+      else if (q3.value === 'a'){ r3.textContent = '✅ Post hoc: confunde correlación con causa única.'; r3.className='resultado ok'; }
+      else { r3.textContent = '❌ Fíjate en la relación temporal/causal.'; r3.className='resultado mal'; }
+
+      // Q4
+      const r4 = document.getElementById('r4');
+      const q4 = document.querySelector('input[name="q4"]:checked');
+      if (!q4){ r4.textContent = 'Selecciona una opción.'; r4.className='resultado'; }
+      else if (q4.value === 'b'){ r4.textContent = '✅ Pendiente resbaladiza: cadena de extremos sin evidencia.'; r4.className='resultado ok'; }
+      else { r4.textContent = '❌ No es generalización ni caricatura del rival.'; r4.className='resultado mal'; }
+
+      // Q5 (texto libre)
+      const r5 = document.getElementById('r5');
+      const v5 = norm(document.getElementById('q5').value);
+      const aceptables = ['falso dilema','falsa dicotomia','falsa dicotomía','falsa disyuncion','falsa disyunción'];
+      if (v5.length === 0){ r5.textContent = 'Escribe el nombre de la falacia.'; r5.className='resultado'; }
+      else if (aceptables.includes(v5)){ r5.textContent = '✅ Correcto: falso dilema/dicotomía.'; r5.className='resultado ok'; }
+      else { r5.textContent = '❌ Revisa: se presentan solo dos opciones de “verdadero patriota / no patriota”.'; r5.className='resultado mal'; }
+    }
+
+    function limpiar(){
+      document.querySelectorAll('input[type="text"]').forEach(i => i.value='');
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked=false);
+      document.querySelectorAll('.resultado').forEach(x => { x.textContent=''; x.className='resultado'; });
+    }
+
+    btnCheck.addEventListener('click', verificar);
+    btnReset.addEventListener('click', limpiar);
+  </script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Religión — La Santísima Trinidad</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root{
+      --blanco:#ffffff;
+      --gris-claro:#e8ecf7;
+      --gris:#bfc7da;
+      --negro:#0d0f12;
+      --azul:#0057ff;
+      --acento:#3aa0ff;
+      --vidrio: rgba(255,255,255,.06);
+      --borde: rgba(255,255,255,.10);
+      --texto-suave:#cfd7ff;
+      --ok:#76e39a;
+      --err:#ff8b8b;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif }
+
+    body{
+      min-height:100vh; color:var(--blanco);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      display:flex; flex-direction:column; align-items:center;
+      padding:28px 18px 60px;
+    }
+
+    /* Topbar */
+    .topbar{
+      width:min(1200px, 100%);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px; border-radius:18px;
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      box-shadow:0 8px 28px rgba(0,0,0,.35);
+      margin-bottom:22px;
+    }
+    .logo{ display:flex; gap:12px; align-items:center; }
+    .logo-badge{
+      width:38px; height:38px; border-radius:12px;
+      background:linear-gradient(135deg, var(--azul), var(--acento));
+      display:grid; place-items:center; font-weight:800;
+      box-shadow:0 6px 20px rgba(0,87,255,.45);
+    }
+    .logo-text{ font-weight:700; letter-spacing:.3px; color:#e9f0ff }
+
+    .nav{ display:flex; gap:8px; flex-wrap:wrap; }
+    .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;
+      background:rgba(255,255,255,.08); color:#eaeaea; border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(6px);
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform:translateY(-2px) }
+
+    /* Hero */
+    header.hero{
+      width:min(1200px, 100%);
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      border-radius:22px;
+      padding:28px 24px;
+      box-shadow:0 12px 36px rgba(0,0,0,.38);
+      position:relative; overflow:hidden; margin-bottom:28px;
+    }
+    .edicion-badge{
+      position:absolute; top:16px; right:16px;
+      font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; color:#d1ddff;
+      background:rgba(0,87,255,.18); border:1px solid rgba(0,87,255,.35);
+      padding:8px 12px; border-radius:999px;
+    }
+    header.hero h1{
+      font-size: clamp(1.9rem, 4.8vw, 2.8rem);
+      color:#bcd4ff; text-shadow:0 8px 28px rgba(0,0,0,.6);
+    }
+    .sub{ margin-top:8px; color:var(--texto-suave); }
+
+    /* Layout */
+    .contenedor{
+      width:min(1200px, 100%);
+      display:grid; gap:22px;
+      grid-template-columns: 1.15fr .85fr;
+    }
+    @media (max-width: 980px){
+      .contenedor{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      border-radius:20px;
+      padding:22px;
+      backdrop-filter: blur(8px);
+      box-shadow:0 6px 18px rgba(0,0,0,.30);
+    }
+    .card h2, .card h3{ color:#cfe3ff; margin-bottom:10px }
+    .card p, .card li{ color:var(--gris-claro); line-height:1.55; }
+    .card ul{ padding-left:18px; }
+
+    .infobox{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-left:4px solid var(--acento);
+      border-radius:12px; padding:14px; color:#e9f1ff; margin-top:10px
+    }
+
+    .grid-2{ display:grid; gap:18px; grid-template-columns:1fr 1fr }
+    @media (max-width: 800px){ .grid-2{ grid-template-columns:1fr } }
+
+    .tabla{
+      width:100%; border-collapse:collapse; margin-top:8px
+    }
+    .tabla th, .tabla td{
+      border:1px solid rgba(255,255,255,.10);
+      padding:8px; text-align:left; vertical-align:top
+    }
+    .tabla th{ background:rgba(0,87,255,.15); color:#e9f1ff }
+
+    abbr[title]{ text-decoration:none; border-bottom:1px dotted rgba(255,255,255,.35); cursor:help }
+
+    /* SVG Trinity Shield */
+    .svg-wrap{
+      width:100%; overflow:auto; border-radius:14px; border:1px solid var(--borde);
+      background:rgba(255,255,255,.05); padding:10px;
+    }
+    svg text{ fill:#e9f1ff; font-size:12px }
+    svg .edge{ stroke:#9fb7ff; stroke-width:2 }
+    svg .edge-not{ stroke:#6b7dab; stroke-width:2; stroke-dasharray:4 4 }
+    svg .node{ fill:#0e1a3b; stroke:#5a7cff; stroke-width:1.2 }
+    svg .label{ fill:#cfe3ff; font-weight:600 }
+
+    .ok{ color:var(--ok) } .mal{ color:var(--err) }
+
+    footer{ width:min(1200px,100%); text-align:center; color:#bfbfbf; margin-top:32px; }
+  </style>
+</head>
+<body>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-badge">MS</div>
+      <div class="logo-text">Los Mil Saberes</div>
+    </div>
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="btn" href="portada.html">Inicio</a>
+      <a class="btn" href="index.html">Categorías</a>
+    </nav>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <span class="edicion-badge">Religión</span>
+    <h1>La Santísima Trinidad</h1>
+    <p class="sub">Un solo Dios en tres Personas: Padre, Hijo y Espíritu Santo — fe cristiana explicada con claridad.</p>
+  </header>
+
+  <!-- Contenido -->
+  <section class="contenedor">
+    <!-- Columna 1: doctrina y contexto -->
+    <article class="card">
+      <h2>1) ¿Qué enseña la doctrina de la Trinidad?</h2>
+      <p>
+        La <strong>Santísima Trinidad</strong> afirma que hay <strong>un solo Dios</strong> en <strong>tres Personas</strong> distintas:
+        <abbr title="Primera Persona de la Trinidad">Padre</abbr>, 
+        <abbr title="Segunda Persona: el Hijo, el Verbo">Hijo</abbr> (Jesucristo) y 
+        <abbr title="Tercera Persona">Espíritu Santo</abbr>. 
+        No son <em>tres dioses</em> (triteísmo), ni un solo Dios que cambia de “modo” (modalismo), 
+        sino <strong>una sola naturaleza divina</strong> compartida plenamente por tres Personas.
+      </p>
+
+      <div class="infobox">
+        <strong>Resumen esencial</strong>
+        <ul>
+          <li><em>Unidad:</em> Dios es <strong>uno</strong> en esencia.</li>
+          <li><em>Distinción:</em> Padre, Hijo y Espíritu Santo son <strong>Personas realmente distintas</strong>.</li>
+          <li><em>Igualdad:</em> Las tres Personas son <strong>co‑iguales y co‑eternas</strong>.</li>
+        </ul>
+      </div>
+
+      <h2 style="margin-top:16px">2) Bases bíblicas (algunos ejemplos)</h2>
+      <ul>
+        <li><strong>Bautismo de Jesús</strong> (Mt 3,13‑17): el Hijo es bautizado, el Espíritu desciende, la voz del Padre habla.</li>
+        <li><strong>Mandato misionero</strong> (Mt 28,19): “bautícenlos en el nombre del Padre, del Hijo y del Espíritu Santo”.</li>
+        <li><strong>Bendición apostólica</strong> (2 Co 13,13): comunión del Espíritu, gracia de Jesucristo, amor del Padre.</li>
+      </ul>
+
+      <h2 style="margin-top:16px">3) Desarrollo histórico</h2>
+      <p>
+        La Iglesia antigua precisó esta fe en los <strong>concilios ecuménicos</strong>:
+      </p>
+      <ul>
+        <li><strong>Nicea (325)</strong>: el Hijo es “consustancial” (<em>de la misma sustancia</em>) con el Padre.</li>
+        <li><strong>Constantinopla (381)</strong>: afirma la divinidad del Espíritu Santo y completa el Credo.</li>
+      </ul>
+
+      <h2 style="margin-top:16px">4) Analogías (útiles, pero limitadas)</h2>
+      <p>
+        A veces se usan <em>analogías</em> para ayudar a comprender, pero ninguna es perfecta:
+      </p>
+      <ul>
+        <li><strong>Agua</strong> (hielo, líquido, vapor): puede sugerir <em>modalismo</em> (un solo “modo” que cambia).</li>
+        <li><strong>Sol</strong> (astro, luz, calor): puede confundir la igualdad entre Personas.</li>
+      </ul>
+      <div class="infobox">
+        La Trinidad no es una fórmula matemática; es un <strong>misterio de fe</strong>. 
+        Las analogías sirven como <em>apoyos pedagógicos</em>, no como definiciones exactas.
+      </div>
+
+      <h2 style="margin-top:16px">5) Errores comunes (lo que <em>no</em> es la Trinidad)</h2>
+      <ul>
+        <li><strong>Triteísmo</strong>: tres dioses separados. <span class="mal">Incorrecto.</span></li>
+        <li><strong>Modalismo</strong>: un solo Dios que se manifiesta en “modos” (Padre, Hijo, Espíritu) sin distinción real. <span class="mal">Incorrecto.</span></li>
+        <li><strong>Subordinacionismo</strong>: Hijo o Espíritu “menores” que el Padre. <span class="mal">Incorrecto.</span></li>
+      </ul>
+    </article>
+
+    <!-- Columna 2: símbolos, diagrama, vida cristiana y quiz -->
+    <aside class="card">
+      <h2>Símbolos y vida cristiana</h2>
+      <ul>
+        <li><strong>Escudo de la Trinidad</strong> (<em>Scutum Fidei</em>): diagrama medieval que muestra unidad y distinción.</li>
+        <li><strong>Triángulo</strong> o <strong>triquetra</strong>: aluden a la triple relación en un solo Dios.</li>
+        <li><strong>Liturgia</strong>: Gloria, doxologías, señal de la cruz “en el nombre del Padre, del Hijo y del Espíritu Santo”.</li>
+      </ul>
+
+      <h3 style="margin-top:14px">Diagrama: “Escudo de la Trinidad”</h3>
+      <div class="svg-wrap">
+        <svg id="trinityShield" viewBox="0 0 600 420" role="img" aria-label="Escudo de la Trinidad" style="width:100%">
+          <!-- Nodos -->
+          <circle class="node" cx="300" cy="70" r="12"></circle>
+          <text x="320" y="75" class="label">PADRE</text>
+
+          <circle class="node" cx="140" cy="320" r="12"></circle>
+          <text x="60" y="325" class="label">ESPÍRITU SANTO</text>
+
+          <circle class="node" cx="460" cy="320" r="12"></circle>
+          <text x="490" y="325" class="label">HIJO</text>
+
+          <circle class="node" cx="300" cy="210" r="12"></circle>
+          <text x="320" y="215" class="label">DIOS</text>
+
+          <!-- Conexiones: ES (—) y NO ES (— —) -->
+          <!-- Padre ↔ Dios -->
+          <line x1="300" y1="82" x2="300" y2="198" class="edge"></line>
+          <text x="310" y="145" class="label">ES</text>
+
+          <!-- Hijo ↔ Dios -->
+          <line x1="448" y1="320" x2="312" y2="210" class="edge"></line>
+          <text x="386" y="260" class="label">ES</text>
+
+          <!-- Espíritu ↔ Dios -->
+          <line x1="152" y1="320" x2="288" y2="210" class="edge"></line>
+          <text x="206" y="260" class="label">ES</text>
+
+          <!-- Lados del triángulo: NO ES -->
+          <line x1="300" y1="70" x2="140" y2="320" class="edge-not"></line>
+          <text x="214" y="190" class="label">NO ES</text>
+
+          <line x1="300" y1="70" x2="460" y2="320" class="edge-not"></line>
+          <text x="384" y="190" class="label">NO ES</text>
+
+          <line x1="140" y1="320" x2="460" y2="320" class="edge-not"></line>
+          <text x="292" y="340" class="label">NO ES</text>
+        </svg>
+      </div>
+
+      <div class="infobox" style="margin-top:12px">
+        <strong>Cómo leer el diagrama</strong>
+        <ul>
+          <li>Padre <em>es</em> Dios; Hijo <em>es</em> Dios; Espíritu Santo <em>es</em> Dios.</li>
+          <li>Padre <em>no es</em> el Hijo ni el Espíritu; el Hijo <em>no es</em> el Padre ni el Espíritu; etc.</li>
+          <li>Muestra la <strong>unidad de esencia</strong> y la <strong>distinción de Personas</strong>.</li>
+        </ul>
+      </div>
+
+      <h3 style="margin-top:14px">Mini‑quiz</h3>
+      <div class="infobox">
+        <p><strong>1)</strong> ¿La Trinidad enseña <em>tres dioses</em> distintos? <em>(Sí/No)</em></p>
+        <input type="text" id="q1" placeholder="Escribe Sí o No">
+        <div id="r1"></div>
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,.15); margin:10px 0">
+        <p><strong>2)</strong> Completa: “El Hijo ____ Dios.”</p>
+        <input type="text" id="q2" placeholder="es / no es">
+        <div id="r2"></div>
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,.15); margin:10px 0">
+        <p><strong>3)</strong> Completa: “El Padre ____ el Hijo.”</p>
+        <input type="text" id="q3" placeholder="es / no es">
+        <div id="r3"></div>
+        <div style="display:flex; gap:10px; margin-top:10px">
+          <button class="btn" id="check">Verificar</button>
+          <button class="btn" id="reset">Limpiar</button>
+        </div>
+      </div>
+
+      <p style="margin-top:14px">Volver a la <a class="btn" href="index.html" style="padding:6px 10px">página principal</a>.</p>
+    </aside>
+  </section>
+
+  <!-- Sección extra: glosario y credos -->
+  
+
+  <footer>
+    <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // Mini‑quiz simple
+    const q1 = document.getElementById('q1');
+    const q2 = document.getElementById('q2');
+    const q3 = document.getElementById('q3');
+    const r1 = document.getElementById('r1');
+    const r2 = document.getElementById('r2');
+    const r3 = document.getElementById('r3');
+    document.getElementById('check').addEventListener('click', ()=>{
+      const v1 = (q1.value||'').trim().toLowerCase();
+      if(!v1){ r1.textContent='Escribe Sí o No.'; r1.className=''; }
+      else if(v1==='no'){ r1.textContent='✅ Correcto: la Trinidad enseña un solo Dios.'; r1.className='ok'; }
+      else { r1.textContent='❌ No: no son tres dioses, es un solo Dios en tres Personas.'; r1.className='mal'; }
+
+      const v2 = (q2.value||'').trim().toLowerCase();
+      if(!v2){ r2.textContent='Escribe “es” o “no es”.'; r2.className=''; }
+      else if(v2==='es'){ r2.textContent='✅ Correcto: el Hijo ES Dios.'; r2.className='ok'; }
+      else { r2.textContent='❌ Revisa: el Hijo ES Dios (unidad de esencia).'; r2.className='mal'; }
+
+      const v3 = (q3.value||'').trim().toLowerCase();
+      if(!v3){ r3.textContent='Escribe “es” o “no es”.'; r3.className=''; }
+      else if(v3==='no es' || v3==='noes'){ r3.textContent='✅ Correcto: el Padre NO ES el Hijo (distinción de Personas).'; r3.className='ok'; }
+      else { r3.textContent='❌ Revisa: el Padre NO ES el Hijo, aunque ambos son Dios.'; r3.className='mal'; }
+    });
+    document.getElementById('reset').addEventListener('click', ()=>{
+      [q1,q2,q3].forEach(i=>i.value='');
+      [r1,r2,r3].forEach(e=>{ e.textContent=''; e.className=''; });
+    });
+  </script>
+</body>
+</html>

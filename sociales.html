@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sociales — Historia de la Violencia en Colombia</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root{
+      --blanco:#ffffff;
+      --gris-claro:#e8ecf7;
+      --gris:#bfc7da;
+      --negro:#0d0f12;
+      --azul:#0057ff;
+      --acento:#3aa0ff;
+      --vidrio: rgba(255,255,255,.06);
+      --borde: rgba(255,255,255,.10);
+      --texto-suave:#cfd7ff;
+      --ok:#76e39a;
+      --err:#ff8b8b;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif }
+
+    body{
+      min-height:100vh; color:var(--blanco);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      display:flex; flex-direction:column; align-items:center;
+      padding:28px 18px 60px;
+    }
+
+    /* Barra superior */
+    .topbar{
+      width:min(1200px, 100%);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px; border-radius:18px;
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      box-shadow:0 8px 28px rgba(0,0,0,.35);
+      margin-bottom:22px;
+    }
+    .logo{ display:flex; gap:12px; align-items:center; }
+    .logo-badge{
+      width:38px; height:38px; border-radius:12px;
+      background:linear-gradient(135deg, var(--azul), var(--acento));
+      display:grid; place-items:center; font-weight:800;
+      box-shadow:0 6px 20px rgba(0,87,255,.45);
+    }
+    .logo-text{ font-weight:700; letter-spacing:.3px; color:#e9f0ff }
+
+    .nav{ display:flex; gap:8px; flex-wrap:wrap; }
+    .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;
+      background:rgba(255,255,255,.08); color:#eaeaea; border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(6px);
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform:translateY(-2px) }
+
+    /* Hero */
+    header.hero{
+      width:min(1200px, 100%);
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      border-radius:22px;
+      padding:28px 24px;
+      box-shadow:0 12px 36px rgba(0,0,0,.38);
+      position:relative;
+      overflow:hidden;
+      margin-bottom:28px;
+    }
+    .edicion-badge{
+      position:absolute; top:16px; right:16px;
+      font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; color:#d1ddff;
+      background:rgba(0,87,255,.18); border:1px solid rgba(0,87,255,.35);
+      padding:8px 12px; border-radius:999px;
+    }
+    header.hero h1{
+      font-size: clamp(1.9rem, 4.8vw, 2.8rem);
+      color:#bcd4ff; text-shadow:0 8px 28px rgba(0,0,0,.6);
+    }
+    .sub{
+      margin-top:8px; color:var(--texto-suave);
+    }
+
+    /* Layout principal */
+    .contenedor{
+      width:min(1200px, 100%);
+      display:grid; gap:22px;
+      grid-template-columns: 1.15fr .85fr;
+    }
+    @media (max-width: 980px){
+      .contenedor{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background:var(--vidrio);
+      border:1px solid var(--borde);
+      border-radius:20px;
+      padding:22px;
+      backdrop-filter: blur(8px);
+      box-shadow:0 6px 18px rgba(0,0,0,.30);
+    }
+    .card h2, .card h3{ color:#cfe3ff; margin-bottom:10px }
+    .card p, .card li{ color:var(--gris-claro) }
+    .card ul{ padding-left:18px; line-height:1.6 }
+
+    .timeline{ position:relative; padding-left:20px; margin-top:6px }
+    .timeline::before{
+      content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:rgba(160,180,220,.35)
+    }
+    .t-item{ position:relative; margin:10px 0 14px 0 }
+    .t-item::before{
+      content:''; position:absolute; left:-1px; top:4px; width:10px; height:10px; border-radius:50%;
+      background:linear-gradient(135deg, var(--azul), var(--acento));
+      box-shadow:0 0 0 4px rgba(58,160,255,.2)
+    }
+    .t-year{ font-weight:800; color:#e9f1ff }
+    .t-desc{ color:#d7e1ff }
+
+    /* Quiz */
+    .quiz .q{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:12px; padding:12px; margin-top:10px
+    }
+    .quiz .opcion{ display:block; margin:6px 0; color:#e9f1ff }
+    .resultado{ font-weight:700; margin-top:6px }
+    .ok{ color:var(--ok) } .mal{ color:var(--err) }
+
+    footer{
+      width:min(1200px, 100%);
+      text-align:center; color:#bfbfbf; margin-top:32px;
+    }
+
+    /* Foco accesible */
+    .btn:focus, a:focus{ outline:2px solid #9fc0ff; outline-offset:2px; }
+  </style>
+</head>
+<body>
+  <!-- Barra superior -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-badge">MS</div>
+      <div class="logo-text">Los Mil Saberes</div>
+    </div>
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="btn" href="portada.html">Inicio</a>
+      <a class="btn" href="index.html">Categorías</a>
+    </nav>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <span class="edicion-badge">Sociales</span>
+    <h1>Historia de la violencia en Colombia</h1>
+    <p class="sub">Un recorrido por las causas, actores y consecuencias del conflicto interno colombiano.</p>
+  </header>
+
+  <!-- Contenido -->
+  <section class="contenedor">
+    <!-- Columna 1 -->
+    <article class="card">
+      <h2>1) Contexto general</h2>
+      <p>
+        La historia de Colombia ha estado marcada por conflictos armados y violencia política que han dejado
+        millones de víctimas. Comprender sus causas es clave para evitar que se repitan.
+      </p>
+
+      <h2 style="margin-top:16px">2) Causas principales</h2>
+      <ul>
+        <li><strong>Desigualdad social y económica</strong>: concentración de tierras y pobreza rural.</li>
+        <li><strong>Exclusión política</strong>: bipartidismo cerrado durante gran parte del siglo XX.</li>
+        <li><strong>Conflictos ideológicos</strong>: luchas entre liberales y conservadores, luego insurgencia comunista y grupos paramilitares.</li>
+        <li><strong>Narcotráfico</strong>: financiación de actores armados y corrupción institucional.</li>
+      </ul>
+
+      <h2 style="margin-top:16px">3) Etapas de la violencia</h2>
+      <div class="timeline">
+        <div class="t-item"><span class="t-year">1948</span> — <span class="t-desc">Asesinato de Jorge Eliécer Gaitán y estallido del “Bogotazo”.</span></div>
+        <div class="t-item"><span class="t-year">1948–1958</span> — <span class="t-desc">La Violencia: guerra civil entre liberales y conservadores.</span></div>
+        <div class="t-item"><span class="t-year">1964</span> — <span class="t-desc">Surgimiento de guerrillas como las FARC y el ELN.</span></div>
+        <div class="t-item"><span class="t-year">1980s</span> — <span class="t-desc">Paramilitarismo, narcotráfico y masacres.</span></div>
+        <div class="t-item"><span class="t-year">1990s–2000s</span> — <span class="t-desc">Escalada del conflicto armado y desplazamientos masivos.</span></div>
+        <div class="t-item"><span class="t-year">2016</span> — <span class="t-desc">Acuerdo de paz con las FARC.</span></div>
+      </div>
+
+      <h2 style="margin-top:16px">4) Consecuencias</h2>
+      <ul>
+        <li>Más de 8 millones de víctimas entre desplazados, asesinados y desaparecidos.</li>
+        <li>Pérdida de confianza en las instituciones del Estado.</li>
+        <li>Profunda fractura social y cultural.</li>
+      </ul>
+    </article>
+
+    <!-- Columna 2 -->
+    <aside class="card">
+      <h2>5) Actores involucrados</h2>
+      <ul>
+        <li><strong>Guerrillas:</strong> FARC, ELN, M-19, entre otras.</li>
+        <li><strong>Paramilitares:</strong> Autodefensas Unidas de Colombia (AUC).</li>
+        <li><strong>Narcotraficantes:</strong> carteles de Medellín, Cali y otros.</li>
+        <li><strong>Fuerza Pública:</strong> Ejército y Policía.</li>
+        <li><strong>Población civil:</strong> principal víctima del conflicto.</li>
+      </ul>
+
+      <div class="infobox" style="margin-top:16px">
+        <strong>Esfuerzos de paz</strong>
+        <ul>
+          <li>Acuerdo de paz con el M-19 (1990).</li>
+          <li>Proceso de desmovilización de paramilitares (2005).</li>
+          <li>Acuerdo de paz con las FARC (2016).</li>
+        </ul>
+      </div>
+
+      <h3 style="margin-top:18px">Mini‑quiz</h3>
+      <div class="quiz" id="quiz">
+        <div class="q">
+          <p><strong>1)</strong> ¿Qué hecho desató “La Violencia” en 1948?</p>
+          <label class="opcion"><input type="radio" name="q1" value="a"> Surgimiento de las FARC</label>
+          <label class="opcion"><input type="radio" name="q1" value="b"> Asesinato de Jorge Eliécer Gaitán</label>
+          <label class="opcion"><input type="radio" name="q1" value="c"> Creación de los paramilitares</label>
+          <div class="resultado" id="r1"></div>
+        </div>
+        <div class="q">
+          <p><strong>2)</strong> ¿Qué grupo firmó un acuerdo de paz en 2016?</p>
+          <label class="opcion"><input type="radio" name="q2" value="a"> ELN</label>
+          <label class="opcion"><input type="radio" name="q2" value="b"> FARC</label>
+          <label class="opcion"><input type="radio" name="q2" value="c"> AUC</label>
+          <div class="resultado" id="r2"></div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:8px">
+          <button class="btn" id="btnCheck" type="button">Verificar</button>
+          <button class="btn" id="btnReset" type="button">Limpiar</button>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    const btnCheck = document.getElementById('btnCheck');
+    const btnReset = document.getElementById('btnReset');
+
+    function verificar(){
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      const r1 = document.getElementById('r1');
+      if (!q1) { r1.textContent = 'Selecciona una opción.'; r1.className='resultado'; }
+      else if (q1.value === 'b') { r1.textContent = '✅ Correcto: el asesinato de Gaitán en 1948.'; r1.className='resultado ok'; }
+      else { r1.textContent = '❌ Revisa los hechos de 1948.'; r1.className='resultado mal'; }
+
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      const r2 = document.getElementById('r2');
+      if (!q2) { r2.textContent = 'Selecciona una opción.'; r2.className='resultado'; }
+      else if (q2.value === 'b') { r2.textContent = '✅ Correcto: las FARC firmaron en 2016.'; r2.className='resultado ok'; }
+      else { r2.textContent = '❌ El grupo correcto firmó en 2016 fue las FARC.'; r2.className='resultado mal'; }
+    }
+
+    function limpiar(){
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked=false);
+      document.querySelectorAll('.resultado').forEach(x => { x.textContent=''; x.className='resultado'; });
+    }
+
+    btnCheck.addEventListener('click', verificar);
+    btnReset.addEventListener('click', limpiar);
+  </script>
+</body>
+</html>
