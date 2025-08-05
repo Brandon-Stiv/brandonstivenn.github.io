@@ -3,14 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Título de la asignatura</title>
+  <title>Física — Aplicaciones matemáticas</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
     :root {
-      --blanco:#ffffff; --gris-claro:#e8ecf7; --gris:#bfc7da; --negro:#0d0f12;
-      --azul:#0057ff; --acento:#3aa0ff; --vidrio: rgba(255,255,255,.06);
-      --borde: rgba(255,255,255,.10); --texto-suave:#cfd7ff;
-      --ok:#76e39a; --err:#ff8b8b;
+      --blanco: #ffffff;
+      --gris-claro: #e8ecf7;
+      --gris: #bfc7da;
+      --negro: #0d0f12;
+      --azul: #0057ff;
+      --acento: #3aa0ff;
+      --vidrio: rgba(255,255,255,.06);
+      --borde: rgba(255,255,255,.10);
+      --texto-suave: #cfd7ff;
+      --ok: #76e39a;
+      --err: #ff8b8b;
     }
     *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif}
     body{
@@ -23,7 +30,8 @@
       padding:28px 18px 60px;
     }
     .topbar{
-      width:min(1200px, 100%); display:flex;align-items:center;justify-content:space-between;
+      width:min(1200px, 100%);
+      display:flex;align-items:center;justify-content:space-between;
       padding:14px 18px;border-radius:18px;
       background:var(--vidrio);border:1px solid var(--borde);
       backdrop-filter:blur(10px);
@@ -54,7 +62,6 @@
       border-radius:22px;padding:28px 24px;
       box-shadow:0 12px 36px rgba(0,0,0,.38);
       margin-bottom:28px;
-      position:relative;
     }
     .edicion-badge{
       position:absolute;top:16px;right:16px;
@@ -82,12 +89,7 @@
     }
     .card h2, .card h3{color:#cfe3ff;margin-bottom:10px}
     .card p, .card li{color:var(--gris-claro)}
-    .quiz .q{
-      background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);
-      border-radius:12px; padding:12px; margin-top:10px
-    }
-    .resultado{font-weight:700;margin-top:6px}
-    .ok{color:var(--ok)} .mal{color:var(--err)}
+    canvas{max-width:100%;margin-top:18px}
     footer{
       width:min(1200px,100%);
       text-align:center;color:#bfbfbf;margin-top:32px
@@ -107,51 +109,40 @@
   </div>
 
   <header class="hero">
-    <span class="edicion-badge">[Asignatura]</span>
-    <h1>[Título del tema]</h1>
-    <p class="sub">[Breve descripción o introducción al tema.]</p>
+    <span class="edicion-badge">Física</span>
+    <h1>Aplicaciones matemáticas<br>en la Física</h1>
+    <p class="sub">Cómo se relacionan fórmulas, gráficas y conceptos matemáticos con fenómenos físicos reales.</p>
   </header>
 
   <section class="contenedor">
     <article class="card">
-      <h2>[Sección teórica]</h2>
-      <p>[Introduce aquí la teoría o explicación principal del tema.]</p>
+      <h2>Movimiento parabólico</h2>
+      <p>Cuando lanzamos un objeto en el aire, su trayectoria describe una parábola. Esto se representa con la fórmula:</p>
+      <p><code>y = x·tan(θ) - (g·x²)/(2·v²·cos²(θ))</code></p>
+      <p>Esto permite predecir el alcance y la altura máxima.</p>
 
-      <h2 style="margin-top:20px">[Otra sección]</h2>
+      <canvas id="grafica" width="400" height="300"></canvas>
+
+      <h2 style="margin-top:20px">Otras aplicaciones matemáticas</h2>
       <ul>
-        <li>[Elemento 1]</li>
-        <li>[Elemento 2]</li>
-        <li>[Elemento 3]</li>
+        <li>Uso de trigonometría para calcular ángulos de proyectiles.</li>
+        <li>Fórmulas de cinemática para velocidad y aceleración.</li>
+        <li>Gráficas de posición vs. tiempo y velocidad vs. tiempo.</li>
       </ul>
     </article>
 
     <aside class="card">
       <h2>Mini Quiz</h2>
-      <div class="q">
-        <p><strong>1)</strong> [Pregunta 1]</p>
-        <label><input type="radio" name="q1" value="a"> Opción A</label><br>
-        <label><input type="radio" name="q1" value="b"> Opción B</label><br>
-        <label><input type="radio" name="q1" value="c"> Opción C</label>
-        <div class="resultado" id="r1"></div>
-      </div>
-
-      <div class="q">
-        <p><strong>2)</strong> [Pregunta 2]</p>
-        <label><input type="radio" name="q2" value="a"> Opción A</label><br>
-        <label><input type="radio" name="q2" value="b"> Opción B</label><br>
-        <label><input type="radio" name="q2" value="c"> Opción C</label>
-        <div class="resultado" id="r2"></div>
-      </div>
-
-      <div class="q">
-        <p><strong>3)</strong> [Pregunta 3]</p>
-        <label><input type="radio" name="q3" value="a"> Opción A</label><br>
-        <label><input type="radio" name="q3" value="b"> Opción B</label><br>
-        <label><input type="radio" name="q3" value="c"> Opción C</label>
-        <div class="resultado" id="r3"></div>
-      </div>
-
+      <p><strong>¿Qué tipo de gráfica representa el movimiento parabólico?</strong></p>
+      <ul style="margin-top:10px">
+        <li><input type="radio" name="q1" id="lineal"> Lineal</li>
+        <li><input type="radio" name="q1" id="cuadratica"> Cuadrática</li>
+        <li><input type="radio" name="q1" id="circular"> Circular</li>
+      </ul>
+      <div id="resultado" style="margin-top:12px;font-weight:bold"></div>
       <button class="btn" onclick="verificar()">Verificar</button>
+
+      <p style="margin-top:14px">Volver a <a class="btn" href="index.html" style="padding:6px 10px">categorías</a>.</p>
     </aside>
   </section>
 
@@ -160,27 +151,25 @@
   </footer>
 
   <script>
-    function verificar() {
-      const respuestas = [
-        { pregunta: 'q1', correcta: 'a', id: 'r1' },
-        { pregunta: 'q2', correcta: 'b', id: 'r2' },
-        { pregunta: 'q3', correcta: 'c', id: 'r3' }
-      ];
+    // Dibujar parábola
+    const canvas = document.getElementById("grafica");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = "#3aa0ff";
+    ctx.beginPath();
+    for (let x = 0; x <= 400; x += 1) {
+      const y = -0.002 * x * x + 0.4 * x; // forma de parábola
+      if (x === 0) ctx.moveTo(x, 300 - y);
+      else ctx.lineTo(x, 300 - y);
+    }
+    ctx.stroke();
 
-      respuestas.forEach(({pregunta, correcta, id}) => {
-        const sel = document.querySelector(`input[name="${pregunta}"]:checked`);
-        const resEl = document.getElementById(id);
-        if (!sel) {
-          resEl.textContent = 'Selecciona una opción.';
-          resEl.className = 'resultado';
-        } else if (sel.value === correcta) {
-          resEl.textContent = '✅ Correcto';
-          resEl.className = 'resultado ok';
-        } else {
-          resEl.textContent = '❌ Incorrecto';
-          resEl.className = 'resultado mal';
-        }
-      });
+    // Quiz
+    function verificar(){
+      const res = document.getElementById('resultado');
+      const esCorrecta = document.getElementById('cuadratica').checked;
+      res.textContent = esCorrecta ? '✅ Correcto: es una parábola (gráfica cuadrática).' : '❌ Intenta de nuevo. Recuerda la forma curva del movimiento.';
+      res.style.color = esCorrecta ? '#76e39a' : '#ff8b8b';
     }
   </script>
 </body>

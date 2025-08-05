@@ -18,12 +18,13 @@
         radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
         linear-gradient(135deg,#0b0b0b,#171717);
       color:var(--blanco);
-      display:flex;align-items:center;justify-content:center;padding:32px;
-      overflow:hidden;
+      display:flex;
+      justify-content:center;
+      padding:32px;
+      overflow-y:auto;
     }
     .marco{
       width:min(1100px,94vw);
-      aspect-ratio:3/4; /* sensación de tapa de revista */
       border-radius:28px;
       position:relative;
       overflow:hidden;
@@ -31,14 +32,16 @@
       background:
         url('portada.jpg') center/cover no-repeat,
         linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.6));
+      padding-bottom:80px;
     }
-    /* capa de vidrio para legibilidad del título */
     .vidrio{
       position:absolute; inset:0;
       background:linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.65) 65%, rgba(0,0,0,.85) 100%);
+      z-index:0;
     }
     header{
-      position:absolute; top:28px; left:28px; right:28px;
+      position:relative; z-index:1;
+      padding:28px;
       display:flex; align-items:center; justify-content:space-between;
     }
     .edicion{
@@ -55,7 +58,8 @@
     }
     .logo-text{font-weight:700; letter-spacing:.4px; color:#e9f0ff}
     .contenido{
-      position:absolute; left:10%; right:10%; bottom:11%;
+      position:relative; z-index:1;
+      padding:0 10% 30px;
     }
     h1{
       font-size: clamp(2.1rem, 4.5vw, 4rem);
@@ -88,12 +92,17 @@
       backdrop-filter:blur(6px);
     }
     footer{
-      position:absolute; left:0; right:0; bottom:10px; text-align:center; color:#bfbfbf; font-size:.9rem;
-      text-shadow:0 2px 10px rgba(0,0,0,.5)
+      position:relative;
+      z-index:1;
+      text-align:center;
+      color:#bfbfbf;
+      font-size:.9rem;
+      text-shadow:0 2px 10px rgba(0,0,0,.5);
+      margin-top:40px;
     }
     @media (max-width: 640px){
-      .marco{ aspect-ratio:auto; height:92vh }
-      .contenido{ left:7%; right:7%; bottom:8% }
+      .contenido{ padding:0 7% 20px; }
+      .cta{ flex-direction:column }
     }
   </style>
 </head>
