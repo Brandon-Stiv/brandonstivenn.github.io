@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Probabilidad Condicional</title>
+  <title>Educación Física — Acondicionamiento Físico</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
     :root {
@@ -82,6 +82,12 @@
     }
     .card h2, .card h3{color:#cfe3ff;margin-bottom:10px}
     .card p, .card li{color:var(--gris-claro)}
+    video{
+      width:100%;
+      border-radius:16px;
+      margin-bottom:20px;
+      box-shadow:0 8px 24px rgba(0,0,0,.35);
+    }
     .quiz .q{
       background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);
       border-radius:12px; padding:12px; margin-top:10px
@@ -107,54 +113,49 @@
   </div>
 
   <header class="hero">
-    <span class="edicion-badge">Matemáticas</span>
-    <h1>Probabilidad Condicional</h1>
-    <p class="sub">Descubre cómo calcular probabilidades cuando ya sabes que ocurrió algo.</p>
+    <span class="edicion-badge">Educación Física</span>
+    <h1>Acondicionamiento Físico</h1>
+    <p class="sub">Mejora tu salud y rendimiento con ejercicios físicos efectivos.</p>
   </header>
+
+  <div style="width:min(1200px, 100%); margin-bottom:26px;">
+    <video controls>
+      <source src="https://video-previews.elements.envatousercontent.com/files/29a6e94f-efb0-4cee-a366-2f71aeb32d5b/video_preview_h264.mp4" type="video/mp4">
+      Tu navegador no soporta el video HTML5.
+    </video>
+  </div>
 
   <section class="contenedor">
     <article class="card">
-      <h2>¿Qué es la probabilidad condicional?</h2>
-      <p>La probabilidad condicional se usa cuando queremos calcular la probabilidad de que ocurra un evento sabiendo que ya ocurrió otro. Se representa así:</p>
-      <p><strong>P(A | B)</strong>, y se lee como “la probabilidad de A dado B”.</p>
+      <h2>¿Qué es el acondicionamiento físico?</h2>
+      <p>
+        Es el proceso de mejorar la capacidad del cuerpo para realizar actividades físicas mediante el desarrollo de fuerza, resistencia, flexibilidad y coordinación. Incluye ejercicios planificados que benefician la salud cardiovascular, muscular y ósea.
+      </p>
 
-      <h2 style="margin-top:20px">🧪 Ejemplo con bolas de colores</h2>
+      <h2 style="margin-top:20px">🌟 Importancia del acondicionamiento</h2>
+      <p>
+        Mejora la salud general, previene enfermedades, ayuda a mantener un peso saludable y fortalece el sistema inmune. También mejora el estado de ánimo, la calidad del sueño y reduce el estrés.
+      </p>
+
+      <h2 style="margin-top:20px">💪 Componentes clave</h2>
       <ul>
-        <li>Hay 5 bolas en una bolsa: 3 rojas y 2 azules.</li>
-        <li>Se saca una bola al azar.</li>
-        <li>Sabemos que la bola que salió <strong>no es azul</strong>.</li>
-        <li>Entonces, solo consideramos las bolas rojas.</li>
-        <li>La probabilidad de que sea roja, sabiendo que no es azul es:</li>
+        <li>Resistencia cardiovascular</li>
+        <li>Fuerza muscular</li>
+        <li>Flexibilidad</li>
+        <li>Coordinación y equilibrio</li>
       </ul>
-      <p style="margin-top:10px"><strong>P(Roja | No azul) = Número de rojas / Total de bolas que no son azules</strong></p>
-      <p>En este caso: <strong>P(Roja | No azul) = 3 / 3 = 1</strong></p>
     </article>
 
     <aside class="card quiz">
       <h2>Mini Quiz</h2>
 
       <div class="q">
-        <p><strong>1)</strong> ¿Qué significa P(A | B)?</p>
-        <label><input type="radio" name="q1" value="a"> La probabilidad de A sabiendo que ocurrió B</label><br>
-        <label><input type="radio" name="q1" value="b"> La probabilidad de que ocurra B y luego A</label><br>
-        <label><input type="radio" name="q1" value="c"> La probabilidad de A o B</label>
+        <p><strong>1)</strong> ¿Cuál de estas opciones ayuda a mejorar la resistencia cardiovascular?</p>
+        <label><input type="radio" name="q1" value="a"> Levantamiento de pesas</label><br>
+        <label><input type="radio" name="q1" value="b"> Estiramientos matutinos</label><br>
+        <label><input type="radio" name="q1" value="c"> Correr durante 30 minutos</label><br>
+        <label><input type="radio" name="q1" value="d"> Práctica de yoga</label>
         <div class="resultado" id="r1"></div>
-      </div>
-
-      <div class="q">
-        <p><strong>2)</strong> ¿Cuántas bolas hay si eliminamos las azules?</p>
-        <label><input type="radio" name="q2" value="a"> 2</label><br>
-        <label><input type="radio" name="q2" value="b"> 3</label><br>
-        <label><input type="radio" name="q2" value="c"> 5</label>
-        <div class="resultado" id="r2"></div>
-      </div>
-
-      <div class="q">
-        <p><strong>3)</strong> ¿Cuál es el resultado de P(Roja | No azul)?</p>
-        <label><input type="radio" name="q3" value="a"> 3/5</label><br>
-        <label><input type="radio" name="q3" value="b"> 2/3</label><br>
-        <label><input type="radio" name="q3" value="c"> 1</label>
-        <div class="resultado" id="r3"></div>
       </div>
 
       <button class="btn" onclick="verificar()">Verificar</button>
@@ -167,30 +168,19 @@
 
   <script>
     function verificar() {
-      const respuestas = [
-        { pregunta: 'q1', correcta: 'a', id: 'r1' },
-        { pregunta: 'q2', correcta: 'b', id: 'r2' },
-        { pregunta: 'q3', correcta: 'c', id: 'r3' }
-      ];
-
-      respuestas.forEach(({pregunta, correcta, id}) => {
-        const sel = document.querySelector(`input[name="${pregunta}"]:checked`);
-        const resEl = document.getElementById(id);
-        if (!sel) {
-          resEl.textContent = 'Selecciona una opción.';
-          resEl.className = 'resultado';
-        } else if (sel.value === correcta) {
-          resEl.textContent = '✅ Correcto';
-          resEl.className = 'resultado ok';
-        } else {
-          resEl.textContent = '❌ Incorrecto';
-          resEl.className = 'resultado mal';
-        }
-      });
+      const sel = document.querySelector(`input[name="q1"]:checked`);
+      const resEl = document.getElementById("r1");
+      if (!sel) {
+        resEl.textContent = 'Selecciona una opción.';
+        resEl.className = 'resultado';
+      } else if (sel.value === 'c') {
+        resEl.textContent = '✅ Correcto';
+        resEl.className = 'resultado ok';
+      } else {
+        resEl.textContent = '❌ Incorrecto';
+        resEl.className = 'resultado mal';
+      }
     }
   </script>
-</body>
-</html>
-
 </body>
 </html>

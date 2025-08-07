@@ -3,100 +3,218 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Física — Aplicaciones matemáticas</title>
+  <title>Física – Aplicación Matemática</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
     :root {
-      --blanco: #ffffff;
-      --gris-claro: #e8ecf7;
-      --gris: #bfc7da;
-      --negro: #0d0f12;
-      --azul: #0057ff;
-      --acento: #3aa0ff;
-      --vidrio: rgba(255,255,255,.06);
-      --borde: rgba(255,255,255,.10);
-      --texto-suave: #cfd7ff;
-      --ok: #76e39a;
-      --err: #ff8b8b;
+      --blanco:#ffffff; --gris-claro:#e8ecf7; --gris:#bfc7da; --negro:#0d0f12;
+      --azul:#0057ff; --acento:#3aa0ff; --vidrio: rgba(255,255,255,.06);
+      --borde: rgba(255,255,255,.10); --texto-suave:#cfd7ff;
+      --ok:#76e39a; --err:#ff8b8b;
     }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif}
-    body{
-      min-height:100vh;color:var(--blanco);
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI','Helvetica Neue',system-ui,sans-serif
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--blanco);
       background:
         radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
         radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
         linear-gradient(135deg,#0b0b0b,#171717);
-      display:flex;flex-direction:column;align-items:center;
-      padding:28px 18px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 18px 60px;
     }
-    .topbar{
-      width:min(1200px, 100%);
-      display:flex;align-items:center;justify-content:space-between;
-      padding:14px 18px;border-radius:18px;
-      background:var(--vidrio);border:1px solid var(--borde);
-      backdrop-filter:blur(10px);
-      box-shadow:0 8px 28px rgba(0,0,0,.35);
-      margin-bottom:22px;
+
+    .topbar {
+      width: min(1200px, 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-radius: 18px;
+      background: var(--vidrio);
+      border: 1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.35);
+      margin-bottom: 22px;
     }
-    .logo{display:flex;gap:12px;align-items:center}
-    .logo-badge{
-      width:38px;height:38px;border-radius:12px;
-      background:linear-gradient(135deg, var(--azul), var(--acento));
-      display:grid;place-items:center;font-weight:800;
-      box-shadow:0 6px 20px rgba(0,87,255,.45);
+
+    .logo {
+      display: flex;
+      gap: 12px;
+      align-items: center;
     }
-    .logo-text{font-weight:700;letter-spacing:.3px;color:#e9f0ff}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{
-      appearance:none;border:none;cursor:pointer;text-decoration:none;
-      padding:10px 14px;border-radius:12px;font-weight:700;letter-spacing:.2px;
-      background:rgba(255,255,255,.08);color:#eaeaea;border:1px solid rgba(255,255,255,.12);
-      backdrop-filter:blur(6px);
-      transition:transform .15s ease;
+
+    .logo-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--azul), var(--acento));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      box-shadow: 0 6px 20px rgba(0,87,255,.45);
     }
-    .btn:hover{transform:translateY(-2px)}
-    header.hero{
-      width:min(1200px, 100%);
-      background:var(--vidrio);border:1px solid var(--borde);
-      backdrop-filter:blur(10px);
-      border-radius:22px;padding:28px 24px;
-      box-shadow:0 12px 36px rgba(0,0,0,.38);
-      margin-bottom:28px;
+
+    .logo-text {
+      font-weight: 700;
+      letter-spacing: .3px;
+      color: #e9f0ff;
     }
-    .edicion-badge{
-      position:absolute;top:16px;right:16px;
-      font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;
-      color:#d1ddff;background:rgba(0,87,255,.18);
-      border:1px solid rgba(0,87,255,.35);
-      padding:8px 12px;border-radius:999px;
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-    header.hero h1{
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      background: rgba(255,255,255,.08);
+      color: #eaeaea;
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(6px);
+      transition: transform .15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    header.hero {
+      width: min(1200px, 100%);
+      background: var(--vidrio);
+      border: 1px solid var(--borde);
+      backdrop-filter: blur(10px);
+      border-radius: 22px;
+      padding: 28px 24px;
+      box-shadow: 0 12px 36px rgba(0,0,0,.38);
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .edicion-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: .9rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #d1ddff;
+      background: rgba(0,87,255,.18);
+      border: 1px solid rgba(0,87,255,.35);
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+
+    header.hero h1 {
       font-size: clamp(1.9rem, 4.8vw, 2.8rem);
-      color:#bcd4ff;text-shadow:0 8px 28px rgba(0,0,0,.6);
+      color: #bcd4ff;
+      text-shadow: 0 8px 28px rgba(0,0,0,.6);
     }
-    .sub{margin-top:8px;color:var(--texto-suave)}
-    .contenedor{
-      width:min(1200px, 100%);
-      display:grid;gap:22px;
-      grid-template-columns:1.15fr .85fr;
+
+    .sub {
+      margin-top: 8px;
+      color: var(--texto-suave);
     }
-    @media(max-width:980px){.contenedor{grid-template-columns:1fr}}
-    .card{
-      background:var(--vidrio);border:1px solid var(--borde);
-      border-radius:20px;padding:22px;
-      backdrop-filter:blur(8px);
-      box-shadow:0 6px 18px rgba(0,0,0,.30);
+
+    .contenedor {
+      width: min(1200px, 100%);
+      display: grid;
+      gap: 22px;
+      grid-template-columns: 1.15fr .85fr;
     }
-    .card h2, .card h3{color:#cfe3ff;margin-bottom:10px}
-    .card p, .card li{color:var(--gris-claro)}
-    canvas{max-width:100%;margin-top:18px}
-    footer{
-      width:min(1200px,100%);
-      text-align:center;color:#bfbfbf;margin-top:32px
+
+    @media(max-width:980px) {
+      .contenedor {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--vidrio);
+      border: 1px solid var(--borde);
+      border-radius: 20px;
+      padding: 22px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(0,0,0,.30);
+    }
+
+    .card h2 {
+      color: #cfe3ff;
+      margin-bottom: 10px;
+    }
+
+    .card p, .card li {
+      color: var(--gris-claro);
+      line-height: 1.5;
+    }
+
+    code {
+      background-color: rgba(255,255,255,.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 1em;
+      display: inline-block;
+    }
+
+    iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+      border-radius: 12px;
+      margin-top: 16px;
+      box-shadow: 0 0 12px rgba(0, 87, 255, 0.25);
+    }
+
+    figcaption {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 0.9em;
+      color: var(--gris-claro);
+    }
+
+    .quiz .q {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    .resultado {
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    .ok { color: var(--ok) }
+    .mal { color: var(--err) }
+
+    footer {
+      width: min(1200px,100%);
+      text-align: center;
+      color: #bfbfbf;
+      margin-top: 32px;
     }
   </style>
 </head>
 <body>
+
   <div class="topbar">
     <div class="logo">
       <div class="logo-badge">MS</div>
@@ -110,39 +228,63 @@
 
   <header class="hero">
     <span class="edicion-badge">Física</span>
-    <h1>Aplicaciones matemáticas<br>en la Física</h1>
-    <p class="sub">Cómo se relacionan fórmulas, gráficas y conceptos matemáticos con fenómenos físicos reales.</p>
+    <h1>Aplicación Matemática</h1>
+    <p class="sub">Explora cómo las ecuaciones matemáticas se usan para describir fenómenos físicos.</p>
   </header>
 
   <section class="contenedor">
     <article class="card">
       <h2>Movimiento parabólico</h2>
-      <p>Cuando lanzamos un objeto en el aire, su trayectoria describe una parábola. Esto se representa con la fórmula:</p>
+      <p>Cuando un objeto es lanzado en un ángulo, su trayectoria describe una parábola. La fórmula matemática para su posición vertical es:</p>
       <p><code>y = x·tan(θ) - (g·x²)/(2·v²·cos²(θ))</code></p>
-      <p>Esto permite predecir el alcance y la altura máxima.</p>
-
-      <canvas id="grafica" width="400" height="300"></canvas>
-
-      <h2 style="margin-top:20px">Otras aplicaciones matemáticas</h2>
+      <p>Donde:</p>
       <ul>
-        <li>Uso de trigonometría para calcular ángulos de proyectiles.</li>
-        <li>Fórmulas de cinemática para velocidad y aceleración.</li>
-        <li>Gráficas de posición vs. tiempo y velocidad vs. tiempo.</li>
+        <li><strong>y</strong>: Altura (m)</li>
+        <li><strong>x</strong>: Distancia horizontal (m)</li>
+        <li><strong>θ</strong>: Ángulo de lanzamiento (grados)</li>
+        <li><strong>v</strong>: Velocidad inicial (m/s)</li>
+        <li><strong>g</strong>: Gravedad (~9.8 m/s²)</li>
+      </ul>
+
+      <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/TLsDPw0zNAI?si=Z6X6eRYWgOLg8x7X" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <figcaption>Video: Movimiento parabólico explicado con animación</figcaption>
+
+      <h2 style="margin-top:22px;">Otras aplicaciones matemáticas</h2>
+      <ul>
+        <li>Uso de trigonometría para calcular el ángulo óptimo de lanzamiento.</li>
+        <li>Aplicación de cinemática: velocidad, aceleración y tiempo.</li>
+        <li>Gráficas de posición vs. tiempo y velocidad vs. tiempo para analizar el movimiento.</li>
       </ul>
     </article>
 
-    <aside class="card">
+    <aside class="card quiz">
       <h2>Mini Quiz</h2>
-      <p><strong>¿Qué tipo de gráfica representa el movimiento parabólico?</strong></p>
-      <ul style="margin-top:10px">
-        <li><input type="radio" name="q1" id="lineal"> Lineal</li>
-        <li><input type="radio" name="q1" id="cuadratica"> Cuadrática</li>
-        <li><input type="radio" name="q1" id="circular"> Circular</li>
-      </ul>
-      <div id="resultado" style="margin-top:12px;font-weight:bold"></div>
-      <button class="btn" onclick="verificar()">Verificar</button>
 
-      <p style="margin-top:14px">Volver a <a class="btn" href="index.html" style="padding:6px 10px">categorías</a>.</p>
+      <div class="q">
+        <p><strong>1)</strong> ¿Qué tipo de trayectoria describe un objeto lanzado en un ángulo?</p>
+        <label><input type="radio" name="q1" value="a"> Circular</label><br>
+        <label><input type="radio" name="q1" value="b"> Recta</label><br>
+        <label><input type="radio" name="q1" value="c"> Parabólica</label>
+        <div class="resultado" id="r1"></div>
+      </div>
+
+      <div class="q">
+        <p><strong>2)</strong> ¿Qué representa la variable "g" en la fórmula del movimiento parabólico?</p>
+        <label><input type="radio" name="q2" value="a"> Gravedad</label><br>
+        <label><input type="radio" name="q2" value="b"> Gasolina</label><br>
+        <label><input type="radio" name="q2" value="c"> Ganancia</label>
+        <div class="resultado" id="r2"></div>
+      </div>
+
+      <div class="q">
+        <p><strong>3)</strong> ¿Cuál de las siguientes es una aplicación de las matemáticas en la física?</p>
+        <label><input type="radio" name="q3" value="a"> Uso de trigonometría</label><br>
+        <label><input type="radio" name="q3" value="b"> Aprendizaje de idiomas</label><br>
+        <label><input type="radio" name="q3" value="c"> Historia de Egipto</label>
+        <div class="resultado" id="r3"></div>
+      </div>
+
+      <button class="btn" onclick="verificar()">Verificar</button>
     </aside>
   </section>
 
@@ -151,25 +293,27 @@
   </footer>
 
   <script>
-    // Dibujar parábola
-    const canvas = document.getElementById("grafica");
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = "#3aa0ff";
-    ctx.beginPath();
-    for (let x = 0; x <= 400; x += 1) {
-      const y = -0.002 * x * x + 0.4 * x; // forma de parábola
-      if (x === 0) ctx.moveTo(x, 300 - y);
-      else ctx.lineTo(x, 300 - y);
-    }
-    ctx.stroke();
+    function verificar() {
+      const respuestas = [
+        { pregunta: 'q1', correcta: 'c', id: 'r1' },
+        { pregunta: 'q2', correcta: 'a', id: 'r2' },
+        { pregunta: 'q3', correcta: 'a', id: 'r3' }
+      ];
 
-    // Quiz
-    function verificar(){
-      const res = document.getElementById('resultado');
-      const esCorrecta = document.getElementById('cuadratica').checked;
-      res.textContent = esCorrecta ? '✅ Correcto: es una parábola (gráfica cuadrática).' : '❌ Intenta de nuevo. Recuerda la forma curva del movimiento.';
-      res.style.color = esCorrecta ? '#76e39a' : '#ff8b8b';
+      respuestas.forEach(({pregunta, correcta, id}) => {
+        const sel = document.querySelector(`input[name="${pregunta}"]:checked`);
+        const resEl = document.getElementById(id);
+        if (!sel) {
+          resEl.textContent = 'Selecciona una opción.';
+          resEl.className = 'resultado';
+        } else if (sel.value === correcta) {
+          resEl.textContent = '✅ Correcto';
+          resEl.className = 'resultado ok';
+        } else {
+          resEl.textContent = '❌ Incorrecto';
+          resEl.className = 'resultado mal';
+        }
+      });
     }
   </script>
 </body>
