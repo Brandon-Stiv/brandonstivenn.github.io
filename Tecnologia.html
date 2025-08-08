@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Excel — Funciones y Fórmulas</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --blanco:#ffffff; --gris-claro:#e8ecf7; --gris:#bfc7da; --negro:#0d0f12;
+      --azul:#0057ff; --acento:#3aa0ff; --vidrio: rgba(255,255,255,.06);
+      --borde: rgba(255,255,255,.10); --texto-suave:#cfd7ff;
+      --ok:#76e39a; --err:#ff8b8b;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif}
+    body{
+      min-height:100vh;color:var(--blanco);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      display:flex;flex-direction:column;align-items:center;
+      padding:28px 18px 60px;
+    }
+    .topbar{
+      width:min(1200px, 100%); display:flex;align-items:center;justify-content:space-between;
+      padding:14px 18px;border-radius:18px;
+      background:var(--vidrio);border:1px solid var(--borde);
+      backdrop-filter:blur(10px);
+      box-shadow:0 8px 28px rgba(0,0,0,.35);
+      margin-bottom:22px;
+    }
+    .logo{display:flex;gap:12px;align-items:center}
+    .logo-badge{
+      width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg, var(--azul), var(--acento));
+      display:grid;place-items:center;font-weight:800;
+      box-shadow:0 6px 20px rgba(0,87,255,.45);
+    }
+    .logo-text{font-weight:700;letter-spacing:.3px;color:#e9f0ff}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{
+      appearance:none;border:none;cursor:pointer;text-decoration:none;
+      padding:10px 14px;border-radius:12px;font-weight:700;letter-spacing:.2px;
+      background:rgba(255,255,255,.08);color:#eaeaea;border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(6px);
+      transition:transform .15s ease;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    header.hero{
+      width:min(1200px, 100%);
+      background:var(--vidrio);border:1px solid var(--borde);
+      backdrop-filter:blur(10px);
+      border-radius:22px;padding:28px 24px;
+      box-shadow:0 12px 36px rgba(0,0,0,.38);
+      margin-bottom:28px;
+      position:relative;
+    }
+    .edicion-badge{
+      position:absolute;top:16px;right:16px;
+      font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;
+      color:#d1ddff;background:rgba(0,87,255,.18);
+      border:1px solid rgba(0,87,255,.35);
+      padding:8px 12px;border-radius:999px;
+    }
+    header.hero h1{
+      font-size: clamp(1.9rem, 4.8vw, 2.8rem);
+      color:#bcd4ff;text-shadow:0 8px 28px rgba(0,0,0,.6);
+    }
+    .sub{margin-top:8px;color:var(--texto-suave)}
+    .contenedor{
+      width:min(1200px, 100%);
+      display:grid;gap:22px;
+      grid-template-columns:1.15fr .85fr;
+    }
+    @media(max-width:980px){.contenedor{grid-template-columns:1fr}}
+    .card{
+      background:var(--vidrio);border:1px solid var(--borde);
+      border-radius:20px;padding:22px;
+      backdrop-filter:blur(8px);
+      box-shadow:0 6px 18px rgba(0,0,0,.30);
+    }
+    .card h2, .card h3{color:#cfe3ff;margin-bottom:10px}
+    .card p, .card li{color:var(--gris-claro)}
+    .quiz .q{
+      background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10);
+      border-radius:12px; padding:12px; margin-top:10px
+    }
+    .resultado{font-weight:700;margin-top:6px}
+    .ok{color:var(--ok)} .mal{color:var(--err)}
+    footer{
+      width:min(1200px,100%);
+      text-align:center;color:#bfbfbf;margin-top:32px
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-badge">MS</div>
+      <div class="logo-text">Los Mil Saberes</div>
+    </div>
+    <nav class="nav">
+      <a class="btn" href="portada.html">Inicio</a>
+      <a class="btn" href="index.html">Categorías</a>
+    </nav>
+  </div>
+  <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/vPq9p7nHhL0?si=Mw7luvc7UdFdrpmE&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+  <header class="hero">
+    <span class="edicion-badge">Informática</span>
+    <h1>Excel — Funciones y Fórmulas</h1>
+    <p class="sub">Aprende a usar fórmulas y funciones para automatizar cálculos y analizar datos.</p>
+  </header>
+
+  <section class="contenedor">
+    <article class="card">
+      <h2>¿Qué son las fórmulas en Excel?</h2>
+      <p>En Excel, una fórmula es una ecuación que realiza cálculos con los valores de las celdas. Siempre comienzan con el signo <strong>=</strong>.</p>
+      <p>Ejemplo: <strong>=A1+B1</strong> suma los valores de las celdas A1 y B1.</p>
+
+      <h2 style="margin-top:20px">📌 Funciones más usadas</h2>
+      <ul>
+        <li><strong>=SUMA(A1:A10)</strong> → Suma un rango de celdas.</li>
+        <li><strong>=PROMEDIO(A1:A10)</strong> → Calcula el promedio.</li>
+        <li><strong>=SI(A1&gt;=10,"Aprobado","Reprobado")</strong> → Evalúa una condición.</li>
+        <li><strong>=MAX(A1:A10)</strong> → Devuelve el valor máximo.</li>
+        <li><strong>=MIN(A1:A10)</strong> → Devuelve el valor mínimo.</li>
+      </ul>
+    </article>
+
+    <aside class="card quiz">
+      <h2>Mini Quiz</h2>
+
+      <div class="q">
+        <p><strong>1)</strong> ¿Con qué símbolo comienzan todas las fórmulas en Excel?</p>
+        <label><input type="radio" name="q1" value="a"> *</label><br>
+        <label><input type="radio" name="q1" value="b"> =</label><br>
+        <label><input type="radio" name="q1" value="c"> #</label>
+        <div class="resultado" id="r1"></div>
+      </div>
+
+      <div class="q">
+        <p><strong>2)</strong> ¿Cuál función devuelve el valor mayor de un rango?</p>
+        <label><input type="radio" name="q2" value="a"> PROMEDIO</label><br>
+        <label><input type="radio" name="q2" value="b"> MAX</label><br>
+        <label><input type="radio" name="q2" value="c"> MIN</label>
+        <div class="resultado" id="r2"></div>
+      </div>
+
+      <div class="q">
+        <p><strong>3)</strong> Si quieres sumar las celdas de A1 a A5, ¿qué escribirías?</p>
+        <label><input type="radio" name="q3" value="a"> =SUMA(A1:A5)</label><br>
+        <label><input type="radio" name="q3" value="b"> =A1+A5</label><br>
+        <label><input type="radio" name="q3" value="c"> =TOTAL(A1:A5)</label>
+        <div class="resultado" id="r3"></div>
+      </div>
+
+      <button class="btn" onclick="verificar()">Verificar</button>
+    </aside>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    function verificar() {
+      const respuestas = [
+        { pregunta: 'q1', correcta: 'b', id: 'r1' },
+        { pregunta: 'q2', correcta: 'b', id: 'r2' },
+        { pregunta: 'q3', correcta: 'a', id: 'r3' }
+      ];
+
+      respuestas.forEach(({pregunta, correcta, id}) => {
+        const sel = document.querySelector(`input[name="${pregunta}"]:checked`);
+        const resEl = document.getElementById(id);
+        if (!sel) {
+          resEl.textContent = 'Selecciona una opción.';
+          resEl.className = 'resultado';
+        } else if (sel.value === correcta) {
+          resEl.textContent = '✅ Correcto';
+          resEl.className = 'resultado ok';
+        } else {
+          resEl.textContent = '❌ Incorrecto';
+          resEl.className = 'resultado mal';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

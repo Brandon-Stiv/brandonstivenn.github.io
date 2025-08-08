@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Glosario — Los Mil Saberes</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --blanco:#ffffff; --gris-claro:#e8ecf7; --gris:#bfc7da; --negro:#0d0f12;
+      --azul:#0057ff; --acento:#3aa0ff; --vidrio: rgba(255,255,255,.06);
+      --borde: rgba(255,255,255,.10); --texto-suave:#cfd7ff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif}
+    body{
+      min-height:100vh;color:var(--blanco);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      display:flex;flex-direction:column;align-items:center;padding:28px 18px 60px;
+    }
+    .topbar{
+      width:min(1200px,100%);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 18px;border-radius:18px;background:var(--vidrio);
+      border:1px solid var(--borde);backdrop-filter:blur(10px);
+      box-shadow:0 8px 28px rgba(0,0,0,.35);margin-bottom:22px;
+    }
+    .logo{display:flex;gap:12px;align-items:center}
+    .logo-badge{
+      width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg,var(--azul),var(--acento));
+      display:grid;place-items:center;font-weight:800;
+      box-shadow:0 6px 20px rgba(0,87,255,.45);
+    }
+    .logo-text{font-weight:700;letter-spacing:.3px;color:#e9f0ff}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{
+      appearance:none;border:none;cursor:pointer;text-decoration:none;
+      padding:10px 14px;border-radius:12px;font-weight:700;letter-spacing:.2px;
+      background:rgba(255,255,255,.08);color:#eaeaea;
+      border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(6px);
+      transition:transform .15s ease;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    header.hero{
+      width:min(1200px,100%);background:var(--vidrio);border:1px solid var(--borde);
+      backdrop-filter:blur(10px);border-radius:22px;padding:28px 24px;
+      box-shadow:0 12px 36px rgba(0,0,0,.38);margin-bottom:28px;position:relative;
+    }
+    .edicion-badge{
+      position:absolute;top:16px;right:16px;font-size:.9rem;letter-spacing:.08em;
+      text-transform:uppercase;color:#d1ddff;background:rgba(0,87,255,.18);
+      border:1px solid rgba(0,87,255,.35);padding:8px 12px;border-radius:999px;
+    }
+    header.hero h1{font-size:clamp(1.9rem,4.8vw,2.8rem);color:#bcd4ff;text-shadow:0 8px 28px rgba(0,0,0,.6)}
+    .sub{margin-top:8px;color:var(--texto-suave)}
+    .contenedor{
+      width:min(1200px,100%);
+      display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    }
+    .card{
+      background:var(--vidrio);border:1px solid var(--borde);
+      border-radius:20px;padding:20px;backdrop-filter:blur(8px);
+      box-shadow:0 6px 18px rgba(0,0,0,.30);
+    }
+    .card h2{color:#cfe3ff;margin-bottom:8px;font-size:1.2rem}
+    .card p{color:var(--gris-claro);line-height:1.5;font-size:0.95rem}
+    footer{width:min(1200px,100%);text-align:center;color:#bfbfbf;margin-top:32px}
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-badge">MS</div>
+      <div class="logo-text">Los Mil Saberes</div>
+    </div>
+    <nav class="nav">
+      <a class="btn" href="portada.html">Inicio</a>
+      <a class="btn" href="index.html">Categorías</a>
+    </nav>
+  </div>
+
+  <header class="hero">
+    <span class="edicion-badge">Glosario</span>
+    <h1>Términos Clave</h1>
+    <p class="sub">Definiciones breves de conceptos relevantes en diversas áreas del conocimiento.</p>
+  </header>
+
+  <section class="contenedor">
+    <div class="card"><h2>ADN</h2><p>Ácido desoxirribonucleico, molécula que contiene la información genética de los seres vivos.</p></div>
+    <div class="card"><h2>Ad hominem</h2><p>Falacia que ataca a la persona en lugar de refutar su argumento.</p></div>
+    <div class="card"><h2>ARN</h2><p>Ácido ribonucleico, molécula que participa en la síntesis de proteínas y en la transmisión de información genética.</p></div>
+    <div class="card"><h2>Bipartidismo</h2><p>Sistema político en el que predominan dos partidos principales.</p></div>
+    <div class="card"><h2>Cinemática</h2><p>Rama de la física que estudia el movimiento de los cuerpos sin considerar las causas que lo producen.</p></div>
+    <div class="card"><h2>Condición</h2><p>Requisito que debe cumplirse para que algo suceda o sea verdadero.</p></div>
+    <div class="card"><h2>Consustancial</h2><p>Que es de la misma naturaleza o esencia que otra cosa.</p></div>
+    <div class="card"><h2>Contracción</h2><p>Acortamiento o reducción de algo; en biología, proceso en que un músculo se acorta y genera fuerza.</p></div>
+    <div class="card"><h2>Coordinación</h2><p>Capacidad de sincronizar movimientos de manera eficiente.</p></div>
+    <div class="card"><h2>Equivocación</h2><p>Error o confusión al interpretar o realizar algo.</p></div>
+    <div class="card"><h2>Fisicalidad</h2><p>Condición de ser físico o material; en arte escénico, uso del cuerpo como medio expresivo.</p></div>
+    <div class="card"><h2>Paramilitarismo</h2><p>Actividad armada desarrollada por grupos organizados no oficiales con fines políticos o militares.</p></div>
+    <div class="card"><h2>P(A|B)</h2><p>Notación para la probabilidad de que ocurra A dado que ya ha ocurrido B.</p></div>
+    <div class="card"><h2>Pendiente</h2><p>En matemáticas, medida de la inclinación de una recta.</p></div>
+    <div class="card"><h2>Performance</h2><p>Manifestación artística en vivo que combina diferentes disciplinas.</p></div>
+    <div class="card"><h2>Predicción</h2><p>Anticipación de un hecho o resultado futuro basada en datos o patrones.</p></div>
+    <div class="card"><h2>Probabilidad condicional</h2><p>Probabilidad de que ocurra un evento sabiendo que otro ya ha ocurrido.</p></div>
+    <div class="card"><h2>Rango de celdas</h2><p>Conjunto de celdas seleccionadas en una hoja de cálculo.</p></div>
+    <div class="card"><h2>Readymade</h2><p>Objeto cotidiano presentado como obra de arte por un artista.</p></div>
+    <div class="card"><h2>Recíproca negativa</h2><p>En geometría, relación entre dos rectas cuyas pendientes multiplicadas dan -1.</p></div>
+    <div class="card"><h2>Resistencia cardiovascular</h2><p>Capacidad del sistema circulatorio y respiratorio para suministrar oxígeno durante actividad física prolongada.</p></div>
+    <div class="card"><h2>Subordinacionismo</h2><p>Doctrina teológica que considera a una persona de la Trinidad inferior en jerarquía a otra.</p></div>
+    <div class="card"><h2>Tramoya</h2><p>Conjunto de mecanismos y estructuras utilizadas en un teatro para cambiar decorados y efectos escénicos.</p></div>
+    <div class="card"><h2>Trayectoria</h2><p>Camino que describe un objeto en movimiento.</p></div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
