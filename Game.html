@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Memorama — Glosario (30s)</title>
+  <style>
+    :root{
+      --blanco:#ffffff; --gris-claro:#e8ecf7; --gris:#bfc7da; --negro:#0d0f12;
+      --azul:#0057ff; --acento:#3aa0ff; --vidrio: rgba(255,255,255,.04);
+      --borde: rgba(255,255,255,.08); --texto-suave:#cfd7ff;
+      --ok:#76e39a; --err:#ff8b8b;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,Helvetica,Arial}
+    body{
+      min-height:100vh;color:var(--blanco);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+        linear-gradient(135deg,#0b0b0b,#171717);
+      display:flex;flex-direction:column;align-items:center;padding:28px 18px 60px;
+    }
+
+    .topbar{
+      width:min(1200px,100%);display:flex;align-items:center;justify-content:space-between;
+      padding:14px 18px;border-radius:18px;background:var(--vidrio);
+      border:1px solid var(--borde);backdrop-filter:blur(10px);box-shadow:0 8px 28px rgba(0,0,0,.35);
+      margin-bottom:22px;
+    }
+    .logo{display:flex;gap:12px;align-items:center}
+    .logo-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--azul),var(--acento));display:grid;place-items:center;font-weight:800;box-shadow:0 6px 20px rgba(0,87,255,.45)}
+    .logo-text{font-weight:700;letter-spacing:.3px;color:#e9f0ff}
+    .btn{appearance:none;border:none;cursor:pointer;text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:700;background:rgba(255,255,255,.06);color:#eaeaea;border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px)}
+
+    header.hero{
+      width:min(1200px,100%);background:var(--vidrio);border:1px solid var(--borde);
+      backdrop-filter:blur(10px);border-radius:18px;padding:18px 20px;margin-bottom:20px;position:relative;
+    }
+    .edicion-badge{position:absolute;top:12px;right:12px;font-size:.8rem;color:#d1ddff;background:rgba(0,87,255,.14);padding:6px 10px;border-radius:999px;border:1px solid rgba(0,87,255,.25)}
+    header.hero h1{color:#bcd4ff;font-size:1.6rem}
+    header.hero p{color:var(--texto-suave);margin-top:6px}
+
+    .panel{
+      width:min(1100px,100%);display:flex;gap:18px;align-items:flex-start;
+      justify-content:space-between;
+    }
+
+    .game-area{flex:1}
+    .sidebar{width:260px}
+
+    .card-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:14px;
+    }
+
+    /* Card styles */
+    .card {
+      perspective:1000px;
+      height:120px;
+    }
+    .card-inner {
+      position:relative;width:100%;height:100%;
+      transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.9,.3,1);
+      cursor:pointer;border-radius:12px;
+    }
+    .card.flipped .card-inner{transform:rotateY(180deg)}
+    .face{
+      position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;
+      display:flex;align-items:center;justify-content:center;padding:12px;
+      box-shadow:0 6px 18px rgba(0,0,0,.35);
+    }
+    .face.front{
+      background:linear-gradient(135deg,var(--azul),var(--acento));
+      color:white;font-weight:800;font-size:1.1rem;transform:rotateY(0deg);
+    }
+    .face.back{
+      background:linear-gradient(180deg,#0f1724,#0b1220);
+      color:var(--gris-claro);transform:rotateY(180deg);font-weight:600;font-size:0.95rem;text-align:center;
+      border:1px solid rgba(255,255,255,.04);
+    }
+
+    .hud{
+      display:flex;flex-direction:column;gap:12px;padding:16px;background:var(--vidrio);border-radius:12px;border:1px solid var(--borde);
+    }
+    .timer{
+      font-size:2.1rem;font-weight:800;color:#fff;text-align:center;
+      background:linear-gradient(90deg,#07103a,#06244d);padding:10px;border-radius:10px;
+      box-shadow:0 6px 18px rgba(0,0,0,.4)
+    }
+    .score{font-size:1rem;color:var(--texto-suave);text-align:center}
+    .progress{height:10px;background:rgba(255,255,255,.04);border-radius:999px;overflow:hidden}
+    .bar{height:100%;width:100%;background:linear-gradient(90deg,var(--ok),#b6ffd5);transition:width .25s}
+
+    .footer-actions{text-align:center;margin-top:12px}
+    .message{
+      margin-top:12px;padding:12px;border-radius:10px;text-align:center;font-weight:700;
+    }
+    .message.ok{background:rgba(118,227,154,.08);color:var(--ok);border:1px solid rgba(118,227,154,.12)}
+    .message.fail{background:rgba(255,139,139,.06);color:var(--err);border:1px solid rgba(255,139,139,.10)}
+
+    /* responsive */
+    @media(max-width:900px){
+      .panel{flex-direction:column}
+      .sidebar{width:100%}
+      .card{height:110px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-badge">MS</div>
+      <div class="logo-text">Los Mil Saberes</div>
+    </div>
+    <div>
+      <button class="btn" id="btnRestart">Reiniciar</button>
+    </div>
+  </div>
+
+  <header class="hero">
+    <span class="edicion-badge">Juego</span>
+    <h1>Memorama del Glosario — 30s</h1>
+    <p>Encuentra las parejas (palabra ⇄ definición) antes de que se acabe el tiempo. ¡Rápido y visual!</p>
+  </header>
+
+  <main class="panel">
+    <section class="game-area">
+      <div id="grid" class="card-grid" aria-live="polite"></div>
+    </section>
+
+    <aside class="sidebar">
+      <div class="hud">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700;color:var(--texto-suave)">Tiempo restante</div>
+          <div id="pairsLeft" style="font-weight:800;color:#fff">—</div>
+        </div>
+        <div class="timer" id="timer">00:30</div>
+        <div class="score" id="score">Puntuación: 0</div>
+        <div class="progress" aria-hidden="true"><div id="bar" class="bar"></div></div>
+        <div style="font-size:.95rem;color:var(--texto-suave);">Encontradas: <span id="found">0</span> / <span id="totalPairs">—</span></div>
+        <div class="footer-actions">
+          <button class="btn" id="btnHint">Mostrar pista</button>
+        </div>
+        <div id="finalMsg"></div>
+      </div>
+    </aside>
+  </main>
+
+<script>
+/* --- Datos (palabra ⇄ definición) --- */
+const vocab = [
+  ["ADN","Ácido desoxirribonucleico, molécula que contiene la información genética de los seres vivos."],
+  ["ARN","Ácido ribonucleico, molécula que participa en la síntesis de proteínas y en la transmisión de información genética."],
+  ["Bipartidismo","Sistema político en el que predominan dos partidos principales."],
+  ["Paramilitarismo","Actividad armada desarrollada por grupos organizados no oficiales con fines políticos o militares."],
+  ["Ad hominem","Falacia que ataca a la persona en lugar de refutar su argumento."],
+  ["Equivocacion","Error o confusión al interpretar o realizar algo."],
+  ["Pendiente","En matemáticas, medida de la inclinación de una recta."],
+  ["Reciproca negativa","En geometría, relación entre dos rectas cuyas pendientes multiplicadas dan -1."],
+  ["Probabilidad condicional","Probabilidad de que ocurra un evento sabiendo que otro ya ha ocurrido."],
+  ["P(A|B)","Notación para la probabilidad de que ocurra A dado que ya ha ocurrido B."],
+  ["Contraccion","Acortamiento o reducción de algo; en biología, proceso en que un músculo se acorta y genera fuerza."],
+  ["Prediccion","Anticipación de un hecho o resultado futuro basada en datos o patrones."],
+  ["Tramoya","Conjunto de mecanismos y estructuras utilizadas en un teatro para cambiar decorados y efectos escénicos."],
+  ["Fisicalidad","Condición de ser físico o material; en arte escénico, uso del cuerpo como medio expresivo."],
+  ["Consustancial","Que es de la misma naturaleza o esencia que otra cosa."],
+  ["Subordinacionismo","Doctrina teológica que considera a una persona de la Trinidad inferior en jerarquía a otra."],
+  ["Rango de celdas","Conjunto de celdas seleccionadas en una hoja de cálculo."],
+  ["Condicion","Requisito que debe cumplirse para que algo suceda o sea verdadero."],
+  ["Trayectoria","Camino que describe un objeto en movimiento."],
+  ["Cinematica","Rama de la física que estudia el movimiento de los cuerpos sin considerar las causas que lo producen."],
+  ["Readymade","Objeto cotidiano presentado como obra de arte por un artista."],
+  ["Performance","Manifestación artística en vivo que combina diferentes disciplinas."],
+  ["Resistencia cardiovascular","Capacidad del sistema circulatorio y respiratorio para suministrar oxígeno durante actividad física prolongada."],
+  ["Coordinacion","Capacidad de sincronizar movimientos de manera eficiente."]
+];
+
+/* --- Configuración --- */
+const TIME_LIMIT = 375; // segundos
+let timer = TIME_LIMIT;
+let intervalId = null;
+let firstCard = null, secondCard = null;
+let lockBoard = false;
+let foundPairs = 0;
+let totalPairs = vocab.length;
+let score = 0;
+
+/* --- UI refs --- */
+const grid = document.getElementById('grid');
+const timerEl = document.getElementById('timer');
+const bar = document.getElementById('bar');
+const scoreEl = document.getElementById('score');
+const foundEl = document.getElementById('found');
+const totalPairsEl = document.getElementById('totalPairs');
+const pairsLeftEl = document.getElementById('pairsLeft');
+const finalMsg = document.getElementById('finalMsg');
+const btnRestart = document.getElementById('btnRestart');
+const btnHint = document.getElementById('btnHint');
+
+/* --- Sonidos via WebAudio --- */
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function beep(type='ok', time=0.05){
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.connect(g); g.connect(audioCtx.destination);
+  if(type==='ok'){ o.type='sine'; o.frequency.value = 880; }
+  else if(type==='fail'){ o.type='square'; o.frequency.value = 220; }
+  else { o.type='sine'; o.frequency.value = 440; }
+  g.gain.value = 0.0001;
+  o.start();
+  g.gain.exponentialRampToValueAtTime(0.15, audioCtx.currentTime + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + time);
+  o.stop(audioCtx.currentTime + time + 0.02);
+}
+
+/* --- Preparar cartas: creamos pares (word vs definition) --- */
+function buildDeck(){
+  const deck = [];
+  vocab.forEach((pair, idx) => {
+    const [word, def] = pair;
+    deck.push({id: idx, type:'word', text: word});
+    deck.push({id: idx, type:'def', text: def});
+  });
+  return shuffle(deck);
+}
+
+function shuffle(array){
+  // Fisher–Yates
+  for(let i=array.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+  return array;
+}
+
+function renderBoard(){
+  grid.innerHTML = '';
+  const deck = buildDeck();
+  deck.forEach((cardData, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.id = cardData.id;
+    card.dataset.type = cardData.type;
+    card.dataset.index = i;
+
+    const inner = document.createElement('div');
+    inner.className = 'card-inner';
+
+    const front = document.createElement('div');
+    front.className = 'face front';
+    front.textContent = cardData.type === 'word' ? cardData.text : 'Definición';
+
+    const back = document.createElement('div');
+    back.className = 'face back';
+    back.textContent = cardData.type === 'word' ? cardData.text : cardData.text;
+
+    inner.appendChild(front);
+    inner.appendChild(back);
+    card.appendChild(inner);
+    card.onclick = () => onCardClick(card);
+    grid.appendChild(card);
+  });
+
+  totalPairsEl.textContent = totalPairs;
+  pairsLeftEl.textContent = totalPairs - foundPairs;
+}
+
+/* --- Juego --- */
+function onCardClick(card){
+  if(lockBoard) return;
+  if(card.classList.contains('flipped')) return;
+
+  // primera interacción activa audioContext (por política de navegadores)
+  if(audioCtx.state === 'suspended') audioCtx.resume();
+
+  card.classList.add('flipped');
+  playFlipAnimation(card);
+
+  if(!firstCard){
+    firstCard = card;
+    return;
+  }
+  secondCard = card;
+  lockBoard = true;
+
+  const id1 = firstCard.dataset.id;
+  const id2 = secondCard.dataset.id;
+  const type1 = firstCard.dataset.type;
+  const type2 = secondCard.dataset.type;
+
+  // son parejos si mismo id y tipos distintos (word vs def)
+  if(id1 === id2 && type1 !== type2){
+    // match
+    foundPairs++;
+    pairsLeftEl.textContent = totalPairs - foundPairs;
+    foundEl.textContent = foundPairs;
+    score += Math.ceil((timer+1)*10); // puntaje dependiente del tiempo restante
+    scoreEl.textContent = 'Puntuación: ' + score;
+    beep('ok',0.08);
+    firstCard.style.pointerEvents = 'none';
+    secondCard.style.pointerEvents = 'none';
+    resetTurn(true);
+    checkWin();
+  } else {
+    // no match
+    beep('fail',0.12);
+    // efecto temporal antes de voltear
+    setTimeout(() => {
+      firstCard.classList.remove('flipped');
+      secondCard.classList.remove('flipped');
+      resetTurn(false);
+    }, 700);
+  }
+}
+
+function resetTurn(matched){
+  [firstCard, secondCard] = [null, null];
+  lockBoard = false;
+}
+
+/* --- simple flip visual tweak (scale) --- */
+function playFlipAnimation(card){
+  const inner = card.querySelector('.card-inner');
+  inner.animate([
+    { transform: 'rotateY(0) scale(1)' },
+    { transform: 'rotateY(0) scale(1.02)' },
+    { transform: 'rotateY(0) scale(1)' }
+  ], { duration: 220, easing: 'ease' });
+}
+
+/* --- Timer --- */
+function startTimer(){
+  clearInterval(intervalId);
+  timer = TIME_LIMIT;
+  updateTimerDisplay();
+  intervalId = setInterval(() => {
+    timer--;
+    updateTimerDisplay();
+    if(timer <= 0){
+      clearInterval(intervalId);
+      endGame(false);
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay(){
+  const mm = String(Math.floor(timer/60)).padStart(2,'0');
+  const ss = String(timer%60).padStart(2,'0');
+  timerEl.textContent = `${mm}:${ss}`;
+  const pct = (timer / TIME_LIMIT) * 100;
+  bar.style.width = pct + '%';
+}
+
+/* --- Win/Lose --- */
+function checkWin(){
+  if(foundPairs === totalPairs){
+    clearInterval(intervalId);
+    endGame(true);
+  }
+}
+
+function endGame(won){
+  lockBoard = true;
+  finalMsg.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = 'message ' + (won ? 'ok':'fail');
+  if(won){
+    div.innerHTML = `🎉 ¡Ganaste! Puntos: <strong>${score}</strong><br>Tiempo restante: <strong>${timer}s</strong>`;
+    beep('ok',0.14);
+  } else {
+    div.innerHTML = `⏱️ Se acabó el tiempo. Encontraste <strong>${foundPairs}</strong> / ${totalPairs}.`;
+    beep('fail',0.12);
+  }
+  finalMsg.appendChild(div);
+}
+
+/* --- Controls --- */
+function resetGame(){
+  clearInterval(intervalId);
+  foundPairs = 0;
+  score = 0;
+  firstCard = null; secondCard = null; lockBoard = false;
+  foundEl.textContent = foundPairs;
+  scoreEl.textContent = 'Puntuación: 0';
+  finalMsg.innerHTML = '';
+  renderBoard();
+  // small initial reveal: show briefly then hide to help player
+  const allCards = Array.from(document.querySelectorAll('.card'));
+  allCards.forEach(c => c.classList.add('flipped'));
+  setTimeout(() => {
+    allCards.forEach(c => c.classList.remove('flipped'));
+    startTimer();
+  }, 900);
+}
+
+btnRestart.addEventListener('click', resetGame);
+
+/* --- Hint: muestra una pareja aleatoria descubierta momentáneamente --- */
+btnHint.addEventListener('click', () => {
+  if(lockBoard) return;
+  const hidden = Array.from(document.querySelectorAll('.card:not(.flipped)'));
+  if(hidden.length < 2) return;
+  // buscar pares ocultos: agrupamos por id
+  const groups = {};
+  hidden.forEach(c => {
+    const id = c.dataset.id;
+    groups[id] = groups[id]||[];
+    groups[id].push(c);
+  });
+  const candidateGroups = Object.values(groups).filter(g => g.length === 2);
+  if(candidateGroups.length === 0){
+    // si no hay pares ocultos, simplemente muestra dos cartas aleatorias
+    const pick = shuffle(hidden).slice(0,2);
+    showHintCards(pick);
+  } else {
+    const pick = candidateGroups[Math.floor(Math.random()*candidateGroups.length)];
+    showHintCards(pick);
+  }
+});
+
+function showHintCards(cards){
+  lockBoard = true;
+  cards.forEach(c => c.classList.add('flipped'));
+  setTimeout(() => {
+    cards.forEach(c => c.classList.remove('flipped'));
+    lockBoard = false;
+  }, 1100);
+}
+
+/* --- Iniciar --- */
+renderBoard();
+resetGame();
+
+</script>
+</body>
+</html>
