@@ -117,7 +117,8 @@
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
       border-left:4px solid var(--acento);
-      border-radius:12px; padding:14px; color:#e9f1ff
+      border-radius:12px; padding:14px; color:#e9f1ff;
+      margin-top: 18px;
     }
 
     /* Interactivos */
@@ -162,13 +163,16 @@
       display: flex;
       justify-content: space-around;
       margin-top: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
     .ratios div {
       background: rgba(255,255,255,.1);
       border-radius: 12px;
       padding: 12px 16px;
       box-shadow: 0 2px 8px rgba(0,87,255,.3);
-      width: 30%;
+      flex: 1 1 30%;
+      min-width: 120px;
       user-select:none;
     }
     /* Etiquetas en SVG */
@@ -178,7 +182,7 @@
       font-size: 16px;
       user-select:none;
       pointer-events:none;
-      text-shadow: 0 0 6px rgba(0, 87, 255, 0.7);
+      text-shadow: 0 0 8px rgba(0, 87, 255, 0.8);
     }
     .arrow-line {
       stroke: var(--acento);
@@ -210,15 +214,15 @@
   <!-- Contenido -->
   <section class="contenedor">
     <!-- Columna 1: teoría e interactivo -->
-    <article class="card">
+    <article class="card" aria-label="Contenido principal sobre razones trigonométricas">
       <h2>Razones trigonométricas básicas</h2>
       <p>
         Las razones trigonométricas relacionan los lados de un triángulo rectángulo en función del ángulo θ. Las tres principales son:
       </p>
       <ul>
-        <li><strong>Seno (sen θ):</strong> cateto opuesto / hipotenusa</li>
-        <li><strong>Coseno (cos θ):</strong> cateto adyacente / hipotenusa</li>
-        <li><strong>Tangente (tan θ):</strong> cateto opuesto / cateto adyacente</li>
+        <li><strong>Seno (sen θ):</strong> es la razón entre el cateto opuesto y la hipotenusa. Indica qué tan "alto" es el ángulo.</li>
+        <li><strong>Coseno (cos θ):</strong> es la razón entre el cateto adyacente y la hipotenusa. Muestra qué tan "ancho" es el ángulo.</li>
+        <li><strong>Tangente (tan θ):</strong> es la razón entre el cateto opuesto y el cateto adyacente. Representa la pendiente o inclinación del ángulo.</li>
       </ul>
 
       <div class="interactive-trig" aria-label="Interacción razones trigonométricas">
@@ -227,12 +231,12 @@
           <input type="range" min="1" max="89" value="45" id="angleRange" aria-valuemin="1" aria-valuemax="89" aria-valuenow="45" />
         </div>
 
-        <svg class="svg-triangle" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+        <svg class="svg-triangle" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc" aria-describedby="desc">
           <title>Triángulo rectángulo interactivo</title>
           <desc>Triángulo con lados y ángulo θ que se actualizan con el control deslizante.</desc>
           <defs>
-            <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="strokeWidth">
-              <path d="M0,0 L6,3 L0,6 L1,3 z" fill="#3aa0ff" />
+            <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L8,4 L0,8 L2,4 z" fill="#3aa0ff" />
             </marker>
           </defs>
 
@@ -247,37 +251,59 @@
           <line id="cateto-op" x1="250" y1="200" x2="250" y2="50" stroke="var(--acento)" stroke-width="4" marker-end="url(#arrowhead)" />
 
           <!-- Ángulo θ (arco) -->
-          <path id="angle-arc" fill="none" stroke="var(--azul)" stroke-width="3" />
+          <path id="angle-arc" fill="none" stroke="#00ffff" stroke-width="5" />
 
           <!-- Etiqueta ángulo θ -->
           <text id="angle-text" class="label-text" x="75" y="180">θ</text>
 
           <!-- Etiquetas lados -->
-          <text id="label-op" class="label-text" x="255" y="130">Cateto opuesto</text>
-          <text id="label-ad" class="label-text" x="150" y="215" text-anchor="middle">Cateto adyacente</text>
-          <text id="label-hip" class="label-text" x="140" y="110" text-anchor="middle">Hipotenusa</text>
+          <text id="label-op" class="label-text" x="255" y="130" font-size="14">Cateto opuesto</text>
+          <text id="label-ad" class="label-text" x="150" y="215" text-anchor="middle" font-size="14">Cateto adyacente</text>
+          <text id="label-hip" class="label-text" x="140" y="110" text-anchor="middle" font-size="14">Hipotenusa</text>
         </svg>
 
         <div class="ratios" aria-live="polite" aria-atomic="true" aria-relevant="additions">
-          <div><strong>sen θ</strong><br><span id="senVal">0.71</span></div>
-          <div><strong>cos θ</strong><br><span id="cosVal">0.71</span></div>
-          <div><strong>tan θ</strong><br><span id="tanVal">1.00</span></div>
+          <div>
+            <strong>sen θ</strong><br>
+            <span id="senVal">0.71</span><br>
+            <small>Ejemplo: si hipotenusa = 10, cateto opuesto ≈ <span id="opNum">7.07</span></small>
+          </div>
+          <div>
+            <strong>cos θ</strong><br>
+            <span id="cosVal">0.71</span><br>
+            <small>Ejemplo: si hipotenusa = 10, cateto adyacente ≈ <span id="adNum">7.07</span></small>
+          </div>
+          <div>
+            <strong>tan θ</strong><br>
+            <span id="tanVal">1.00</span><br>
+            <small>Ejemplo: si cateto adyacente = 7, cateto opuesto ≈ <span id="tanNum">7</span></small>
+          </div>
         </div>
+      </div>
+
+      <div class="infobox" aria-label="Información adicional">
+        <h3>¿Por qué son importantes estas razones?</h3>
+        <p>
+          Las razones trigonométricas son la base para resolver triángulos, calcular alturas, distancias inaccesibles y modelar fenómenos periódicos como ondas y vibraciones.
+        </p>
+        <p>
+          Además, forman la base para funciones trigonométricas en cálculo, física, ingeniería y muchas ciencias aplicadas.
+        </p>
       </div>
     </article>
 
     <!-- Columna 2: mini-quiz -->
-    <aside class="card">
+    <aside class="card" aria-label="Mini cuestionario sobre razones trigonométricas">
       <h2>Mini‑quiz</h2>
       <div class="quiz" id="quiz">
         <div class="q">
           <p><strong>Contexto:</strong> El coseno es una razón trigonométrica que relaciona lados específicos de un triángulo rectángulo.</p>
           <p><strong>Pregunta:</strong> ¿Cuál es la definición correcta del coseno en un triángulo rectángulo?</p>
-          <label class="opcion"><input type="radio" name="p1" value="a"> A) Cateto opuesto dividido por la hipotenusa.</label>
-          <label class="opcion"><input type="radio" name="p1" value="b"> B) Cateto adyacente dividido por la hipotenusa.</label>
-          <label class="opcion"><input type="radio" name="p1" value="c"> C) Cateto opuesto dividido por el cateto adyacente.</label>
-          <label class="opcion"><input type="radio" name="p1" value="d"> D) Hipotenusa dividida por el cateto adyacente.</label>
-          <div class="resultado" id="r1"></div>
+          <label class="opcion"><input type="radio" name="p1" value="a"> A) Cateto opuesto sobre hipotenusa.</label>
+          <label class="opcion"><input type="radio" name="p1" value="b"> B) Cateto adyacente sobre hipotenusa.</label>
+          <label class="opcion"><input type="radio" name="p1" value="c"> C) Hipotenusa sobre cateto opuesto.</label>
+          <label class="opcion"><input type="radio" name="p1" value="d"> D) Cateto opuesto sobre cateto adyacente.</label>
+          <div class="resultado" id="r1" role="alert" aria-live="assertive"></div>
         </div>
         <div style="margin-top:10px;">
           <button class="btn" id="btnCheck" type="button">Verificar</button>
@@ -293,64 +319,41 @@
   </footer>
 
   <script>
-    // Mini-quiz
-    const r1 = document.getElementById('r1');
-    const btnCheck = document.getElementById('btnCheck');
-    const btnReset = document.getElementById('btnReset');
-
-    function verificar() {
-      const p1Sel = document.querySelector('input[name="p1"]:checked');
-      if (!p1Sel) {
-        r1.textContent = 'Selecciona una opción.';
-        r1.className = 'resultado';
-      } else if (p1Sel.value === 'b') {
-        r1.textContent = '¡Correcto! El coseno es el cateto adyacente dividido por la hipotenusa.';
-        r1.className = 'resultado ok';
-      } else {
-        r1.textContent = 'Incorrecto. Revisa las definiciones de las razones trigonométricas.';
-        r1.className = 'resultado mal';
-      }
-    }
-
-    function limpiar() {
-      document.querySelectorAll('input[name="p1"]').forEach(r => r.checked = false);
-      r1.textContent = '';
-      r1.className = 'resultado';
-    }
-
-    btnCheck.addEventListener('click', verificar);
-    btnReset.addEventListener('click', limpiar);
-
-    // Interactividad del triángulo
     const angleRange = document.getElementById('angleRange');
     const angleValue = document.getElementById('angleValue');
-    const senVal = document.getElementById('senVal');
-    const cosVal = document.getElementById('cosVal');
-    const tanVal = document.getElementById('tanVal');
     const hipotenusa = document.getElementById('hipotenusa');
     const catetoAd = document.getElementById('cateto-ad');
     const catetoOp = document.getElementById('cateto-op');
     const angleArc = document.getElementById('angle-arc');
     const angleText = document.getElementById('angle-text');
-
     const labelOp = document.getElementById('label-op');
     const labelAd = document.getElementById('label-ad');
     const labelHip = document.getElementById('label-hip');
 
-    // Constantes fijas
-    const baseX = 50;
-    const baseY = 200;
-    const hip = 200; // hipotenusa fija para facilitar proporciones
+    const senVal = document.getElementById('senVal');
+    const cosVal = document.getElementById('cosVal');
+    const tanVal = document.getElementById('tanVal');
+
+    const opNum = document.getElementById('opNum');
+    const adNum = document.getElementById('adNum');
+    const tanNum = document.getElementById('tanNum');
 
     function actualizarTriangulo() {
-      const angleDeg = Number(angleRange.value);
-      const angleRad = angleDeg * Math.PI / 180;
-
+      const angleDeg = +angleRange.value;
       angleValue.textContent = angleDeg;
 
-      // Calcular catetos
-      const opuesto = hip * Math.sin(angleRad);
+      const angleRad = angleDeg * Math.PI / 180;
+
+      // Coordenadas base
+      const baseX = 50;
+      const baseY = 200;
+
+      // Hipotenusa fija: distancia entre (50,200) y (250,50) original, vamos a ajustar para que sea constante = 212.13
+      const hip = 212.13;
+
+      // Catetos calculados según ángulo
       const adyacente = hip * Math.cos(angleRad);
+      const opuesto = hip * Math.sin(angleRad);
 
       // Actualizar líneas
       hipotenusa.setAttribute('x1', baseX);
@@ -368,11 +371,8 @@
       catetoOp.setAttribute('x2', baseX + adyacente);
       catetoOp.setAttribute('y2', baseY - opuesto);
 
-      // Arco ángulo (un cuarto de círculo pequeño)
-      const arcRadius = 30;
-      const arcX = baseX + arcRadius;
-      const arcY = baseY;
-      // Path arco: M (inicio), A (arco) 
+      // Arco ángulo (arco circular de 40 px de radio para mejor visibilidad)
+      const arcRadius = 40;
       const startX = baseX;
       const startY = baseY;
       const endX = baseX + arcRadius * Math.cos(angleRad);
@@ -388,7 +388,7 @@
       angleText.setAttribute('x', baseX + arcRadius * 0.7);
       angleText.setAttribute('y', baseY - arcRadius * 0.3);
 
-      // Etiquetas lados se colocan en puntos medios aproximados
+      // Posicionar etiquetas lados
       labelOp.setAttribute('x', baseX + adyacente + 10);
       labelOp.setAttribute('y', baseY - opuesto / 2 + 6);
 
@@ -398,14 +398,52 @@
       labelHip.setAttribute('x', baseX + adyacente / 2 + 20);
       labelHip.setAttribute('y', baseY - opuesto / 2 - 10);
 
-      // Actualizar valores numéricos (3 decimales)
+      // Actualizar valores numéricos con 3 decimales
       senVal.textContent = Math.sin(angleRad).toFixed(3);
       cosVal.textContent = Math.cos(angleRad).toFixed(3);
       tanVal.textContent = Math.tan(angleRad).toFixed(3);
+
+      // Ejemplos numéricos con hipotenusa = 10 para sen y cos, cateto adyacente = 7 para tan
+      const hipVal = 10;
+      const adyacenteNum = (hipVal * Math.cos(angleRad)).toFixed(2);
+      const opuestoNum = (hipVal * Math.sin(angleRad)).toFixed(2);
+      const tanNumCalc = (Math.tan(angleRad) * 7).toFixed(2);
+
+      opNum.textContent = opuestoNum;
+      adNum.textContent = adyacenteNum;
+      tanNum.textContent = tanNumCalc;
     }
 
     angleRange.addEventListener('input', actualizarTriangulo);
     actualizarTriangulo();
+
+    // Quiz
+    const r1 = document.getElementById('r1');
+    const btnCheck = document.getElementById('btnCheck');
+    const btnReset = document.getElementById('btnReset');
+
+    function verificar() {
+      const p1Sel = document.querySelector('input[name="p1"]:checked');
+      if (!p1Sel) {
+        r1.textContent = 'Selecciona una opción.';
+        r1.className = 'resultado';
+      } else if (p1Sel.value === 'b') {
+        r1.textContent = '¡Correcto! El coseno es la razón entre el cateto adyacente y la hipotenusa.';
+        r1.className = 'resultado ok';
+      } else {
+        r1.textContent = 'Incorrecto. Revisa la definición del coseno en un triángulo rectángulo.';
+        r1.className = 'resultado mal';
+      }
+    }
+
+    function limpiar() {
+      document.querySelectorAll('input[name="p1"]').forEach(r => r.checked = false);
+      r1.textContent = '';
+      r1.className = 'resultado';
+    }
+
+    btnCheck.addEventListener('click', verificar);
+    btnReset.addEventListener('click', limpiar);
   </script>
 </body>
 </html>
