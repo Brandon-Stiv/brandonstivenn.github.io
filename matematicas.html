@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Matemáticas — La Ecuación de la Recta</title>
+  <title>Matemáticas — Razones Trigonométricas Interactivas</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
     :root{
@@ -12,11 +12,14 @@
       --gris:#bfc7da;
       --negro:#0d0f12;
       --azul:#0057ff;
+      --acento:#3aa0ff;
       --vidrio: rgba(255,255,255,.06);
       --borde: rgba(255,255,255,.10);
-      --acento:#3aa0ff;
       --texto-suave:#cfd7ff;
       --grid:#3a4060;
+      --ok:#76e39a;
+      --warn:#ffc06b;
+      --err:#ff8b8b;
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif }
@@ -31,7 +34,7 @@
       padding:28px 18px 60px;
     }
 
-    /* Barra superior coherente con index/portada */
+    /* Barra superior */
     .topbar{
       width:min(1200px, 100%);
       display:flex; align-items:center; justify-content:space-between;
@@ -61,7 +64,7 @@
     }
     .btn:hover{ transform:translateY(-2px) }
 
-    /* Encabezado de página */
+    /* Hero */
     header.hero{
       width:min(1200px, 100%);
       background:var(--vidrio);
@@ -88,11 +91,11 @@
       margin-top:8px; color:var(--texto-suave);
     }
 
-    /* Contenido principal en tarjetas vidrio */
+    /* Layout principal */
     .contenedor{
       width:min(1200px, 100%);
       display:grid; gap:22px;
-      grid-template-columns: 1.1fr .9fr;
+      grid-template-columns: 1.15fr .85fr;
     }
     @media (max-width: 980px){
       .contenedor{ grid-template-columns: 1fr; }
@@ -106,60 +109,29 @@
       backdrop-filter: blur(8px);
       box-shadow:0 6px 18px rgba(0,0,0,.30);
     }
-    .card h2, .card h3{
-      color:#cfe3ff;
-      margin-bottom:10px;
-    }
-    .card p, .card li{
-      color:var(--gris-claro);
-    }
+    .card h2, .card h3{ color:#cfe3ff; margin-bottom:10px }
+    .card p, .card li{ color:var(--gris-claro) }
     .card ul{ padding-left:18px; line-height:1.6 }
 
-    code{
-      background: rgba(0,87,255,.18);
-      padding: 2px 6px;
-      border-radius: 6px;
-      font-weight: 700;
-      color:#bcd4ff;
-    }
-
-    /* Gráfica */
-    .grafica-wrap{
-      display:flex; flex-direction:column; gap:14px;
-    }
-    .panel-controles{
-      display:flex; flex-wrap:wrap; gap:14px;
-      align-items:center;
+    .infobox{
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
-      border-radius:14px; padding:12px;
-    }
-    .control{
-      display:flex; align-items:center; gap:10px; color:var(--gris-claro);
-    }
-    .control input[type="range"]{ width:140px }
-    .badge{
-      display:inline-block; min-width:46px; text-align:center;
-      padding:6px 10px; border-radius:10px; font-weight:700;
-      background:linear-gradient(135deg, var(--azul), var(--acento));
-      border:none; color:#fff; box-shadow:0 8px 20px rgba(0,87,255,.35);
-    }
-    canvas{
-      width:100%; height:auto;
-      background: transparent;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:14px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
-    }
-    .ayudas{
-      font-size:.95rem; color:#d7e1ff
+      border-left:4px solid var(--acento);
+      border-radius:12px; padding:14px; color:#e9f1ff
     }
 
-    /* Secciones extra */
-    .grid-2{
-      display:grid; gap:22px; grid-template-columns: 1fr 1fr;
+    /* Interactivos */
+    .quiz{ display:flex; flex-direction:column; gap:14px }
+    .q{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:12px; padding:12px;
     }
-    @media (max-width: 800px){ .grid-2{ grid-template-columns:1fr } }
+    .q p{ margin-bottom:8px; color:#e9f1ff }
+    .q .opcion{ display:block; margin:6px 0; color:#e9f1ff }
+    .resultado{ font-weight:700; margin-top:6px }
+    .ok{ color:var(--ok) } .mal{ color:var(--err) }
+    .nota{ color:#ffdca8 }
 
     footer{
       width:min(1200px, 100%);
@@ -168,6 +140,51 @@
 
     /* Foco accesible */
     .btn:focus, a:focus, input:focus{ outline:2px solid #9fc0ff; outline-offset:2px; }
+
+    /* Interacción trigonometría */
+    .interactive-trig {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .slider-container {
+      margin: 18px 0;
+    }
+    .svg-triangle {
+      max-width: 350px;
+      width: 100%;
+      height: auto;
+      margin: 0 auto 18px auto;
+      display: block;
+    }
+    .ratios {
+      font-size: 1.1rem;
+      color: var(--texto-suave);
+      display: flex;
+      justify-content: space-around;
+      margin-top: 14px;
+    }
+    .ratios div {
+      background: rgba(255,255,255,.1);
+      border-radius: 12px;
+      padding: 12px 16px;
+      box-shadow: 0 2px 8px rgba(0,87,255,.3);
+      width: 30%;
+      user-select:none;
+    }
+    /* Etiquetas en SVG */
+    .label-text {
+      fill: var(--blanco);
+      font-weight: 700;
+      font-size: 16px;
+      user-select:none;
+      pointer-events:none;
+      text-shadow: 0 0 6px rgba(0, 87, 255, 0.7);
+    }
+    .arrow-line {
+      stroke: var(--acento);
+      stroke-width: 2;
+      marker-end: url(#arrowhead);
+    }
   </style>
 </head>
 <body>
@@ -186,282 +203,209 @@
   <!-- Hero -->
   <header class="hero">
     <span class="edicion-badge">Matemáticas</span>
-    <h1>La Ecuación de la Recta <span style="color:#cfe3ff">y = mx + b</span></h1>
-    <p class="sub">Cómo leerla, graficarla e interpretarla en situaciones reales.</p>
+    <h1>Razones Trigonométricas</h1>
+    <p class="sub">Visualiza y comprende las relaciones trigonométricas con un triángulo rectángulo interactivo.</p>
   </header>
 
   <!-- Contenido -->
   <section class="contenedor">
-    <!-- Columna izquierda: teoría + ejemplos -->
+    <!-- Columna 1: teoría e interactivo -->
     <article class="card">
-      <h2>1) ¿Qué significan <code>m</code> y <code>b</code>?</h2>
-      <p>La forma pendiente–intersección, <code>y = mx + b</code>, describe una recta en el plano cartesiano:</p>
+      <h2>Razones trigonométricas básicas</h2>
+      <p>
+        Las razones trigonométricas relacionan los lados de un triángulo rectángulo en función del ángulo θ. Las tres principales son:
+      </p>
       <ul>
-        <li><strong>Pendiente <code>m</code></strong>: indica cuánto cambia <code>y</code> por cada unidad que cambia <code>x</code>. Es la razón <em>“rise/run”</em> = <code>Δy/Δx</code>. Si <code>m &gt; 0</code> la recta sube; si <code>m &lt; 0</code> baja; si <code>m = 0</code> es horizontal.</li>
-        <li><strong>Intersección con el eje <code>Y</code> (<code>b</code>)</strong>: es el valor de <code>y</code> cuando <code>x = 0</code>. Es el punto donde la recta corta el eje vertical: <code>(0, b)</code>.</li>
+        <li><strong>Seno (sen θ):</strong> cateto opuesto / hipotenusa</li>
+        <li><strong>Coseno (cos θ):</strong> cateto adyacente / hipotenusa</li>
+        <li><strong>Tangente (tan θ):</strong> cateto opuesto / cateto adyacente</li>
       </ul>
 
-      <h3>Ejemplo rápido</h3>
-      <p>En <code>y = 2x + 1</code>, la pendiente es <code>m = 2</code> (sube 2 por cada 1 que avanzas en <code>x</code>) y corta el eje <code>Y</code> en <code>b = 1</code> (punto <code>(0,1)</code>).</p>
-
-      <h3>Cómo encontrar la ecuación de una recta</h3>
-      <div class="grid-2">
-        <div>
-          <p><strong>Con pendiente e intersección</strong> (directo): si conoces <code>m</code> y <code>b</code>, sustituyes: <code>y = mx + b</code>.</p>
-          <p><strong>Con un punto y la pendiente</strong> (forma punto–pendiente):<br/><code>y - y₁ = m(x - x₁)</code>. Luego despejas para obtener <code>y = mx + b</code>.</p>
+      <div class="interactive-trig" aria-label="Interacción razones trigonométricas">
+        <label for="angleRange">Ajusta el ángulo θ: <span id="angleValue">45</span>°</label>
+        <div class="slider-container">
+          <input type="range" min="1" max="89" value="45" id="angleRange" aria-valuemin="1" aria-valuemax="89" aria-valuenow="45" />
         </div>
-        <div>
-          <p><strong>Con dos puntos</strong> <code>(x₁,y₁)</code> y <code>(x₂,y₂)</code>:</p>
-          <ul>
-            <li>Calcula <code>m = (y₂ - y₁) / (x₂ - x₁)</code> (si <code>x₂ ≠ x₁</code>).</li>
-            <li>Usa punto–pendiente con cualquiera de los dos puntos y despeja <code>b</code>.</li>
-          </ul>
-          <p style="font-size:.95rem;color:#d7e1ff">Nota: si <code>x₂ = x₁</code>, la recta es vertical (<code>x = c</code>) y no puede escribirse como <code>y = mx + b</code> porque la pendiente es indefinida.</p>
+
+        <svg class="svg-triangle" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+          <title>Triángulo rectángulo interactivo</title>
+          <desc>Triángulo con lados y ángulo θ que se actualizan con el control deslizante.</desc>
+          <defs>
+            <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L6,3 L0,6 L1,3 z" fill="#3aa0ff" />
+            </marker>
+          </defs>
+
+          <!-- Triángulo -->
+          <polygon points="50,200 250,200 50,50" fill="rgba(0,87,255,0.15)" stroke="var(--acento)" stroke-width="3" />
+
+          <!-- Hipotenusa -->
+          <line id="hipotenusa" x1="50" y1="200" x2="250" y2="50" stroke="var(--azul)" stroke-width="4" />
+          <!-- Cateto adyacente -->
+          <line id="cateto-ad" x1="50" y1="200" x2="250" y2="200" stroke="var(--acento)" stroke-width="4" marker-end="url(#arrowhead)" />
+          <!-- Cateto opuesto -->
+          <line id="cateto-op" x1="250" y1="200" x2="250" y2="50" stroke="var(--acento)" stroke-width="4" marker-end="url(#arrowhead)" />
+
+          <!-- Ángulo θ (arco) -->
+          <path id="angle-arc" fill="none" stroke="var(--azul)" stroke-width="3" />
+
+          <!-- Etiqueta ángulo θ -->
+          <text id="angle-text" class="label-text" x="75" y="180">θ</text>
+
+          <!-- Etiquetas lados -->
+          <text id="label-op" class="label-text" x="255" y="130">Cateto opuesto</text>
+          <text id="label-ad" class="label-text" x="150" y="215" text-anchor="middle">Cateto adyacente</text>
+          <text id="label-hip" class="label-text" x="140" y="110" text-anchor="middle">Hipotenusa</text>
+        </svg>
+
+        <div class="ratios" aria-live="polite" aria-atomic="true" aria-relevant="additions">
+          <div><strong>sen θ</strong><br><span id="senVal">0.71</span></div>
+          <div><strong>cos θ</strong><br><span id="cosVal">0.71</span></div>
+          <div><strong>tan θ</strong><br><span id="tanVal">1.00</span></div>
         </div>
       </div>
-
-      <h3>Intersecciones y paralelas/perpendiculares</h3>
-      <ul>
-        <li><strong>Intersección con X</strong> (corte en el eje horizontal): pon <code>y = 0</code> y resuelve <code>0 = mx + b</code> → <code>x = -b/m</code> (si <code>m ≠ 0</code>).</li>
-        <li><strong>Paralelas</strong>: tienen la misma pendiente (<code>m</code> igual) y distinto <code>b</code>.</li>
-        <li><strong>Perpendiculares</strong>: si una tiene pendiente <code>m</code>, la otra tiene pendiente <code>-1/m</code> (recíproca negativa), cuando <code>m ≠ 0</code>.</li>
-      </ul>
     </article>
 
-    <!-- Columna derecha: gráfica interactiva -->
-    <aside class="card grafica-wrap">
-      <h2>2) Gráfica interactiva</h2>
-      <p class="ayudas">Ajusta <strong>pendiente</strong> y <strong>intersección</strong> para ver cómo cambian la recta, sus cortes con los ejes y el triángulo de la pendiente.</p>
-
-      <div class="panel-controles">
-        <div class="control">
-          <label for="m">Pendiente (m):</label>
-          <input type="range" id="m" min="-5" max="5" step="0.1" value="1">
-          <span class="badge" id="mBadge">1.0</span>
+    <!-- Columna 2: mini-quiz -->
+    <aside class="card">
+      <h2>Mini‑quiz</h2>
+      <div class="quiz" id="quiz">
+        <div class="q">
+          <p><strong>Contexto:</strong> El coseno es una razón trigonométrica que relaciona lados específicos de un triángulo rectángulo.</p>
+          <p><strong>Pregunta:</strong> ¿Cuál es la definición correcta del coseno en un triángulo rectángulo?</p>
+          <label class="opcion"><input type="radio" name="p1" value="a"> A) Cateto opuesto dividido por la hipotenusa.</label>
+          <label class="opcion"><input type="radio" name="p1" value="b"> B) Cateto adyacente dividido por la hipotenusa.</label>
+          <label class="opcion"><input type="radio" name="p1" value="c"> C) Cateto opuesto dividido por el cateto adyacente.</label>
+          <label class="opcion"><input type="radio" name="p1" value="d"> D) Hipotenusa dividida por el cateto adyacente.</label>
+          <div class="resultado" id="r1"></div>
         </div>
-        <div class="control">
-          <label for="b">Intersección (b):</label>
-          <input type="range" id="b" min="-10" max="10" step="1" value="0">
-          <span class="badge" id="bBadge">0</span>
+        <div style="margin-top:10px;">
+          <button class="btn" id="btnCheck" type="button">Verificar</button>
+          <button class="btn" id="btnReset" type="button">Limpiar</button>
         </div>
-        <button class="btn" id="btnReset" type="button" title="Restablecer">Restablecer</button>
       </div>
-
-      <canvas id="grafica" width="720" height="460" aria-label="Plano cartesiano con recta y = mx + b"></canvas>
-      <p class="ayudas" id="ecuacionTexto" aria-live="polite">Ecuación: <code>y = 1.0x + 0</code> &nbsp;•&nbsp; Corte Y: <code>(0, 0)</code> &nbsp;•&nbsp; Corte X: <code>(0, 0)</code></p>
     </aside>
   </section>
 
-  <!-- Aplicaciones -->
-  <section class="card" style="width:min(1200px,100%); margin-top:22px">
-    <h2>3) Aplicaciones típicas</h2>
-    <ul>
-      <li><strong>Costo total</strong>: <code>y = mx + b</code>, donde <code>m</code> es el costo por unidad y <code>b</code> un costo fijo (por ejemplo, matrícula + valor por crédito).</li>
-      <li><strong>Distancia en función del tiempo</strong>: si te mueves con velocidad constante, <code>y</code> (distancia) crece linealmente con <code>x</code> (tiempo); <code>m</code> es la velocidad y <code>b</code> la distancia inicial.</li>
-      <li><strong>Temperatura vs. altura</strong> (aproximación): a cierta escala, la temperatura desciende casi linealmente con la altura; <code>m</code> sería la tasa de variación por kilómetro.</li>
-    </ul>
-  </section>
-
+  <!-- Pie de página -->
   <footer>
     <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
   </footer>
 
   <script>
-    // --- Utilidades para la gráfica ---
-    const canvas = document.getElementById('grafica');
-    const ctx = canvas.getContext('2d');
-    const mInput = document.getElementById('m');
-    const bInput = document.getElementById('b');
-    const mBadge = document.getElementById('mBadge');
-    const bBadge = document.getElementById('bBadge');
-    const ecuacionTexto = document.getElementById('ecuacionTexto');
+    // Mini-quiz
+    const r1 = document.getElementById('r1');
+    const btnCheck = document.getElementById('btnCheck');
     const btnReset = document.getElementById('btnReset');
 
-    // Factor de escala: 1 unidad = 20 px (ajustable)
-    const UNIT = 20;
-
-    // Ajuste para pantallas de alta densidad (retina)
-    function scaleForDPR() {
-      const dpr = window.devicePixelRatio || 1;
-      const cssWidth = canvas.clientWidth || canvas.width;
-      const cssHeight = canvas.clientHeight || canvas.height;
-      canvas.width = Math.round(cssWidth * dpr);
-      canvas.height = Math.round(cssHeight * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    // Dibuja cuadrícula, ejes, ticks y etiquetas básicas
-    function drawAxesGrid(cx, cy, width, height) {
-      ctx.clearRect(0, 0, width, height);
-
-      // Cuadrícula
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = 'rgba(160,180,220,0.10)';
-      for (let x = 0; x <= width; x += UNIT) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
-      }
-      for (let y = 0; y <= height; y += UNIT) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
-      }
-
-      // Ejes
-      ctx.strokeStyle = 'rgba(187, 206, 255, 0.7)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(0, cy); ctx.lineTo(width, cy);
-      ctx.moveTo(cx, 0); ctx.lineTo(cx, height);
-      ctx.stroke();
-
-      // Flechas en ejes
-      ctx.beginPath();
-      // eje X →
-      ctx.moveTo(width - 12, cy - 6); ctx.lineTo(width, cy); ctx.lineTo(width - 12, cy + 6);
-      // eje Y ↑
-      ctx.moveTo(cx - 6, 12); ctx.lineTo(cx, 0); ctx.lineTo(cx + 6, 12);
-      ctx.stroke();
-
-      // Cero
-      ctx.fillStyle = '#cfe3ff';
-      ctx.font = '12px Segoe UI, Helvetica, Arial, sans-serif';
-      ctx.fillText('0', cx + 4, cy - 4);
-
-      // Marcas numéricas (cada 2 unidades para no saturar)
-      ctx.fillStyle = 'rgba(220,230,255,0.85)';
-      for (let i = -20; i <= 20; i++) {
-        if (i !== 0 && i % 2 === 0) {
-          // X
-          const x = cx + i * UNIT;
-          if (x >= 0 && x <= width) {
-            ctx.fillText(String(i), x - 6, cy + 14);
-          }
-          // Y
-          const y = cy - i * UNIT;
-          if (y >= 0 && y <= height) {
-            ctx.fillText(String(i), cx + 6, y + 4);
-          }
-        }
+    function verificar() {
+      const p1Sel = document.querySelector('input[name="p1"]:checked');
+      if (!p1Sel) {
+        r1.textContent = 'Selecciona una opción.';
+        r1.className = 'resultado';
+      } else if (p1Sel.value === 'b') {
+        r1.textContent = '¡Correcto! El coseno es el cateto adyacente dividido por la hipotenusa.';
+        r1.className = 'resultado ok';
+      } else {
+        r1.textContent = 'Incorrecto. Revisa las definiciones de las razones trigonométricas.';
+        r1.className = 'resultado mal';
       }
     }
 
-    // Dibuja la recta y = m x + b
-    function drawLine(m, b, cx, cy, width, height) {
-      ctx.strokeStyle = 'rgba(220,230,255,0.95)';
-      ctx.lineWidth = 2;
-
-      ctx.beginPath();
-      // Recorremos píxeles en X en coordenadas de pantalla
-      let first = true;
-      for (let px = 0; px <= width; px++) {
-        const xReal = (px - cx) / UNIT;
-        const yReal = m * xReal + b;
-        const py = cy - yReal * UNIT;
-        if (first) { ctx.moveTo(px, py); first = false; }
-        else { ctx.lineTo(px, py); }
-      }
-      ctx.stroke();
-
-      // Intersección con Y: (0, b)
-      const yIntercept = { x: cx, y: cy - b * UNIT };
-      drawPoint(yIntercept.x, yIntercept.y, '#3aa0ff');
-      drawLabel(yIntercept.x + 8, yIntercept.y - 8, `(0, ${round(b)})`);
-
-      // Intersección con X: y=0 → x = -b/m (si m != 0)
-      if (m !== 0) {
-        const xCut = -b / m;
-        const xIntercept = { x: cx + xCut * UNIT, y: cy };
-        drawPoint(xIntercept.x, xIntercept.y, '#3aa0ff');
-        drawLabel(xIntercept.x + 8, xIntercept.y - 8, `(${round(xCut)}, 0)`);
-      }
-
-      // Triángulo de pendiente (rise/run): desde el punto (0,b) toma run=1 (si cabe)
-      const run = 2; // se ve mejor 2 unidades
-      const rise = m * run;
-      const x1 = cx, y1 = cy - b * UNIT; // punto en (0,b)
-      const x2 = x1 + run * UNIT;
-      const y2 = y1 - rise * UNIT;
-
-      // Solo si el triángulo queda dentro
-      if (x2 >= 0 && x2 <= width && y2 >= 0 && y2 <= height) {
-        // Cateto horizontal (run)
-        ctx.strokeStyle = 'rgba(58,160,255,0.9)';
-        ctx.lineWidth = 3;
-        ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y1); ctx.stroke();
-
-        // Cateto vertical (rise)
-        ctx.strokeStyle = 'rgba(0,87,255,0.9)';
-        ctx.beginPath(); ctx.moveTo(x2, y1); ctx.lineTo(x2, y2); ctx.stroke();
-
-        // Hipotenusa sobre la recta
-        ctx.strokeStyle = 'rgba(220,230,255,0.95)';
-        ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
-
-        // Etiquetas
-        drawLabel((x1 + x2) / 2 - 10, y1 + 16, `run=${run}`);
-        drawLabel(x2 + 8, (y1 + y2) / 2, `rise=${round(rise)}`);
-      }
+    function limpiar() {
+      document.querySelectorAll('input[name="p1"]').forEach(r => r.checked = false);
+      r1.textContent = '';
+      r1.className = 'resultado';
     }
 
-    function drawPoint(x, y, color) {
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(x, y, 4, 0, Math.PI * 2);
-      ctx.fill();
-      // halo
-      ctx.fillStyle = 'rgba(58,160,255,0.25)';
-      ctx.beginPath(); ctx.arc(x, y, 10, 0, Math.PI * 2); ctx.fill();
+    btnCheck.addEventListener('click', verificar);
+    btnReset.addEventListener('click', limpiar);
+
+    // Interactividad del triángulo
+    const angleRange = document.getElementById('angleRange');
+    const angleValue = document.getElementById('angleValue');
+    const senVal = document.getElementById('senVal');
+    const cosVal = document.getElementById('cosVal');
+    const tanVal = document.getElementById('tanVal');
+    const hipotenusa = document.getElementById('hipotenusa');
+    const catetoAd = document.getElementById('cateto-ad');
+    const catetoOp = document.getElementById('cateto-op');
+    const angleArc = document.getElementById('angle-arc');
+    const angleText = document.getElementById('angle-text');
+
+    const labelOp = document.getElementById('label-op');
+    const labelAd = document.getElementById('label-ad');
+    const labelHip = document.getElementById('label-hip');
+
+    // Constantes fijas
+    const baseX = 50;
+    const baseY = 200;
+    const hip = 200; // hipotenusa fija para facilitar proporciones
+
+    function actualizarTriangulo() {
+      const angleDeg = Number(angleRange.value);
+      const angleRad = angleDeg * Math.PI / 180;
+
+      angleValue.textContent = angleDeg;
+
+      // Calcular catetos
+      const opuesto = hip * Math.sin(angleRad);
+      const adyacente = hip * Math.cos(angleRad);
+
+      // Actualizar líneas
+      hipotenusa.setAttribute('x1', baseX);
+      hipotenusa.setAttribute('y1', baseY);
+      hipotenusa.setAttribute('x2', baseX + adyacente);
+      hipotenusa.setAttribute('y2', baseY - opuesto);
+
+      catetoAd.setAttribute('x1', baseX);
+      catetoAd.setAttribute('y1', baseY);
+      catetoAd.setAttribute('x2', baseX + adyacente);
+      catetoAd.setAttribute('y2', baseY);
+
+      catetoOp.setAttribute('x1', baseX + adyacente);
+      catetoOp.setAttribute('y1', baseY);
+      catetoOp.setAttribute('x2', baseX + adyacente);
+      catetoOp.setAttribute('y2', baseY - opuesto);
+
+      // Arco ángulo (un cuarto de círculo pequeño)
+      const arcRadius = 30;
+      const arcX = baseX + arcRadius;
+      const arcY = baseY;
+      // Path arco: M (inicio), A (arco) 
+      const startX = baseX;
+      const startY = baseY;
+      const endX = baseX + arcRadius * Math.cos(angleRad);
+      const endY = baseY - arcRadius * Math.sin(angleRad);
+
+      const largeArcFlag = 0;
+      const sweepFlag = 1;
+
+      const d = `M${startX},${startY} A${arcRadius},${arcRadius} 0 ${largeArcFlag} ${sweepFlag} ${endX},${endY}`;
+      angleArc.setAttribute('d', d);
+
+      // Posicionar texto θ cerca del arco
+      angleText.setAttribute('x', baseX + arcRadius * 0.7);
+      angleText.setAttribute('y', baseY - arcRadius * 0.3);
+
+      // Etiquetas lados se colocan en puntos medios aproximados
+      labelOp.setAttribute('x', baseX + adyacente + 10);
+      labelOp.setAttribute('y', baseY - opuesto / 2 + 6);
+
+      labelAd.setAttribute('x', baseX + adyacente / 2);
+      labelAd.setAttribute('y', baseY + 20);
+
+      labelHip.setAttribute('x', baseX + adyacente / 2 + 20);
+      labelHip.setAttribute('y', baseY - opuesto / 2 - 10);
+
+      // Actualizar valores numéricos (3 decimales)
+      senVal.textContent = Math.sin(angleRad).toFixed(3);
+      cosVal.textContent = Math.cos(angleRad).toFixed(3);
+      tanVal.textContent = Math.tan(angleRad).toFixed(3);
     }
 
-    function drawLabel(x, y, text) {
-      ctx.fillStyle = '#e9f1ff';
-      ctx.font = '12px Segoe UI, Helvetica, Arial, sans-serif';
-      ctx.fillText(text, x, y);
-    }
-
-    function round(val) {
-      return Math.abs(val) < 1e-9 ? 0 : Math.round(val * 100) / 100;
-    }
-
-    function updateEquationText(m, b) {
-      const bx = b >= 0 ? ` + ${round(b)}` : ` - ${Math.abs(round(b))}`;
-      const eq = `y = ${round(m)}x${b === 0 ? '' : bx}`;
-      // corte X
-      let corteX = '(indefinido)';
-      if (m !== 0) { corteX = `(${round(-b / m)}, 0)`; }
-      ecuacionTexto.innerHTML = `Ecuación: <code>${eq}</code> &nbsp;•&nbsp; Corte Y: <code>(0, ${round(b)})</code> &nbsp;•&nbsp; Corte X: <code>${corteX}</code>`;
-    }
-
-    function drawAll() {
-      scaleForDPR();
-      const width = canvas.width / (window.devicePixelRatio || 1);
-      const height = canvas.height / (window.devicePixelRatio || 1);
-      const cx = Math.round(width / 2);
-      const cy = Math.round(height / 2);
-
-      const m = parseFloat(mInput.value);
-      const b = parseFloat(bInput.value);
-
-      mBadge.textContent = m.toFixed(1);
-      bBadge.textContent = b.toString();
-
-      drawAxesGrid(cx, cy, width, height);
-      drawLine(m, b, cx, cy, width, height);
-      updateEquationText(m, b);
-    }
-
-    mInput.addEventListener('input', drawAll);
-    bInput.addEventListener('input', drawAll);
-    btnReset.addEventListener('click', () => {
-      mInput.value = '1';
-      bInput.value = '0';
-      drawAll();
-    });
-
-    // Redibuja al cambiar tamaño para mantener nitidez
-    window.addEventListener('resize', drawAll, { passive:true });
-
-    // Inicial
-    drawAll();
+    angleRange.addEventListener('input', actualizarTriangulo);
+    actualizarTriangulo();
   </script>
 </body>
 </html>

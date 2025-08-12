@@ -91,6 +91,14 @@
       margin-top:8px; color:var(--texto-suave);
     }
 
+    /* Imagen destacada */
+    .imagen-destacada {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+
     /* Layout principal */
     .contenedor{
       width:min(1200px, 100%);
@@ -113,29 +121,12 @@
     .card p, .card li{ color:var(--gris-claro) }
     .card ul{ padding-left:18px; line-height:1.6 }
 
-    .grid-2{ display:grid; gap:18px; grid-template-columns:1fr 1fr }
-    @media (max-width: 800px){ .grid-2{ grid-template-columns:1fr } }
-
     .infobox{
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
       border-left:4px solid var(--acento);
       border-radius:12px; padding:14px; color:#e9f1ff
     }
-
-    /* Timeline */
-    .timeline{ position:relative; padding-left:20px }
-    .timeline::before{
-      content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:rgba(160,180,220,.35)
-    }
-    .t-item{ position:relative; margin:10px 0 14px 0 }
-    .t-item::before{
-      content:''; position:absolute; left:-1px; top:4px; width:10px; height:10px; border-radius:50%;
-      background:linear-gradient(135deg, var(--azul), var(--acento));
-      box-shadow:0 0 0 4px rgba(58,160,255,.2)
-    }
-    .t-year{ font-weight:800; color:#e9f1ff }
-    .t-desc{ color:#d7e1ff }
 
     /* Interactivos */
     .quiz{ display:flex; flex-direction:column; gap:14px }
@@ -145,10 +136,6 @@
       border-radius:12px; padding:12px;
     }
     .q p{ margin-bottom:8px; color:#e9f1ff }
-    .q input[type="text"]{
-      width:100%; max-width:420px; padding:10px; border-radius:8px; border:none;
-      background:rgba(255,255,255,.1); color:#fff
-    }
     .q .opcion{ display:block; margin:6px 0; color:#e9f1ff }
     .resultado{ font-weight:700; margin-top:6px }
     .ok{ color:var(--ok) } .mal{ color:var(--err) }
@@ -181,213 +168,94 @@
     <span class="edicion-badge">Lenguaje</span>
     <h1>Teatro Renacentista</h1>
     <p class="sub">Del redescubrimiento clásico al surgimiento de nuevas formas escénicas en Italia, Inglaterra y España.</p>
+    <img class="imagen-destacada" src="https://humanidades.com/wp-content/uploads/2018/07/arte-renacentista-e1571802362634.jpg" alt="Arte Renacentista">
   </header>
 
   <!-- Contenido -->
   <section class="contenedor">
     <!-- Columna 1: teoría -->
     <article class="card">
-      <h2>1) Contexto y rasgos generales</h2>
+      <h2>Contexto y características</h2>
       <p>
-        El Renacimiento (siglos XV–XVI, con variaciones según el país) recuperó el legado grecolatino y colocó al ser humano en el centro del arte y el pensamiento.
-        En teatro, esto se tradujo en equilibrio formal, interés por la psicología de los personajes, y un lenguaje que combinó
-        <em>claridad</em>, <em>musicalidad</em> y <em>verosimilitud</em>.
+        Durante los siglos XV y XVI, el Renacimiento marcó un cambio cultural donde el ser humano y su razón pasaron al centro del arte y la literatura. En el teatro, esto se reflejó en la recuperación del modelo clásico grecolatino, enfatizando la armonía, la claridad y la verosimilitud.
       </p>
-      <div class="grid-2" style="margin-top:10px">
-        <div class="infobox">
-          <h3>Características clave</h3>
-          <ul>
-            <li><strong>Humanismo</strong>: conflictos morales, pasión y razón en tensión.</li>
-            <li><strong>Modelo clásico</strong>: influencia de Plauto, Terencio y Séneca.</li>
-            <li><strong>Estructura</strong>: tendencia a 5 actos en la tradición italiana; en Inglaterra la división es flexible.</li>
-            <li><strong>Unidades</strong>: tiempo, lugar y acción recomendadas por tratadistas italianos; aplicadas con libertad según el país.</li>
-            <li><strong>Lenguaje</strong>: uso del verso (p. ej., <em>blank verse</em> inglés) y prosa según situaciones.</li>
-          </ul>
-        </div>
-        <div class="infobox">
-          <h3>Temas frecuentes</h3>
-          <ul>
-            <li>Amor, honor, fortuna y libre albedrío.</li>
-            <li>Historia y mitología como espejos del presente.</li>
-            <li>Crítica social y sátira de costumbres.</li>
-          </ul>
-        </div>
-      </div>
-
-      <h2 style="margin-top:16px">2) Espacios escénicos y escenografía</h2>
+      <h3>Principales rasgos</h3>
       <ul>
-        <li><strong>Italia</strong>: innovación en <em>perspectiva</em> (Sebastiano Serlio) y maquinaria teatral (Giovan Battista Aleotti, Nicola Sabbatini); salas como el <em>Teatro Olimpico</em> de Vicenza (1585, Andrea Palladio) integran arquitectura clásica y tramoya.</li>
-        <li><strong>Inglaterra</strong>: teatros públicos a cielo abierto (p. ej., <em>The Globe</em>, 1599) con escenario saliente y cercanía al público; gran dinamismo y escenografía sugerida por el texto.</li>
-        <li><strong>España</strong>: <em>corrales de comedias</em> (como el Corral de la Cruz, Madrid) con patios y galerías; transición hacia el <em>Siglo de Oro</em> al final del periodo renacentista.</li>
+        <li><strong>Humanismo:</strong> los personajes expresan conflictos morales y emociones complejas.</li>
+        <li><strong>Estructura:</strong> en Italia predominan obras en 5 actos; en Inglaterra es más flexible.</li>
+        <li><strong>Lenguaje:</strong> alternancia entre verso y prosa según la situación y el estatus social.</li>
+        <li><strong>Unidades clásicas:</strong> tiempo, lugar y acción recomendadas por tratadistas, pero aplicadas con flexibilidad.</li>
       </ul>
 
-      <h2 style="margin-top:16px">3) Géneros y formas</h2>
+      <h3>Géneros y formas teatrales</h3>
       <ul>
-        <li><strong>Tragedia</strong> y <strong>comedia</strong> de raíz clásica.</li>
-        <li><strong>Tragicomedia</strong> y <strong>pastoral</strong> (idilios, ninfas, pastores).</li>
-        <li><strong>Intermedios</strong> e <strong>intermezzi</strong>: piezas breves entre actos con música y danza.</li>
-        <li><strong>Commedia dell’arte</strong> (Italia): teatro popular e improvisado con máscaras (Arlequín, Pantalone, Colombina), tramas arquetípicas y gran fisicalidad.</li>
+        <li><strong>Tragedia y comedia</strong> clásicas y renovadas.</li>
+        <li><strong>Tragicomedia y pastoral:</strong> combinan elementos dramáticos y bucólicos.</li>
+        <li><strong>Intermedios:</strong> piezas musicales y de danza entre actos.</li>
+        <li><strong>Commedia dell’arte:</strong> teatro popular italiano con personajes arquetípicos y gran improvisación.</li>
       </ul>
 
-      <h2 style="margin-top:16px">4) Recursos expresivos</h2>
+      <h3>Escenarios</h3>
       <ul>
-        <li><strong>Soliloquio</strong> y <strong>aparte</strong> para explorar la conciencia del personaje.</li>
-        <li><strong>Metáforas</strong>, <strong>antítesis</strong> y juegos retóricos que enriquecen el tono poético.</li>
-        <li><strong>Alternancia verso/prosa</strong> para diferenciar niveles sociales o registros emotivos.</li>
-      </ul>
-    </article>
+              <li><strong>Italia:</strong> teatros con escenografía avanzada, perspectiva y tramoyas (Teatro Olimpico de Vicenza).</li>
+      <li><strong>Inglaterra:</strong> teatros públicos al aire libre como The Globe, con escenario saliente.</li>
+      <li><strong>España:</strong> corrales de comedias con patios y galerías, transición al Siglo de Oro.</li>
+    </ul>
+  </article>
 
-    <!-- Columna 2: autores + línea de tiempo + quiz -->
-    <aside class="card">
-      <h2>Autores y obras representativas</h2>
-      <ul>
-        <li><strong>Italia</strong>: Ludovico Ariosto (<em>La Cassaria</em>), Torquato Tasso (<em>Aminta</em>), Maquiavelo (<em>La mandrágora</em>).</li>
-        <li><strong>Inglaterra</strong>: William Shakespeare (<em>Hamlet</em>, <em>Romeo and Juliet</em>, <em>Much Ado About Nothing</em>), Christopher Marlowe (<em>Doctor Faustus</em>).</li>
-        <li><strong>España</strong>: Juan del Encina (precursor), Torres Naharro; y ya hacia el tránsito al Siglo de Oro, <strong>Lope de Vega</strong> (renueva la comedia nueva).</li>
-        <li><strong>Francia</strong>: Étienne Jodelle (hacia el clasicismo posterior).</li>
-      </ul>
-
-      <h3 style="margin-top:14px">Línea de tiempo</h3>
-      <div class="timeline" aria-label="Hitos del teatro renacentista">
-        <div class="t-item"><span class="t-year">c. 1500–1530</span> — <span class="t-desc">Primeras comedias humanistas en Italia; recuperación de Plauto y Terencio.</span></div>
-        <div class="t-item"><span class="t-year">1550–1580</span> — <span class="t-desc">Tratados escenográficos y perspectiva; intermedios espectaculares en cortes italianas.</span></div>
-        <div class="t-item"><span class="t-year">1585</span> — <span class="t-desc">Se inaugura el <em>Teatro Olimpico</em> de Vicenza.</span></div>
-        <div class="t-item"><span class="t-year">c. 1580–1600</span> — <span class="t-desc">Auge de <em>commedia dell’arte</em>; aparecen teatros ingleses como <em>The Theatre</em> y <em>The Globe</em>.</span></div>
-        <div class="t-item"><span class="t-year">1590–1613</span> — <span class="t-desc">Periodo principal de producción de Shakespeare.</span></div>
-        <div class="t-item"><span class="t-year">Finales s. XVI</span> — <span class="t-desc">Consolidación de corrales en España y transición al Siglo de Oro.</span></div>
+  <!-- Columna 2: mini-quiz -->
+  <aside class="card">
+    <h2>Mini‑quiz</h2>
+    <div class="quiz" id="quiz">
+      <div class="q">
+        <p><strong>Contexto:</strong> El teatro renacentista combina formas clásicas con innovaciones expresivas que reflejan la complejidad humana y social.</p>
+        <p><strong>Pregunta:</strong> ¿Cuál es una característica del lenguaje en el teatro renacentista?</p>
+        <label class="opcion"><input type="radio" name="p1" value="a"> A) Solo se usa prosa en todos los personajes.</label>
+        <label class="opcion"><input type="radio" name="p1" value="b"> B) Alternancia entre verso y prosa según la situación y el personaje.</label>
+        <label class="opcion"><input type="radio" name="p1" value="c"> C) Uso exclusivo de verso sin prosa.</label>
+        <label class="opcion"><input type="radio" name="p1" value="d"> D) Lenguaje sin recursos expresivos como el soliloquio.</label>
+        <div class="resultado" id="r1"></div>
       </div>
-
-      <div class="infobox" style="margin-top:14px">
-        <strong>¿Y las “tres unidades”?</strong> Tratadistas italianos recomendaron unidad de <em>tiempo</em>, <em>lugar</em> y <em>acción</em>, pero su aplicación varió:
-        en Francia ganarán fuerza en el siglo XVII, mientras que el teatro inglés isabelino (Shakespeare) <em>no</em> las siguió estrictamente.
-      </div>
-
-      <h3 style="margin-top:16px">Mini‑quiz</h3>
-      <div class="quiz" id="quiz">
-        <!-- Pregunta 1 -->
-        <div class="q">
-          <p><strong>1)</strong> ¿Quién es el dramaturgo inglés más citado del Renacimiento?</p>
-          <input type="text" id="p1" placeholder="Escribe su apellido…">
-          <div class="resultado" id="r1"></div>
-        </div>
-
-        <!-- Pregunta 2 -->
-        <div class="q">
-          <p><strong>2)</strong> La <em>commedia dell’arte</em> se caracteriza por…</p>
-          <label class="opcion"><input type="radio" name="p2" value="a"> A) Dramas en cinco actos con coro rígido</label>
-          <label class="opcion"><input type="radio" name="p2" value="b"> B) Improvisación con máscaras y personajes tipo</label>
-          <label class="opcion"><input type="radio" name="p2" value="c"> C) Escenas mudas sin diálogo</label>
-          <div class="resultado" id="r2"></div>
-        </div>
-
-        <!-- Pregunta 3 -->
-        <div class="q">
-          <p><strong>3)</strong> ¿En qué país se popularizaron los <em>corrales de comedias</em>?</p>
-          <label class="opcion"><input type="radio" name="p3" value="ita"> Italia</label>
-          <label class="opcion"><input type="radio" name="p3" value="esp"> España</label>
-          <label class="opcion"><input type="radio" name="p3" value="ing"> Inglaterra</label>
-          <div class="resultado" id="r3"></div>
-        </div>
-
-        <div style="display:flex; gap:10px; margin-top:4px">
-          <button class="btn" id="btnCheck" type="button">Verificar</button>
-          <button class="btn" id="btnReset" type="button">Limpiar</button>
-        </div>
-      </div>
-    </aside>
-  </section>
-
-  <!-- Cierre y recursos -->
-  <section class="card" style="width:min(1200px,100%); margin-top:22px">
-    <h2>5) Para profundizar y trabajar en clase</h2>
-    <div class="grid-2">
-      <div>
-        <h3>Actividades sugeridas</h3>
-        <ul>
-          <li>Reescribe una escena clásica en clave de <em>commedia dell’arte</em> usando un guion de acciones (lazzi).</li>
-          <li>Compara la estructura de una tragedia isabelina con una comedia italiana en 5 actos.</li>
-          <li>Diseña una <em>tarjeta escénica</em> con perspectiva (calle urbana o palacio) siguiendo a Serlio.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Glosario básico</h3>
-        <ul>
-          <li><strong>Soliloquio</strong>: parlamento en el que el personaje expresa sus pensamientos en voz alta.</li>
-          <li><strong>Aparte</strong>: comentario que oye el público pero no los otros personajes.</li>
-          <li><strong>Intermedio</strong>/<strong>intermezzo</strong>: pieza breve entre actos con música y danza.</li>
-          <li><strong>Comedia nueva</strong>: fórmula española renovada (Lope) que mezcla lo trágico y lo cómico.</li>
-        </ul>
+      <div style="margin-top:10px;">
+        <button class="btn" id="btnCheck" type="button">Verificar</button>
+        <button class="btn" id="btnReset" type="button">Limpiar</button>
       </div>
     </div>
-    <p class="nota" style="margin-top:10px">Nota: Las cronologías varían entre países; algunos autores puentes (como Lope) enlazan Renacimiento y Barroco.</p>
-    <p style="margin-top:14px">Volver a la <a class="btn" href="index.html" style="padding:6px 10px">página principal</a>.</p>
-  </section>
+  </aside>
+</section>
 
-  <footer>
-    <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
-  </footer>
+<!-- Pie de página -->
+<footer>
+  <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
+</footer>
 
-  <script>
-    // --- Lógica del mini-quiz ---
-    const p1 = document.getElementById('p1');
-    const r1 = document.getElementById('r1');
-    const r2 = document.getElementById('r2');
-    const r3 = document.getElementById('r3');
-    const btnCheck = document.getElementById('btnCheck');
-    const btnReset = document.getElementById('btnReset');
+<script>
+  const r1 = document.getElementById('r1');
+  const btnCheck = document.getElementById('btnCheck');
+  const btnReset = document.getElementById('btnReset');
 
-    function verificar() {
-      // P1 texto
-      const v1 = (p1.value || '').trim().toLowerCase();
-      if (v1.includes('shakespeare')) {
-        r1.textContent = '¡Correcto! William Shakespeare es el referente inglés más citado.';
-        r1.className = 'resultado ok';
-      } else if (v1.length === 0) {
-        r1.textContent = 'Escribe un apellido…';
-        r1.className = 'resultado';
-      } else {
-        r1.textContent = 'No es correcto. Pista: autor de Hamlet.';
-        r1.className = 'resultado mal';
-      }
-
-      // P2 radio
-      const p2Sel = document.querySelector('input[name="p2"]:checked');
-      if (!p2Sel) {
-        r2.textContent = 'Selecciona una opción.';
-        r2.className = 'resultado';
-      } else if (p2Sel.value === 'b') {
-        r2.textContent = '¡Bien! La commedia dell’arte se basa en improvisación con máscaras.';
-        r2.className = 'resultado ok';
-      } else {
-        r2.textContent = 'Incorrecto. Revisa las características de la commedia.';
-        r2.className = 'resultado mal';
-      }
-
-      // P3 radio
-      const p3Sel = document.querySelector('input[name="p3"]:checked');
-      if (!p3Sel) {
-        r3.textContent = 'Selecciona una opción.';
-        r3.className = 'resultado';
-      } else if (p3Sel.value === 'esp') {
-        r3.textContent = '¡Correcto! Los corrales de comedias se popularizaron en España.';
-        r3.className = 'resultado ok';
-      } else {
-        r3.textContent = 'No es correcto. Piensa en Madrid y Almagro…';
-        r3.className = 'resultado mal';
-      }
+  function verificar() {
+    const p1Sel = document.querySelector('input[name="p1"]:checked');
+    if (!p1Sel) {
+      r1.textContent = 'Selecciona una opción.';
+      r1.className = 'resultado';
+    } else if (p1Sel.value === 'b') {
+      r1.textContent = '¡Correcto! En el teatro renacentista se alterna verso y prosa según la situación y personaje.';
+      r1.className = 'resultado ok';
+    } else {
+      r1.textContent = 'Incorrecto. Revisa las características del lenguaje teatral renacentista.';
+      r1.className = 'resultado mal';
     }
+  }
 
-    function limpiar() {
-      p1.value = '';
-      document.querySelectorAll('input[name="p2"]').forEach(r => r.checked = false);
-      document.querySelectorAll('input[name="p3"]').forEach(r => r.checked = false);
-      r1.textContent = ''; r1.className = 'resultado';
-      r2.textContent = ''; r2.className = 'resultado';
-      r3.textContent = ''; r3.className = 'resultado';
-    }
+  function limpiar() {
+    document.querySelectorAll('input[name="p1"]').forEach(r => r.checked = false);
+    r1.textContent = '';
+    r1.className = 'resultado';
+  }
 
-    btnCheck.addEventListener('click', verificar);
-    btnReset.addEventListener('click', limpiar);
-  </script>
-</body>
-</html>
+  btnCheck.addEventListener('click', verificar);
+  btnReset.addEventListener('click', limpiar);
+</script>
+
+ 
