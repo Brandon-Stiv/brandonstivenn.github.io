@@ -208,29 +208,26 @@
     </article>
 
     <!-- Columna 2: mini-quiz -->
+    <!-- Columna 2: mini-quiz -->
     <aside class="card">
       <h2>Mini-quiz</h2>
-      <p><strong>Pregunta:</strong> ¿Cuál de estas opciones describe mejor un gas?</p>
-      <label><input type="radio" name="q1" value="a"> A) Volumen definido y forma variable</label><br>
-      <label><input type="radio" name="q1" value="b"> B) Forma y volumen definidos</label><br>
-      <label><input type="radio" name="q1" value="c"> C) Sin forma ni volumen definidos</label>
+      <p><strong>Contexto:</strong> Imagina que dejas un globo inflado dentro de un carro caliente durante varias horas. Al volver, el globo ha aumentado de tamaño. Esto ocurre porque las partículas del aire dentro del globo se mueven más rápido y se separan debido al aumento de temperatura.</p>
+      
+      <p><strong>Pregunta:</strong> Según la descripción, ¿en qué estado de la materia se encuentra el aire dentro del globo y qué característica lo explica?</p>
+      
+      <label><input type="radio" name="q1" value="a"> A) Sólido — Partículas ordenadas y fijas</label><br>
+      <label><input type="radio" name="q1" value="b"> B) Líquido — Partículas próximas que fluyen</label><br>
+      <label><input type="radio" name="q1" value="c"> C) Gas — Partículas muy separadas y en rápido movimiento</label><br>
+      <label><input type="radio" name="q1" value="d"> D) Plasma — Partículas cargadas con alta energía</label>
+      
       <div id="resultado" style="margin-top:10px;"></div>
+      
       <div style="margin-top:10px; display:flex; gap:8px;">
         <button class="btn" id="btnVerificar">Verificar</button>
         <button class="btn" id="btnLimpiar">Limpiar</button>
       </div>
-
-      <hr style="margin:18px 0; border-color: rgba(255,255,255,.1);">
-      <p><strong>Reto:</strong> ¿Cómo se llama el paso de sólido a gas sin pasar por el líquido?</p>
-      <label><input type="radio" name="q2" value="a"> A) Condensación</label><br>
-      <label><input type="radio" name="q2" value="b"> B) Sublimación</label><br>
-      <label><input type="radio" name="q2" value="c"> C) Evaporación</label>
-      <div id="resultado2" style="margin-top:10px;"></div>
-      <div style="margin-top:10px; display:flex; gap:8px;">
-        <button class="btn" id="btnVerificar2">Verificar</button>
-        <button class="btn" id="btnLimpiar2">Limpiar</button>
-      </div>
     </aside>
+
   </section>
 
   <!-- Pie de página -->
@@ -475,53 +472,31 @@
     step();
 
     // ---------- Mini-quiz ----------
-    const btnVerificar = document.getElementById('btnVerificar');
-    const btnLimpiar   = document.getElementById('btnLimpiar');
-    const res1         = document.getElementById('resultado');
+    // ---------- Mini-quiz ----------
+      const btnVerificar = document.getElementById('btnVerificar');
+      const btnLimpiar   = document.getElementById('btnLimpiar');
+      const res1         = document.getElementById('resultado');
 
-    btnVerificar.addEventListener('click', () => {
-      const seleccion = document.querySelector('input[name="q1"]:checked');
-      if(!seleccion){
-        res1.textContent = 'Selecciona una opción.';
-        res1.style.color = '#ff8b8b';
-      } else if(seleccion.value === 'c'){
-        res1.textContent = '¡Correcto! Un gas no tiene forma ni volumen definidos.';
-        res1.style.color = '#76e39a';
-      } else {
-        res1.textContent = 'Incorrecto. La respuesta correcta es: sin forma ni volumen definidos.';
-        res1.style.color = '#ff8b8b';
-      }
-    });
+      btnVerificar.addEventListener('click', () => {
+        const seleccion = document.querySelector('input[name="q1"]:checked');
+        if(!seleccion){
+          res1.textContent = 'Selecciona una opción.';
+          res1.style.color = '#ff8b8b';
+        } else if(seleccion.value === 'c'){
+          res1.textContent = '¡Correcto! Un gas tiene partículas muy separadas y en rápido movimiento.';
+          res1.style.color = '#76e39a';
+        } else {
+          res1.textContent = 'Incorrecto. La respuesta correcta es: Gas — partículas muy separadas y en rápido movimiento.';
+          res1.style.color = '#ff8b8b';
+        }
+      });
 
-    btnLimpiar.addEventListener('click', () => {
-      document.querySelectorAll('input[name="q1"]').forEach(r => r.checked = false);
-      res1.textContent = '';
-      res1.style.color = '';
-    });
+      btnLimpiar.addEventListener('click', () => {
+        document.querySelectorAll('input[name="q1"]').forEach(r => r.checked = false);
+        res1.textContent = '';
+        res1.style.color = '';
+      });
 
-    const btnVerificar2 = document.getElementById('btnVerificar2');
-    const btnLimpiar2   = document.getElementById('btnLimpiar2');
-    const res2          = document.getElementById('resultado2');
-
-    btnVerificar2.addEventListener('click', () => {
-      const seleccion = document.querySelector('input[name="q2"]:checked');
-      if(!seleccion){
-        res2.textContent = 'Selecciona una opción.';
-        res2.style.color = '#ff8b8b';
-      } else if(seleccion.value === 'b'){
-        res2.textContent = '¡Correcto! Se llama sublimación.';
-        res2.style.color = '#76e39a';
-      } else {
-        res2.textContent = 'Incorrecto. La respuesta correcta es sublimación.';
-        res2.style.color = '#ff8b8b';
-      }
-    });
-
-    btnLimpiar2.addEventListener('click', () => {
-      document.querySelectorAll('input[name="q2"]').forEach(r => r.checked = false);
-      res2.textContent = '';
-      res2.style.color = '';
-    });
   </script>
 </body>
 </html>
