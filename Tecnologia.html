@@ -92,6 +92,20 @@
       width:min(1200px,100%);
       text-align:center;color:#bfbfbf;margin-top:32px
     }
+    table.simulador th, table.simulador td {
+      border:1px solid var(--borde);
+      padding:6px;
+      min-width:60px;
+      text-align:center;
+      background:rgba(255,255,255,.02);
+    }
+    table.simulador th {
+      background:rgba(255,255,255,.08);
+    }
+    table.simulador td[contenteditable] {
+      background:rgba(255,255,255,.04);
+      outline:none;
+    }
   </style>
 </head>
 <body>
@@ -126,7 +140,34 @@
         <li><strong>=SI(A1&gt;=10,"Aprobado","Reprobado")</strong> → Evalúa una condición.</li>
         <li><strong>=MAX(A1:A10)</strong> → Devuelve el valor máximo.</li>
         <li><strong>=MIN(A1:A10)</strong> → Devuelve el valor mínimo.</li>
+        <li><strong>=SUMAR.SI(A1:A10, "&gt;10")</strong> → Suma solo los valores mayores a 10.</li>
       </ul>
+
+      <div style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); border-radius:12px; padding:12px; margin-top:15px;">
+        <h3>ℹ️ Reglas importantes al escribir funciones en Excel</h3>
+        <ul>
+          <li><strong>Siempre empezar con <code>=</code> :</strong> Esto indica que vas a escribir una fórmula o función.</li>
+          <li><strong>Dos puntos <code>:</code> :</strong> Indica un rango continuo de celdas. Ejemplo: <code>A1:A5</code> incluye todas las celdas desde A1 hasta A5.</li>
+          <li><strong>Punto y coma <code>;</code> :</strong> Separa distintos argumentos dentro de una función. Ejemplo: <code>=SI(A1>10;"Aprobado";"Reprobado")</code>.</li>
+        </ul>
+      </div>
+
+      <h2 style="margin-top:25px">📊 Simulador de Excel</h2>
+      <p>Escribe números o fórmulas (ej: <strong>=A1+B1</strong>, <strong>=SUMA(A1:A3)</strong>, <strong>=PROMEDIO(A1:A3)</strong>, <strong>=SUMAR.SI(A1:A3, "&gt;5")</strong>) y presiona Enter o cambia de celda.</p>
+      <table class="simulador" id="tablaExcel" style="margin-top:12px; border-collapse: collapse; width:100%;">
+        <thead>
+          <tr>
+            <th></th><th>A</th><th>B</th><th>C</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>1</th><td contenteditable="true" data-cell="A1"></td><td contenteditable="true" data-cell="B1"></td><td contenteditable="true" data-cell="C1"></td></tr>
+          <tr><th>2</th><td contenteditable="true" data-cell="A2"></td><td contenteditable="true" data-cell="B2"></td><td contenteditable="true" data-cell="C2"></td></tr>
+          <tr><th>3</th><td contenteditable="true" data-cell="A3"></td><td contenteditable="true" data-cell="B3"></td><td contenteditable="true" data-cell="C3"></td></tr>
+          <tr><th>4</th><td contenteditable="true" data-cell="A4"></td><td contenteditable="true" data-cell="B4"></td><td contenteditable="true" data-cell="C4"></td></tr>
+          <tr><th>5</th><td contenteditable="true" data-cell="A5"></td><td contenteditable="true" data-cell="B5"></td><td contenteditable="true" data-cell="C5"></td></tr>
+        </tbody>
+      </table>
     </article>
 
     <aside class="card quiz">
@@ -165,13 +206,13 @@
   </footer>
 
   <script>
+    // Quiz
     function verificar() {
       const respuestas = [
         { pregunta: 'q1', correcta: 'b', id: 'r1' },
         { pregunta: 'q2', correcta: 'b', id: 'r2' },
         { pregunta: 'q3', correcta: 'a', id: 'r3' }
       ];
-
       respuestas.forEach(({pregunta, correcta, id}) => {
         const sel = document.querySelector(`input[name="${pregunta}"]:checked`);
         const resEl = document.getElementById(id);
@@ -186,6 +227,119 @@
           resEl.className = 'resultado mal';
         }
       });
+    }
+
+    // Simulador Excel
+    const celdas = {};
+    document.querySelectorAll('#tablaExcel [contenteditable]').forEach(celda => {
+      celda.addEventListener('blur', () => {
+        celdas[celda.dataset.cell] = celda.textContent.trim();
+        recalcular();
+      });
+    });
+
+    function recalcular() {
+      document.querySelectorAll('#tablaExcel [contenteditable]').forEach(celda => {
+        const valor = celdas[celda.dataset.cell] || '';
+        if (valor.startsWith('=')) {
+          celda.textContent = evaluarFormula(valor.substring(1));
+        } else {
+          celda.textContent = valor;
+        }
+      });
+    }
+
+    function evaluarFormula(formula) {
+      try {
+        const fMayus = formula.toUpperCase();
+
+        // SUMA
+        if (fMayus.startsWith('SUMA(')) {
+          const rango = formula.match(/\((.*?)\)/)[1];
+          return sumarRango(rango);
+        }
+
+        // SUMAR.SI
+        if (fMayus.startsWith('SUMAR.SI(')) {
+          const args = formula.match(/\((.*?)\)/)[1].split(',');
+          const rango = args[0].trim();
+          const condicion = args[1] ? args[1].trim() : 'TRUE';
+          return sumarSi(rango, condicion);
+        }
+
+        // PROMEDIO
+        if (fMayus.startsWith('PROMEDIO(')) {
+          const rango = formula.match(/\((.*?)\)/)[1];
+          const valores = obtenerValoresRango(rango);
+          const total = valores.reduce((a,b) => a+b, 0);
+          return (total / valores.length).toFixed(2);
+        }
+
+        // MAX
+        if (fMayus.startsWith('MAX(')) {
+          const rango = formula.match(/\((.*?)\)/)[1];
+          return Math.max(...obtenerValoresRango(rango));
+        }
+
+        // MIN
+        if (fMayus.startsWith('MIN(')) {
+          const rango = formula.match(/\((.*?)\)/)[1];
+          return Math.min(...obtenerValoresRango(rango));
+        }
+
+        // SI
+        if (fMayus.startsWith('SI(')) {
+          const args = formula.match(/\((.*?)\)/)[1].split(',');
+          const condicion = args[0].trim();
+          const valorVerdadero = args[1] ? args[1].trim().replace(/"/g, '') : '';
+          const valorFalso = args[2] ? args[2].trim().replace(/"/g, '') : '';
+          const condicionEval = reemplazarReferencias(condicion);
+          return eval(condicionEval) ? valorVerdadero : valorFalso;
+        }
+
+        // Operaciones básicas (+, -, *)
+        const expresion = reemplazarReferencias(formula);
+        return eval(expresion);
+
+      } catch {
+        return 'ERROR';
+      }
+    }
+
+    function reemplazarReferencias(texto) {
+      return texto.replace(/[A-Z]\d+/gi, ref => parseFloat(celdas[ref] || 0));
+    }
+
+    function obtenerValoresRango(rango) {
+      const [ini, fin] = rango.split(':');
+      const filas = [parseInt(ini.match(/\d+/)[0]), parseInt(fin.match(/\d+/)[0])];
+      const colIni = ini.match(/[A-Z]+/i)[0];
+      const colFin = fin.match(/[A-Z]+/i)[0];
+      const valores = [];
+      for (let f = filas[0]; f <= filas[1]; f++) {
+        for (let c = colIni.charCodeAt(0); c <= colFin.charCodeAt(0); c++) {
+          const ref = String.fromCharCode(c) + f;
+          valores.push(parseFloat(celdas[ref] || 0));
+        }
+      }
+      return valores;
+    }
+
+    function sumarRango(rango) {
+      return obtenerValoresRango(rango).reduce((a,b)=>a+b,0);
+    }
+
+    function sumarSi(rango, condicion) {
+      const valores = obtenerValoresRango(rango);
+      return valores
+        .filter(v => {
+          try {
+            return eval(`${v}${condicion}`);
+          } catch {
+            return false;
+          }
+        })
+        .reduce((a,b)=>a+b,0);
     }
   </script>
 </body>

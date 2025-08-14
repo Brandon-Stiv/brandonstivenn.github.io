@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Física – Aplicación Matemática</title>
+  <title>Física – Las 3 Leyes de Newton</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
     :root {
@@ -12,209 +12,63 @@
       --borde: rgba(255,255,255,.10); --texto-suave:#cfd7ff;
       --ok:#76e39a; --err:#ff8b8b;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI','Helvetica Neue',system-ui,sans-serif
-    }
-
-    body {
-      min-height: 100vh;
-      color: var(--blanco);
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif}
+    body{
+      min-height:100vh;color:var(--blanco);
       background:
         radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
         radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
         linear-gradient(135deg,#0b0b0b,#171717);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 28px 18px 60px;
+      display:flex;flex-direction:column;align-items:center;padding:28px 18px 60px;
     }
+    .topbar{width:min(1200px,100%);display:flex;align-items:center;justify-content:space-between;
+      padding:14px 18px;border-radius:18px;background:var(--vidrio);
+      border:1px solid var(--borde);backdrop-filter:blur(10px);
+      box-shadow:0 8px 28px rgba(0,0,0,.35);margin-bottom:22px;}
+    .logo{display:flex;gap:12px;align-items:center;}
+    .logo-badge{width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg,var(--azul),var(--acento));display:grid;place-items:center;
+      font-weight:800;box-shadow:0 6px 20px rgba(0,87,255,.45);}
+    .logo-text{font-weight:700;letter-spacing:.3px;color:#e9f0ff;}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;}
+    .btn{appearance:none;border:none;cursor:pointer;text-decoration:none;padding:10px 14px;border-radius:12px;
+      font-weight:700;letter-spacing:.2px;background:rgba(255,255,255,.08);color:#eaeaea;
+      border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(6px);transition:transform .15s ease;}
+    .btn:hover{transform:translateY(-2px);}
+    header.hero{width:min(1200px,100%);background:var(--vidrio);border:1px solid var(--borde);
+      backdrop-filter:blur(10px);border-radius:22px;padding:28px 24px;
+      box-shadow:0 12px 36px rgba(0,0,0,.38);margin-bottom:28px;position:relative;}
+    .edicion-badge{position:absolute;top:16px;right:16px;font-size:.9rem;letter-spacing:.08em;
+      text-transform:uppercase;color:#d1ddff;background:rgba(0,87,255,.18);
+      border:1px solid rgba(0,87,255,.35);padding:8px 12px;border-radius:999px;}
+    header.hero h1{font-size:clamp(1.9rem,4.8vw,2.8rem);color:#bcd4ff;
+      text-shadow:0 8px 28px rgba(0,0,0,.6);}
+    .sub{margin-top:8px;color:var(--texto-suave);}
+    .contenedor{width:min(1200px,100%);display:grid;gap:22px;grid-template-columns:1.15fr .85fr;}
+    @media(max-width:980px){.contenedor{grid-template-columns:1fr;}}
+    .card{background:var(--vidrio);border:1px solid var(--borde);border-radius:20px;padding:22px;
+      backdrop-filter:blur(8px);box-shadow:0 6px 18px rgba(0,0,0,.30);}
+    .card h2{color:#cfe3ff;margin-bottom:10px;}
+    .card p,.card li{color:var(--gris-claro);line-height:1.5;}
+    code{background-color:rgba(255,255,255,.08);padding:4px 8px;border-radius:6px;font-size:1em;display:inline-block;}
+    iframe{width:100%;height:315px;border:none;border-radius:12px;margin-top:16px;
+      box-shadow:0 0 12px rgba(0,87,255,0.25);}
+    figcaption{text-align:center;margin-top:8px;font-size:0.9em;color:var(--gris-claro);}
+    .quiz .q{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+      border-radius:12px;padding:12px;margin-top:10px;}
+    .resultado{font-weight:700;margin-top:6px;}
+    .ok{color:var(--ok)} .mal{color:var(--err)}
+    footer{width:min(1200px,100%);text-align:center;color:#bfbfbf;margin-top:32px;}
 
-    .topbar {
-      width: min(1200px, 100%);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 18px;
-      border-radius: 18px;
-      background: var(--vidrio);
-      border: 1px solid var(--borde);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 28px rgba(0,0,0,.35);
-      margin-bottom: 22px;
-    }
-
-    .logo {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .logo-badge {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--azul), var(--acento));
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      box-shadow: 0 6px 20px rgba(0,87,255,.45);
-    }
-
-    .logo-text {
-      font-weight: 700;
-      letter-spacing: .3px;
-      color: #e9f0ff;
-    }
-
-    .nav {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      appearance: none;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-weight: 700;
-      letter-spacing: .2px;
-      background: rgba(255,255,255,.08);
-      color: #eaeaea;
-      border: 1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(6px);
-      transition: transform .15s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    header.hero {
-      width: min(1200px, 100%);
-      background: var(--vidrio);
-      border: 1px solid var(--borde);
-      backdrop-filter: blur(10px);
-      border-radius: 22px;
-      padding: 28px 24px;
-      box-shadow: 0 12px 36px rgba(0,0,0,.38);
-      margin-bottom: 28px;
-      position: relative;
-    }
-
-    .edicion-badge {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      font-size: .9rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: #d1ddff;
-      background: rgba(0,87,255,.18);
-      border: 1px solid rgba(0,87,255,.35);
-      padding: 8px 12px;
-      border-radius: 999px;
-    }
-
-    header.hero h1 {
-      font-size: clamp(1.9rem, 4.8vw, 2.8rem);
-      color: #bcd4ff;
-      text-shadow: 0 8px 28px rgba(0,0,0,.6);
-    }
-
-    .sub {
-      margin-top: 8px;
-      color: var(--texto-suave);
-    }
-
-    .contenedor {
-      width: min(1200px, 100%);
-      display: grid;
-      gap: 22px;
-      grid-template-columns: 1.15fr .85fr;
-    }
-
-    @media(max-width:980px) {
-      .contenedor {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
-      background: var(--vidrio);
-      border: 1px solid var(--borde);
-      border-radius: 20px;
-      padding: 22px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 6px 18px rgba(0,0,0,.30);
-    }
-
-    .card h2 {
-      color: #cfe3ff;
-      margin-bottom: 10px;
-    }
-
-    .card p, .card li {
-      color: var(--gris-claro);
-      line-height: 1.5;
-    }
-
-    code {
-      background-color: rgba(255,255,255,.08);
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 1em;
-      display: inline-block;
-    }
-
-    iframe {
-      width: 100%;
-      height: 315px;
-      border: none;
-      border-radius: 12px;
-      margin-top: 16px;
-      box-shadow: 0 0 12px rgba(0, 87, 255, 0.25);
-    }
-
-    figcaption {
-      text-align: center;
-      margin-top: 8px;
-      font-size: 0.9em;
-      color: var(--gris-claro);
-    }
-
-    .quiz .q {
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 10px;
-    }
-
-    .resultado {
-      font-weight: 700;
-      margin-top: 6px;
-    }
-
-    .ok { color: var(--ok) }
-    .mal { color: var(--err) }
-
-    footer {
-      width: min(1200px,100%);
-      text-align: center;
-      color: #bfbfbf;
-      margin-top: 32px;
-    }
+    /* estilos para controles y canvas dentro de tu diseño */
+    .sim-canvas { display:block; margin-top:12px; width:100%; max-width:520px; height:180px; border-radius:10px; background:#0b1220; box-shadow: inset 0 1px 0 rgba(255,255,255,0.02); }
+    .controls { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .small { padding:8px 10px; font-weight:700; border-radius:10px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); color:var(--blanco); cursor:pointer; }
+    .range { width: 160px; }
+    .label-muted { color: var(--texto-suave); font-size:0.9rem; }
   </style>
 </head>
 <body>
-
   <div class="topbar">
     <div class="logo">
       <div class="logo-badge">MS</div>
@@ -228,93 +82,291 @@
 
   <header class="hero">
     <span class="edicion-badge">Física</span>
-    <h1>Aplicación Matemática</h1>
-    <p class="sub">Explora cómo las ecuaciones matemáticas se usan para describir fenómenos físicos.</p>
+    <h1>Las 3 Leyes de Newton</h1>
+    <p class="sub">Descubre cómo estas leyes fundamentales explican el movimiento y están presentes en tu vida diaria.</p>
   </header>
 
   <section class="contenedor">
     <article class="card">
-      <h2>Movimiento parabólico</h2>
-      <p>Cuando un objeto es lanzado en un ángulo, su trayectoria describe una parábola. La fórmula matemática para su posición vertical es:</p>
-      <p><code>y = x·tan(θ) - (g·x²)/(2·v²·cos²(θ))</code></p>
-      <p>Donde:</p>
-      <ul>
-        <li><strong>y</strong>: Altura (m)</li>
-        <li><strong>x</strong>: Distancia horizontal (m)</li>
-        <li><strong>θ</strong>: Ángulo de lanzamiento (grados)</li>
-        <li><strong>v</strong>: Velocidad inicial (m/s)</li>
-        <li><strong>g</strong>: Gravedad (~9.8 m/s²)</li>
-      </ul>
+      <h2>Primera Ley: Ley de la Inercia</h2>
+      <p>Un objeto en reposo permanecerá en reposo y uno en movimiento seguirá moviéndose con la misma velocidad y dirección, a menos que una fuerza externa actúe sobre él.</p>
+      <p><strong>Ejemplo cotidiano:</strong> Cuando vas en un bus y frena bruscamente, tu cuerpo tiende a seguir hacia adelante.</p>
 
-      <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/TLsDPw0zNAI?si=Z6X6eRYWgOLg8x7X" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      <figcaption>Video: Movimiento parabólico explicado con animación</figcaption>
+      <!-- simulación primera ley -->
+      <canvas id="canvas-inercia" class="sim-canvas" width="520" height="180"></canvas>
+      <div class="controls">
+        <button class="small" id="start-inercia">Iniciar movimiento</button>
+        <button class="small" id="frenar-inercia">Frenar (aplicar fuerza externa)</button>
+        <div class="label-muted">Haz clic en "Iniciar movimiento", luego "Frenar" para ver la inercia en acción.</div>
+      </div>
 
-      <h2 style="margin-top:22px;">Otras aplicaciones matemáticas</h2>
-      <ul>
-        <li>Uso de trigonometría para calcular el ángulo óptimo de lanzamiento.</li>
-        <li>Aplicación de cinemática: velocidad, aceleración y tiempo.</li>
-        <li>Gráficas de posición vs. tiempo y velocidad vs. tiempo para analizar el movimiento.</li>
-      </ul>
+      <h2 style="margin-top:20px;">Segunda Ley: Fuerza y Aceleración</h2>
+      <p>La aceleración de un objeto es proporcional a la fuerza neta que actúa sobre él e inversamente proporcional a su masa.</p>
+      <p><code>F = m · a</code></p>
+      <p><strong>Ejemplo cotidiano:</strong> Empujar un carrito de supermercado vacío es más fácil que empujar uno lleno.</p>
+
+      <!-- simulación segunda ley -->
+      <canvas id="canvas-fuerza" class="sim-canvas" width="520" height="180"></canvas>
+      <div class="controls" style="margin-bottom:6px;">
+        <label class="label-muted">Masa: <span id="massValue">1</span> kg</label>
+        <input id="massRange" class="range" type="range" min="1" max="12" value="1">
+        <button class="small" id="apply-force">Aplicar fuerza</button>
+        <button class="small" id="reset-fuerza">Reiniciar</button>
+      </div>
+      <div class="label-muted">Mueve la masa y presiona "Aplicar fuerza" para ver cómo cambia la aceleración (misma fuerza, distinta masa).</div>
+
+      <h2 style="margin-top:20px;">Tercera Ley: Acción y Reacción</h2>
+      <p>A toda acción le corresponde una reacción de igual magnitud y en sentido opuesto.</p>
+      <p><strong>Ejemplo cotidiano:</strong> Al saltar desde una canoa, empujas la canoa hacia atrás mientras tú avanzas hacia adelante.</p>
+
+      <!-- simulación tercera ley -->
+      <canvas id="canvas-reaccion" class="sim-canvas" width="520" height="180"></canvas>
+      <div class="controls">
+        <button class="small" id="start-reaccion">Simular empuje</button>
+        <button class="small" id="reset-reaccion">Reiniciar</button>
+        <div class="label-muted">Presiona "Simular empuje" para ver dos bloques repeliéndose (acción y reacción).</div>
+      </div>
+
+      <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/_X-BTbwj3xU?si=EC4lSbOSOUKBB_e-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <figcaption>Video: Explicación visual de las 3 Leyes de Newton</figcaption>
     </article>
 
     <aside class="card quiz">
-      <h2>Mini Quiz</h2>
+  <h2>Mini Quiz</h2>
+  <div class="q">
+    <p><strong>Contexto:</strong> María viaja en un bus a gran velocidad. De repente, el conductor frena bruscamente para evitar un accidente. María, que estaba de pie, siente que su cuerpo se mueve hacia adelante, aunque el bus ya se ha detenido.</p>
+    <p><strong>Pregunta:</strong> ¿Qué ley de Newton explica el movimiento hacia adelante de María al frenar el bus?</p>
+    <label><input type="radio" name="q1" value="a"> A) Segunda Ley: La aceleración es proporcional a la fuerza aplicada.</label><br>
+    <label><input type="radio" name="q1" value="b"> B) Primera Ley: Un objeto mantiene su estado de reposo o movimiento si no actúa una fuerza externa.</label><br>
+    <label><input type="radio" name="q1" value="c"> C) Tercera Ley: A toda acción corresponde una reacción igual y opuesta.</label><br>
+    <label><input type="radio" name="q1" value="d"> D) Ninguna de las anteriores.</label>
+    <div class="resultado" id="r1"></div>
+  </div>
+  <button class="btn" onclick="verificar()">Verificar</button>
 
-      <div class="q">
-        <p><strong>1)</strong> ¿Qué tipo de trayectoria describe un objeto lanzado en un ángulo?</p>
-        <label><input type="radio" name="q1" value="a"> Circular</label><br>
-        <label><input type="radio" name="q1" value="b"> Recta</label><br>
-        <label><input type="radio" name="q1" value="c"> Parabólica</label>
-        <div class="resultado" id="r1"></div>
-      </div>
+  <!-- Inserción de la imagen de Newton -->
+    <img src="https://museovirtual.csic.es/salas/luz/img/Sir_Isaac_Newton_(1643-1727).jpg"
+        alt="Sir Isaac Newton"
+        style="display:block; margin-top:14px; width:100%; border-radius:12px; box-shadow:0 0 12px rgba(0,0,0,0.25);">
+  </aside>
 
-      <div class="q">
-        <p><strong>2)</strong> ¿Qué representa la variable "g" en la fórmula del movimiento parabólico?</p>
-        <label><input type="radio" name="q2" value="a"> Gravedad</label><br>
-        <label><input type="radio" name="q2" value="b"> Gasolina</label><br>
-        <label><input type="radio" name="q2" value="c"> Ganancia</label>
-        <div class="resultado" id="r2"></div>
-      </div>
+<script>
+function verificar() {
+  const correcta = 'b';
+  const sel = document.querySelector(`input[name="q1"]:checked`);
+  const resEl = document.getElementById('r1');
+  if (!sel) {
+    resEl.textContent = 'Selecciona una opción.';
+    resEl.className = 'resultado';
+  } else if (sel.value === correcta) {
+    resEl.textContent = '✅ Correcto';
+    resEl.className = 'resultado ok';
+  } else {
+    resEl.textContent = '❌ Incorrecto';
+    resEl.className = 'resultado mal';
+  }
+}
 
-      <div class="q">
-        <p><strong>3)</strong> ¿Cuál de las siguientes es una aplicación de las matemáticas en la física?</p>
-        <label><input type="radio" name="q3" value="a"> Uso de trigonometría</label><br>
-        <label><input type="radio" name="q3" value="b"> Aprendizaje de idiomas</label><br>
-        <label><input type="radio" name="q3" value="c"> Historia de Egipto</label>
-        <div class="resultado" id="r3"></div>
-      </div>
+    /* ----------------- Simulación 1: Inercia ----------------- */
+    (function(){
+      const canvas = document.getElementById('canvas-inercia');
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width, H = canvas.height;
+      let x = 60, vx = 0, running = false, braking = false;
 
-      <button class="btn" onclick="verificar()">Verificar</button>
-    </aside>
-  </section>
+      function draw() {
+        ctx.clearRect(0,0,W,H);
+        // pista
+        ctx.fillStyle = 'rgba(255,255,255,0.03)';
+        ctx.fillRect(10, H/2 + 30, W-20, 6);
+        // objeto
+        ctx.beginPath();
+        ctx.fillStyle = '#79e3ff';
+        ctx.arc(x, H/2, 18, 0, Math.PI*2);
+        ctx.fill();
+        // instrucciones small text
+        ctx.fillStyle = 'rgba(255,255,255,0.12)';
+        ctx.font = '12px Segoe UI';
+        ctx.fillText('Click "Iniciar movimiento" para comenzar. Luego "Frenar" para aplicar fuerza externa.', 12, 18);
+      }
 
-  <footer>
-    <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
-  </footer>
+      function step() {
+        if (running) {
+          // si frenando, aplicar fuerza opuesta (frena)
+          if (braking) {
+            // aplicar fricción fuerte
+            vx += -0.5 * Math.sign(vx);
+            // si ya casi detenido, detener completamente
+            if (Math.abs(vx) < 0.05) { vx = 0; braking = false; running = false; }
+          }
+          x += vx;
+          // ventanas
+          if (x > W-30) { x = W-30; vx = 0; running = false; }
+          if (x < 30) { x = 30; vx = 0; running = false; }
+        }
+        draw();
+        requestAnimationFrame(step);
+      }
 
-  <script>
-    function verificar() {
-      const respuestas = [
-        { pregunta: 'q1', correcta: 'c', id: 'r1' },
-        { pregunta: 'q2', correcta: 'a', id: 'r2' },
-        { pregunta: 'q3', correcta: 'a', id: 'r3' }
-      ];
-
-      respuestas.forEach(({pregunta, correcta, id}) => {
-        const sel = document.querySelector(`input[name="${pregunta}"]:checked`);
-        const resEl = document.getElementById(id);
-        if (!sel) {
-          resEl.textContent = 'Selecciona una opción.';
-          resEl.className = 'resultado';
-        } else if (sel.value === correcta) {
-          resEl.textContent = '✅ Correcto';
-          resEl.className = 'resultado ok';
-        } else {
-          resEl.textContent = '❌ Incorrecto';
-          resEl.className = 'resultado mal';
+      document.getElementById('start-inercia').addEventListener('click', () => {
+        if (!running) {
+          vx = 3; running = true; braking = false;
         }
       });
+      document.getElementById('frenar-inercia').addEventListener('click', () => {
+        if (running) braking = true;
+      });
+
+      // start loop
+      step();
+    })();
+
+    /* ----------------- Simulación 2: F = m·a ----------------- */
+    (function(){
+      const canvas = document.getElementById('canvas-fuerza');
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width, H = canvas.height;
+      let mass = 1;
+      let x = 40, v = 0;
+      const FORCE = 6; // fuerza aplicada constante (N) cuando se presiona
+      let animating = false;
+
+      const massRange = document.getElementById('massRange');
+      const massValue = document.getElementById('massValue');
+      const applyBtn = document.getElementById('apply-force');
+      const resetBtn = document.getElementById('reset-fuerza');
+
+      massRange.addEventListener('input', (e) => {
+        mass = Number(e.target.value);
+        massValue.textContent = mass;
+      });
+
+      applyBtn.addEventListener('click', () => {
+        // a = F/m
+        const a = FORCE / mass;
+        v += a; // impulsito (puedes presionar varias veces)
+        animating = true;
+      });
+
+      resetBtn.addEventListener('click', () => {
+        x = 40; v = 0; animating = false; draw();
+      });
+
+      function draw() {
+        ctx.clearRect(0,0,W,H);
+        // pista
+        ctx.fillStyle = 'rgba(255,255,255,0.03)';
+        ctx.fillRect(10, H/2 + 30, W-20, 6);
+        // carrito
+        ctx.fillStyle = '#ffc86b';
+        ctx.fillRect(x, H/2 - 12, 60, 28);
+        // etiqueta masa y velocidad
+        ctx.fillStyle = 'rgba(255,255,255,0.12)';
+        ctx.font = '12px Segoe UI';
+        ctx.fillText('Masa = ' + mass + ' kg   |   Velocidad = ' + v.toFixed(2) + ' m/s', 12, 18);
+        // fuerza constante line (for visual)
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+        ctx.moveTo(10, 20); ctx.lineTo(W-10, 20);
+        ctx.stroke();
+      }
+
+      function step() {
+        if (animating) {
+          x += v;
+          // pequeña fricción para que no vaya indefinidamente
+          v *= 0.995;
+          if (x > W - 80) { x = W - 80; v = 0; animating = false; }
+        }
+        draw();
+        requestAnimationFrame(step);
+      }
+
+      // init
+      massValue.textContent = massRange.value;
+      mass = Number(massRange.value);
+      draw();
+      step();
+    })();
+
+    /* ----------------- Simulación 3: Acción y Reacción (choque real) ----------------- */
+(function(){
+  const canvas = document.getElementById('canvas-reaccion');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  let leftX = 120, rightX = W - 120;
+  let leftV = 0, rightV = 0;
+  let running = false;
+
+  const startBtn = document.getElementById('start-reaccion');
+  const resetBtn = document.getElementById('reset-reaccion');
+
+  startBtn.addEventListener('click', () => {
+    leftX = 120;
+    rightX = W - 120;
+    leftV = 3;   // velocidad inicial
+    rightV = -3; 
+    running = true;
+  });
+
+  resetBtn.addEventListener('click', () => {
+    leftX = 120; 
+    rightX = W - 120; 
+    leftV = rightV = 0; 
+    running = false;
+  });
+
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = 'rgba(255,255,255,0.03)';
+    ctx.fillRect(10, H/2 + 40, W-20, 6);
+    ctx.fillStyle = '#7ef59a';
+    ctx.fillRect(leftX - 30, H/2 - 20, 60, 40);
+    ctx.fillStyle = '#ff9aa2';
+    ctx.fillRect(rightX - 30, H/2 - 20, 60, 40);
+    ctx.fillStyle = 'rgba(255,255,255,0.12)';
+    ctx.font = '12px Segoe UI';
+    ctx.fillText('Se acercan, chocan y se devuelven (acción y reacción).', 12, 18);
+  }
+
+  function step() {
+    if (running) {
+      leftX += leftV;
+      rightX += rightV;
+
+      // Colisión
+      if (rightX - leftX <= 60) { 
+        // Separarlos para evitar que se queden pegados
+        const overlap = 60 - (rightX - leftX);
+        leftX -= overlap / 2;
+        rightX += overlap / 2;
+
+        // Invertir velocidad de cada uno
+        leftV = -Math.abs(leftV);
+        rightV = Math.abs(rightV);
+      }
+
+      // Fricción suave
+      leftV *= 0.99;
+      rightV *= 0.99;
+
+      // Detener si ya casi no se mueven
+      if (Math.abs(leftV) < 0.05 && Math.abs(rightV) < 0.05) {
+        leftV = 0;
+        rightV = 0;
+        running = false;
+      }
     }
+    draw();
+    requestAnimationFrame(step);
+  }
+
+  step();
+})();
+
+
+
+
   </script>
 </body>
 </html>
