@@ -1,261 +1,275 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lenguaje — Teatro Renacentista</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <style>
-    :root{
-      --blanco:#ffffff;
-      --gris-claro:#e8ecf7;
-      --gris:#bfc7da;
-      --negro:#0d0f12;
-      --azul:#0057ff;
-      --acento:#3aa0ff;
-      --vidrio: rgba(255,255,255,.06);
-      --borde: rgba(255,255,255,.10);
-      --texto-suave:#cfd7ff;
-      --grid:#3a4060;
-      --ok:#76e39a;
-      --warn:#ffc06b;
-      --err:#ff8b8b;
-    }
-
-    *{ box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI','Helvetica Neue',system-ui,sans-serif }
-
-    body{
-      min-height:100vh; color:var(--blanco);
-      background:
-        radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
-        radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
-        linear-gradient(135deg,#0b0b0b,#171717);
-      display:flex; flex-direction:column; align-items:center;
-      padding:28px 18px 60px;
-    }
-
-    /* Barra superior */
-    .topbar{
-      width:min(1200px, 100%);
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 18px; border-radius:18px;
-      background:var(--vidrio);
-      border:1px solid var(--borde);
-      backdrop-filter: blur(10px);
-      box-shadow:0 8px 28px rgba(0,0,0,.35);
-      margin-bottom:22px;
-    }
-    .logo{ display:flex; gap:12px; align-items:center; }
-    .logo-badge{
-      width:38px; height:38px; border-radius:12px;
-      background:linear-gradient(135deg, var(--azul), var(--acento));
-      display:grid; place-items:center; font-weight:800;
-      box-shadow:0 6px 20px rgba(0,87,255,.45);
-    }
-    .logo-text{ font-weight:700; letter-spacing:.3px; color:#e9f0ff }
-
-    .nav{ display:flex; gap:8px; flex-wrap:wrap; }
-    .btn{
-      appearance:none; border:none; cursor:pointer; text-decoration:none;
-      padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;
-      background:rgba(255,255,255,.08); color:#eaeaea; border:1px solid rgba(255,255,255,.12);
-      backdrop-filter:blur(6px);
-      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
-    }
-    .btn:hover{ transform:translateY(-2px) }
-
-    /* Hero */
-    header.hero{
-      width:min(1200px, 100%);
-      background:var(--vidrio);
-      border:1px solid var(--borde);
-      backdrop-filter: blur(10px);
-      border-radius:22px;
-      padding:28px 24px;
-      box-shadow:0 12px 36px rgba(0,0,0,.38);
-      position:relative;
-      overflow:hidden;
-      margin-bottom:28px;
-    }
-    .edicion-badge{
-      position:absolute; top:16px; right:16px;
-      font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; color:#d1ddff;
-      background:rgba(0,87,255,.18); border:1px solid rgba(0,87,255,.35);
-      padding:8px 12px; border-radius:999px;
-    }
-    header.hero h1{
-      font-size: clamp(1.9rem, 4.8vw, 2.8rem);
-      color:#bcd4ff; text-shadow:0 8px 28px rgba(0,0,0,.6);
-    }
-    .sub{
-      margin-top:8px; color:var(--texto-suave);
-    }
-
-    /* Imagen destacada */
-    .imagen-destacada {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      margin-top: 20px;
-    }
-
-    /* Layout principal */
-    .contenedor{
-      width:min(1200px, 100%);
-      display:grid; gap:22px;
-      grid-template-columns: 1.15fr .85fr;
-    }
-    @media (max-width: 980px){
-      .contenedor{ grid-template-columns: 1fr; }
-    }
-
-    .card{
-      background:var(--vidrio);
-      border:1px solid var(--borde);
-      border-radius:20px;
-      padding:22px;
-      backdrop-filter: blur(8px);
-      box-shadow:0 6px 18px rgba(0,0,0,.30);
-    }
-    .card h2, .card h3{ color:#cfe3ff; margin-bottom:10px }
-    .card p, .card li{ color:var(--gris-claro) }
-    .card ul{ padding-left:18px; line-height:1.6 }
-
-    .infobox{
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      border-left:4px solid var(--acento);
-      border-radius:12px; padding:14px; color:#e9f1ff
-    }
-
-    /* Interactivos */
-    .quiz{ display:flex; flex-direction:column; gap:14px }
-    .q{
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:12px; padding:12px;
-    }
-    .q p{ margin-bottom:8px; color:#e9f1ff }
-    .q .opcion{ display:block; margin:6px 0; color:#e9f1ff }
-    .resultado{ font-weight:700; margin-top:6px }
-    .ok{ color:var(--ok) } .mal{ color:var(--err) }
-    .nota{ color:#ffdca8 }
-
-    footer{
-      width:min(1200px, 100%);
-      text-align:center; color:#bfbfbf; margin-top:32px;
-    }
-
-    /* Foco accesible */
-    .btn:focus, a:focus, input:focus{ outline:2px solid #9fc0ff; outline-offset:2px; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Infografia — Teatro Renacentista</title>
+<style>
+  :root{
+    --blanco:#ffffff;
+    --gris-claro:#e8ecf7;
+    --gris:#bfc7da;
+    --negro:#0d0f12;
+    --azul:#0057ff;
+    --acento:#3aa0ff;
+    --vidrio: rgba(255,255,255,.06);
+    --borde: rgba(255,255,255,.10);
+    --texto-suave:#cfd7ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',sans-serif}
+  body{
+    background: radial-gradient(1200px 600px at 80% -10%, #0c2a80 0%, transparent 60%),
+                radial-gradient(1000px 500px at -10% 110%, #0a5cff 0%, transparent 55%),
+                linear-gradient(135deg,#0b0b0b,#171717);
+    color:var(--blanco); display:flex; flex-direction:column; align-items:center; padding:30px;
+  }
+  .topbar{
+    display:flex; justify-content:space-between; align-items:center;
+    width:100%; max-width:1200px; background:var(--vidrio);
+    padding:14px 18px; border-radius:18px; border:1px solid var(--borde);
+    backdrop-filter:blur(10px); margin-bottom:20px;
+  }
+  .logo{display:flex; gap:10px; align-items:center;}
+  .logo-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--azul),var(--acento));
+              display:grid;place-items:center;font-weight:800;box-shadow:0 6px 20px rgba(0,87,255,.45);}
+  .logo-text{font-weight:700;color:#e9f0ff}
+  .btn{padding:8px 12px;background:rgba(255,255,255,.08);border:1px solid var(--borde);
+       border-radius:10px;color:var(--blanco);text-decoration:none;backdrop-filter:blur(6px);}
+  .main-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+  }
+  .mapa-container {
+    position: relative;
+    width: 500px;
+    height: 500px;
+  }
+  .nodo {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background: var(--vidrio);
+    border: 1px solid var(--borde);
+    border-radius: 50%;
+    backdrop-filter: blur(6px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: bold;
+    line-height: 1.1em;
+    padding: 6px;
+    box-shadow: 0 0 10px rgba(0,87,255,0.25), inset 0 0 8px rgba(255,255,255,0.05);
+    cursor:pointer;
+    animation: popIn 0.6s ease forwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .nodo-central {
+    width: 140px;
+    height: 140px;
+    font-size: 1.1em;
+    left: 180px;
+    top: 180px;
+  }
+  .nodo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0,87,255,0.45), inset 0 0 12px rgba(255,255,255,0.08);
+  }
+  @keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    80% { transform: scale(1.15); opacity: 1; }
+    90% { transform: scale(0.95); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes fadeOut {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0); }
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  .info-panel {
+    width: 300px;
+    background: var(--vidrio);
+    border: 1px solid var(--borde);
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    transform: translateX(20px);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.3s ease;
+  }
+  .info-panel.visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  }
+  .info-panel h2 {
+    margin-bottom: 10px;
+    color: var(--acento);
+  }
+  .info-panel img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    margin-top: 8px;
+  }
+  .opciones button {
+    background: var(--vidrio);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 8px;
+    margin-top: 5px;
+    color: var(--blanco);
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+  }
+  .opciones button:hover {
+    background: rgba(255,255,255,0.1);
+  }
+</style>
 </head>
 <body>
-  <!-- Barra superior -->
-  <div class="topbar">
-    <div class="logo">
-      <div class="logo-badge">MS</div>
-      <div class="logo-text">Los Mil Saberes</div>
-    </div>
-    <nav class="nav" aria-label="Navegación principal">
-      <a class="btn" href="portada.html">Inicio</a>
-      <a class="btn" href="index.html">Categorías</a>
-    </nav>
+
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-badge">MS</div>
+    <div class="logo-text">Los Mil Saberes</div>
+  </div>
+  <nav>
+    <a class="btn" href="portada.html">Inicio</a>
+    <a class="btn" href="index.html">Categorías</a>
+  </nav>
+</div>
+
+<div class="main-container">
+  <div class="mapa-container">
+    <div class="nodo nodo-central" data-id="central">Teatro<br>Renacentista</div>
+    <div class="nodo" data-id="arquitectura" style="left:180px;top:40px;">Arquitectura</div>
+    <div class="nodo" data-id="escenarios" style="left:320px;top:80px;">Escenarios</div>
+    <div class="nodo" data-id="actores" style="left:380px;top:200px;">Actores</div>
+    <div class="nodo" data-id="guiones" style="left:320px;top:320px;">Guiones</div>
+    <div class="nodo" data-id="vestuario" style="left:180px;top:360px;">Vestuario</div>
+    <div class="nodo" data-id="musica" style="left:40px;top:200px;">Música</div>
+    <div class="nodo" data-id="pregunta" style="left:40px;top:80px;">Pregunta<br>ICFES</div>
   </div>
 
-  <!-- Hero -->
-  <header class="hero">
-    <span class="edicion-badge">Lenguaje</span>
-    <h1>Teatro Renacentista</h1>
-    <p class="sub">Del redescubrimiento clásico al surgimiento de nuevas formas escénicas en Italia, Inglaterra y España.</p>
-    <img class="imagen-destacada" src="https://humanidades.com/wp-content/uploads/2018/07/arte-renacentista-e1571802362634.jpg" alt="Arte Renacentista">
-  </header>
-
-  <!-- Contenido -->
-  <section class="contenedor">
-    <!-- Columna 1: teoría -->
-    <article class="card">
-      <h2>Contexto y características</h2>
-      <p>
-        Durante los siglos XV y XVI, el Renacimiento marcó un cambio cultural donde el ser humano y su razón pasaron al centro del arte y la literatura. En el teatro, esto se reflejó en la recuperación del modelo clásico grecolatino, enfatizando la armonía, la claridad y la verosimilitud.
-      </p>
-      <h3>Principales rasgos</h3>
-      <ul>
-        <li><strong>Humanismo:</strong> los personajes expresan conflictos morales y emociones complejas.</li>
-        <li><strong>Estructura:</strong> en Italia predominan obras en 5 actos; en Inglaterra es más flexible.</li>
-        <li><strong>Lenguaje:</strong> alternancia entre verso y prosa según la situación y el estatus social.</li>
-        <li><strong>Unidades clásicas:</strong> tiempo, lugar y acción recomendadas por tratadistas, pero aplicadas con flexibilidad.</li>
-      </ul>
-
-      <h3>Géneros y formas teatrales</h3>
-      <ul>
-        <li><strong>Tragedia y comedia</strong> clásicas y renovadas.</li>
-        <li><strong>Tragicomedia y pastoral:</strong> combinan elementos dramáticos y bucólicos.</li>
-        <li><strong>Intermedios:</strong> piezas musicales y de danza entre actos.</li>
-        <li><strong>Commedia dell’arte:</strong> teatro popular italiano con personajes arquetípicos y gran improvisación.</li>
-      </ul>
-
-      <h3>Escenarios</h3>
-      <ul>
-              <li><strong>Italia:</strong> teatros con escenografía avanzada, perspectiva y tramoyas (Teatro Olimpico de Vicenza).</li>
-      <li><strong>Inglaterra:</strong> teatros públicos al aire libre como The Globe, con escenario saliente.</li>
-      <li><strong>España:</strong> corrales de comedias con patios y galerías, transición al Siglo de Oro.</li>
-    </ul>
-  </article>
-
-  <!-- Columna 2: mini-quiz -->
-  <aside class="card">
-    <h2>Mini‑quiz</h2>
-    <div class="quiz" id="quiz">
-      <div class="q">
-        <p><strong>Contexto:</strong> El teatro renacentista combina formas clásicas con innovaciones expresivas que reflejan la complejidad humana y social.</p>
-        <p><strong>Pregunta:</strong> ¿Cuál es una característica del lenguaje en el teatro renacentista?</p>
-        <label class="opcion"><input type="radio" name="p1" value="a"> A) Solo se usa prosa en todos los personajes.</label>
-        <label class="opcion"><input type="radio" name="p1" value="b"> B) Alternancia entre verso y prosa según la situación y el personaje.</label>
-        <label class="opcion"><input type="radio" name="p1" value="c"> C) Uso exclusivo de verso sin prosa.</label>
-        <label class="opcion"><input type="radio" name="p1" value="d"> D) Lenguaje sin recursos expresivos como el soliloquio.</label>
-        <div class="resultado" id="r1"></div>
-      </div>
-      <div style="margin-top:10px;">
-        <button class="btn" id="btnCheck" type="button">Verificar</button>
-        <button class="btn" id="btnReset" type="button">Limpiar</button>
-      </div>
-    </div>
-  </aside>
-</section>
-
-<!-- Pie de página -->
-<footer>
-  <p>&copy; 2025 Los Mil Saberes. Todos los derechos reservados.</p>
-</footer>
+  <div class="info-panel" id="infoPanel">
+    <h2 id="infoTitle">Teatro Renacentista</h2>
+    <p id="infoContent">Movimiento artístico que floreció en Europa entre los siglos XV y XVII...</p>
+  </div>
+</div>
 
 <script>
-  const r1 = document.getElementById('r1');
-  const btnCheck = document.getElementById('btnCheck');
-  const btnReset = document.getElementById('btnReset');
+const infoData = {
+  arquitectura: {
+    title: "Arquitectura",
+    content: `Se construyeron teatros más grandes y permanentes, con forma semicircular, gradas en varios niveles y escenarios elevados, inspirados en modelos clásicos grecorromanos.
+              <img src="https://i.pinimg.com/236x/7f/9b/9b/7f9b9b6a43ecbd187a42712ac7b33878.jpg" alt="Arquitectura Renacentista">`
+  },
+  escenarios: {
+    title: "Escenarios",
+    content: `Eran amplios, con decorados pintados y mecanismos para cambiar de escena; buscaban realismo y profundidad.
+              <img src="https://mmimundoartistico.wordpress.com/wp-content/uploads/2014/10/fotos-palacio-litomysl-teatro-barroco-001.jpg" alt="Escenario Renacentista">`
+  },
+  actores: {
+    title: "Actores",
+    content: `Mayor profesionalización; podían ser hombres y mujeres (aunque en algunos países las mujeres aún no actuaban). Desarrollaban mejor expresión corporal y vocal.
+              <img src="https://tiposdearte.com/wp-content/uploads/2017/12/El.Teatro.del_.Renacimiento.jpg" alt="Actores Renacentistas">`
+  },
+  guiones: {
+    title: "Guiones",
+    content: `Se escribían con temáticas variadas: tragedias, comedias y obras históricas, influenciadas por la mitología y la literatura clásica.
+              <img src="https://www.lifeder.com/wp-content/uploads/2018/04/Romeo-y-Julieta-ilustracion-min-1024x854.jpg" alt="Guiones Renacentistas">`
+  },
+  vestuario: {
+    title: "Vestuario",
+    content: `Ropas lujosas, coloridas y detalladas, muchas veces relacionadas con la época del autor más que con la del argumento de la obra.
+              <img src="https://arteescenicas.wordpress.com/wp-content/uploads/2009/11/commedia.jpg" alt="Vestuario Renacentista">`
+  },
+  musica: {
+    title: "Música",
+    content: `Se usaba para ambientar, acompañar escenas y marcar cambios de acto; podía ser en vivo, con instrumentos de la época.
+              <img src="https://www.academiasolfeando.com/wp-content/uploads/2021/11/musica-renacentista.jpg" alt="Música Renacentista">`
+  },
+  pregunta: {
+    title: "Pregunta ICFES",
+    content: `
+      En el teatro renacentista, el uso de vestuarios elegantes y coloridos tenía como objetivo principal:
+      <div class="opciones">
+        <button data-correct="true">A) Mostrar el estatus social de los personajes y dar realismo a la obra</button>
+        <button data-correct="false">B) Ahorrar costos en la producción teatral</button>
+        <button data-correct="false">C) Facilitar los cambios rápidos de escena</button>
+        <button data-correct="false">D) Distraer al público de la actuación</button>
+      </div>
+    `
+  }
+};
 
-  function verificar() {
-    const p1Sel = document.querySelector('input[name="p1"]:checked');
-    if (!p1Sel) {
-      r1.textContent = 'Selecciona una opción.';
-      r1.className = 'resultado';
-    } else if (p1Sel.value === 'b') {
-      r1.textContent = '¡Correcto! En el teatro renacentista se alterna verso y prosa según la situación y personaje.';
-      r1.className = 'resultado ok';
+const panel = document.getElementById("infoPanel");
+const titleEl = document.getElementById("infoTitle");
+const contentEl = document.getElementById("infoContent");
+const nodos = document.querySelectorAll(".nodo:not(.nodo-central)");
+const central = document.querySelector(".nodo-central");
+
+let ramasVisibles = true;
+
+central.addEventListener("click", () => {
+  ramasVisibles = !ramasVisibles;
+  nodos.forEach(n => {
+    if (ramasVisibles) {
+      n.style.display = "flex";
+      n.style.animation = "fadeIn 0.3s forwards";
     } else {
-      r1.textContent = 'Incorrecto. Revisa las características del lenguaje teatral renacentista.';
-      r1.className = 'resultado mal';
+      n.style.animation = "fadeOut 0.3s forwards";
+      setTimeout(() => n.style.display = "none", 300);
     }
-  }
+  });
+});
 
-  function limpiar() {
-    document.querySelectorAll('input[name="p1"]').forEach(r => r.checked = false);
-    r1.textContent = '';
-    r1.className = 'resultado';
-  }
+nodos.forEach(nodo => {
+  nodo.addEventListener("click", e => {
+    e.stopPropagation();
+    const id = nodo.getAttribute("data-id");
+    if (infoData[id]) {
+      panel.classList.remove("visible");
+      setTimeout(() => {
+        titleEl.textContent = infoData[id].title;
+        contentEl.innerHTML = infoData[id].content;
+        panel.classList.add("visible");
 
-  btnCheck.addEventListener('click', verificar);
-  btnReset.addEventListener('click', limpiar);
+        if (id === "pregunta") {
+          document.querySelectorAll(".opciones button").forEach(btn => {
+            btn.addEventListener("click", () => {
+              if (btn.dataset.correct === "true") {
+                alert("✅ ¡Correcto! Los vestuarios ayudaban a identificar personajes y dar realismo a la obra.");
+              } else {
+                alert("❌ Incorrecto. Recuerda que los vestuarios ayudaban a mostrar el estatus social y ambientar la historia.");
+              }
+            });
+          });
+        }
+      }, 300);
+    }
+  });
+});
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    panel.classList.add("visible");
+  }, 300);
+});
 </script>
 
- 
+</body>
+</html>
