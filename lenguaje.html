@@ -36,10 +36,41 @@
   .btn{padding:8px 12px;background:rgba(255,255,255,.08);border:1px solid var(--borde);
        border-radius:10px;color:var(--blanco);text-decoration:none;backdrop-filter:blur(6px);}
   .main-container {
-    display: flex;
-    gap: 20px;
-    margin-top: 30px;
-  }
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+  position: relative; /* clave para posicionar decoraciones */
+}
+
+/* Ajustamos las decoraciones */
+.decoracion {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: levitar 4s ease-in-out infinite;
+  z-index: 0; /* detrás del contenido */
+  opacity: 0.9;
+}
+.decoracion.izquierda {
+  left: 300px; /* un poco a la izquierda del panel */
+}
+.decoracion.derecha {
+  right: 150px;
+  top: 42%; /* sube la imagen, prueba con 40%, 35%, etc. */
+  transform: translateY(-50%);
+}
+
+
+.decoracion img {
+  width: 300px;
+  height: auto;
+}
+
+/* En pantallas pequeñas las ocultamos */
+@media (max-width: 768px) {
+  .decoracion { display: none; }
+}
+
   .mapa-container {
     position: relative;
     width: 500px;
@@ -137,6 +168,16 @@
   .opciones button:hover {
     background: rgba(255,255,255,0.1);
   }
+
+  /* ANIMACIÓN LEVITACIÓN */
+  @keyframes levitar {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+
+  
+
 </style>
 </head>
 <body>
@@ -150,6 +191,14 @@
     <a class="btn" href="portada.html">Inicio</a>
     <a class="btn" href="index.html">Categorías</a>
   </nav>
+</div>
+
+<!-- IMÁGENES DECORATIVAS -->
+<div class="decoracion izquierda">
+  <img src="1.png" alt="Máscaras Teatro">
+</div>
+<div class="decoracion derecha">
+  <img src="2.png" alt="Shakespeare Calavera">
 </div>
 
 <div class="main-container">
