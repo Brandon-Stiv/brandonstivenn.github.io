@@ -44,7 +44,6 @@
     .badge{display:inline-block;min-width:46px;text-align:center;padding:6px 10px;border-radius:10px;font-weight:700;background:linear-gradient(135deg, var(--azul), var(--acento));border:none;color:#fff;box-shadow:0 8px 20px rgba(0,87,255,.35);}
     canvas{width:100%;height:auto;background: transparent;border:1px solid rgba(255,255,255,.10);border-radius:14px;box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);}
     
-    /* Estilos para mini-quiz */
     .quiz{ display:flex; flex-direction:column; gap:14px; }
     .q{ background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); border-radius:12px; padding:12px; }
     .q p{ margin-bottom:8px; color:#e9f1ff; }
@@ -69,60 +68,70 @@
   <header class="hero">
     <span class="edicion-badge">Matemáticas</span>
     <h1>Ecuación de la recta <code>y = mx + b</code></h1>
-    <p class="sub">Fórmula que describe cómo cambia <strong>y</strong> cuando cambia <strong>x</strong> usando pendiente (<strong>m</strong>) y corte Y (<strong>b</strong>).</p>
+    <p class="sub">Una manera de describir una línea recta con su inclinación (<strong>m</strong>) y su punto de inicio en el eje Y (<strong>b</strong>).</p>
   </header>
 
   <!-- Contenido -->
   <section class="contenedor">
-    <!-- Teoría + ejemplo -->
+    <!-- Teoría -->
     <article class="card">
-      <h2>Partes de la ecuación</h2>
+      <h2>¿Qué significa <code>y = mx + b</code>?</h2>
+      <p>Imagina que dibujas una línea en una hoja cuadriculada:</p>
       <ul>
-        <li><strong>m (pendiente)</strong>: indica inclinación. 
+        <li><strong>m</strong> es la inclinación de la línea:
           <ul>
-            <li>m &gt; 0 → recta sube</li>
-            <li>m &lt; 0 → recta baja</li>
-            <li>m = 0 → horizontal</li>
+            <li>Si es positiva, la línea sube como una montaña.</li>
+            <li>Si es negativa, la línea baja como un tobogán.</li>
           </ul>
         </li>
-        <li><strong>b (intercepto)</strong>: punto donde cruza eje Y (<code>x=0</code>).</li>
+        <li><strong>b</strong> es el punto de inicio en el eje Y, es decir, por dónde empieza la línea cuando <code>x = 0</code>.</li>
       </ul>
-      <h3>Ejemplo</h3>
-      <p>Pendiente <strong>m = 2</strong> → sube 2 unidades por cada paso a la derecha.<br>
-      Intercepto <strong>b = 3</strong> → cruza el eje Y en (0,3).</p>
-
-      <h2>Usos prácticos</h2>
+      <p>👉 Entonces, la ecuación <code>y = mx + b</code> es como una receta que dice:</p>
       <ul>
-        <li>Calcular precios con tarifa fija + costo por unidad.</li>
-        <li>Hacer predicciones en gráficos o datos.</li>
-      </ul>
-      <h2>Propiedades importantes de la recta</h2>
-      <ul>
-        <li>Si la pendiente <strong>m</strong> es positiva, la recta sube hacia la derecha.</li>
-        <li>Si <strong>m</strong> es negativa, la recta baja hacia la derecha.</li>
-        <li>Si <strong>m = 0</strong>, la recta es horizontal y no depende de x.</li>
-        <li>Rectas verticales no pueden representarse con y = mx + b (pendiente indefinida).</li>
+        <li>cuánto sube o baja la línea (<strong>m</strong>)</li>
+        <li>y en qué punto empieza (<strong>b</strong>).</li>
       </ul>
 
-      <h2>Variaciones de la pendiente</h2>
-      <p>Al modificar la pendiente <strong>m</strong>:</p>
+      <h2>🌟 Ejemplo fácil</h2>
+      <p><strong>Ecuación:</strong> <code>y = 2x + 1</code></p>
       <ul>
-        <li><strong>m grande:</strong> recta más inclinada.</li>
-        <li><strong>m pequeña:</strong> recta más plana.</li>
+        <li>El número <strong>2</strong> dice que la línea sube rápido (pendiente).</li>
+        <li>El número <strong>1</strong> dice que la línea empieza en el punto (0,1) en el eje Y.</li>
       </ul>
-
-      <h2>Fórmulas útiles</h2>
-      <ul>
-        <li>Cálculo de pendiente entre dos puntos: <code>m = (y2 - y1) / (x2 - x1)</code></li>
-        <li>Ecuación a partir de un punto y la pendiente: <code>y - y1 = m(x - x1)</code></li>
-      </ul>
-
     </article>
+    <div class="card">
+  <h2>📘 ¿Qué es la ecuación de la recta?</h2>
+  <p>
+    La <b>ecuación de la recta</b> es una forma matemática de representar una línea en el plano cartesiano.
+    Se escribe como:
+  </p>
+  <p style="text-align:center; font-weight:bold; font-size:1.2em;">y = mx + b</p>
+  <p>
+    🔹 <b>m</b> = pendiente → indica la inclinación de la recta.<br>
+    🔹 <b>b</b> = intercepto → el punto donde la recta cruza el eje Y.
+  </p>
 
-    <!-- Gráfica interactiva + mini-quiz -->
+  <h3>🌟 Ejemplos</h3>
+  <ul>
+    <li><b>y = 2x + 1</b> → Pendiente positiva, sube como una montaña. Cruza en (0,1).</li>
+    <li><b>y = -x + 3</b> → Pendiente negativa, baja como un tobogán. Cruza en (0,3).</li>
+  </ul>
+
+  <h3>📌 Usos en la vida real</h3>
+  <p>
+    La ecuación de la recta se usa para representar situaciones cotidianas:
+  </p>
+  <ul>
+    <li>El costo de productos que tienen un precio fijo más un adicional.</li>
+    <li>El recorrido de un vehículo a velocidad constante.</li>
+    <li>El crecimiento de una planta cada día.</li>
+  </ul>
+</div>
+
+    <!-- Gráfica + Quiz -->
     <aside class="card grafica-wrap">
       <h2>Gráfica interactiva</h2>
-      <p class="sub">Ajusta <strong>pendiente</strong> y <strong>intercepto</strong> para ver cómo cambia la recta y sus cortes.</p>
+      <p class="sub">Ajusta la <strong>pendiente (m)</strong> y el <strong>intercepto (b)</strong> para ver cómo cambia la recta.</p>
 
       <div class="panel-controles">
         <div class="control">
@@ -139,18 +148,19 @@
       </div>
 
       <canvas id="grafica" width="720" height="460"></canvas>
-      <p class="sub" id="ecuacionTexto">Ecuación: <code>y = 1x + 0</code> • Corte Y: <code>(0,0)</code> • Corte X: <code>(0,0)</code></p>
+      <p class="sub" id="ecuacionTexto">Ecuación: <code>y = 1x + 0</code></p>
 
-      <!-- Mini-quiz interactivo -->
-      <h2>Mini‑quiz: Pregunta tipo ICFES</h2>
+      <!-- Mini-quiz -->
+      <h2>📝 Pregunta tipo ICFES (fácil)</h2>
       <div class="quiz" id="quizRecta">
         <div class="q">
-          <p><strong>Contexto:</strong> Un taxi cobra una tarifa fija de 5.000 pesos más 2.000 pesos por kilómetro.</p>
-          <p><strong>Pregunta:</strong> ¿Cuál es la ecuación de la recta que representa el valor a pagar (<code>y</code>) en función de la distancia en km (<code>x</code>)?</p>
-          <label class="opcion"><input type="radio" name="pRecta" value="a"> A) y = 5000x + 2000</label>
-          <label class="opcion"><input type="radio" name="pRecta" value="b"> B) y = 2000x + 5000</label>
-          <label class="opcion"><input type="radio" name="pRecta" value="c"> C) y = 2000x - 5000</label>
-          <label class="opcion"><input type="radio" name="pRecta" value="d"> D) y = 5000x - 2000</label>
+          <p><strong>Contexto:</strong> Juan compra helados. Cada helado vale $2.000, pero además la tienda siempre cobra $1.000 de empaque.</p>
+          <p><strong>Pregunta:</strong> La ecuación que representa el precio total (<code>y</code>) según el número de helados (<code>x</code>) es: <code>y = 2000x + 1000</code>.  
+          Si Juan compra 2 helados, ¿cuánto paga en total?</p>
+          <label class="opcion"><input type="radio" name="pRecta" value="a"> A) $2.000</label>
+          <label class="opcion"><input type="radio" name="pRecta" value="b"> B) $3.000</label>
+          <label class="opcion"><input type="radio" name="pRecta" value="c"> C) $4.000</label>
+          <label class="opcion"><input type="radio" name="pRecta" value="d"> D) $5.000</label>
           <div class="resultado" id="rRecta"></div>
         </div>
         <div style="margin-top:10px;">
@@ -186,38 +196,19 @@
       ctx.setTransform(dpr,0,0,dpr,0,0);
     }
 
-    function drawAxesGrid(cx, cy, width, height){
-      ctx.clearRect(0,0,width,height);
-      ctx.lineWidth=1; ctx.strokeStyle='rgba(160,180,220,0.10)';
-      for(let x=0;x<=width;x+=UNIT){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,height);ctx.stroke();}
-      for(let y=0;y<=height;y+=UNIT){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(width,y);ctx.stroke();}
-      ctx.strokeStyle='rgba(187,206,255,0.7)'; ctx.lineWidth=2;
-      ctx.beginPath(); ctx.moveTo(0,cy);ctx.lineTo(width,cy); ctx.moveTo(cx,0);ctx.lineTo(cx,height); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(width-12,cy-6);ctx.lineTo(width,cy);ctx.lineTo(width-12,cy+6);
-      ctx.moveTo(cx-6,12);ctx.lineTo(cx,0);ctx.lineTo(cx+6,12); ctx.stroke();
-      ctx.fillStyle='#cfe3ff'; ctx.font='12px Segoe UI, Helvetica, Arial, sans-serif'; ctx.fillText('0',cx+4,cy-4);
-      ctx.fillStyle='rgba(220,230,255,0.85)';
-      for(let i=-20;i<=20;i+=2){if(i!==0){const x=cx+i*UNIT; if(x>=0&&x<=width)ctx.fillText(String(i),x-6,cy+14);
-      const y=cy-i*UNIT; if(y>=0&&y<=height)ctx.fillText(String(i),cx+6,y+4);} }
-    }
+    function drawAxesGrid(cx, cy, width, height){ ctx.clearRect(0,0,width,height); ctx.lineWidth=1; ctx.strokeStyle='rgba(160,180,220,0.10)'; for(let x=0;x<=width;x+=UNIT){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,height);ctx.stroke();} for(let y=0;y<=height;y+=UNIT){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(width,y);ctx.stroke();} ctx.strokeStyle='rgba(187,206,255,0.7)'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(0,cy);ctx.lineTo(width,cy); ctx.moveTo(cx,0);ctx.lineTo(cx,height); ctx.stroke(); ctx.beginPath(); ctx.moveTo(width-12,cy-6);ctx.lineTo(width,cy);ctx.lineTo(width-12,cy+6); ctx.moveTo(cx-6,12);ctx.lineTo(cx,0);ctx.lineTo(cx+6,12); ctx.stroke(); ctx.fillStyle='#cfe3ff'; ctx.font='12px Segoe UI, Helvetica, Arial, sans-serif'; ctx.fillText('0',cx+4,cy-4); ctx.fillStyle='rgba(220,230,255,0.85)'; for(let i=-20;i<=20;i+=2){if(i!==0){const x=cx+i*UNIT; if(x>=0&&x<=width)ctx.fillText(String(i),x-6,cy+14); const y=cy-i*UNIT; if(y>=0&&y<=height)ctx.fillText(String(i),cx+6,y+4);} } }
 
     function drawLine(m,b,cx,cy,width,height){
       ctx.strokeStyle='rgba(220,230,255,0.95)'; ctx.lineWidth=2; ctx.beginPath();
       let first=true;
       for(let px=0;px<=width;px++){const xReal=(px-cx)/UNIT;const yReal=m*xReal+b;const py=cy-yReal*UNIT; if(first){ctx.moveTo(px,py);first=false;}else{ctx.lineTo(px,py);} }
       ctx.stroke();
-      function drawPoint(x,y,color){ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();
-        ctx.fillStyle='rgba(58,160,255,0.25)';ctx.beginPath();ctx.arc(x,y,10,0,Math.PI*2);ctx.fill();}
-      function drawLabel(x,y,text){ctx.fillStyle='#e9f1ff';ctx.font='12px Segoe UI, Helvetica, Arial, sans-serif';ctx.fillText(text,x,y);}
-      function round(v){return Math.abs(v)<1e-9?0:Math.round(v*100)/100;}
-      const yInt={x:cx,y:cy-b*UNIT}; drawPoint(yInt.x,yInt.y,'#3aa0ff'); drawLabel(yInt.x+8,yInt.y-8,`(0, ${b})`);
-      if(m!==0){const xCut=-b/m; const xInt={x:cx+xCut*UNIT,y:cy}; drawPoint(xInt.x,xInt.y,'#3aa0ff'); drawLabel(xInt.x+8,xInt.y-8,`(${round(xCut)},0)`);}
     }
 
     function updateEquationText(m,b){
       const bx=b>=0?` + ${b}`:` - ${Math.abs(b)}`;
-      const eq=`y = ${m}x${b===0?'':bx}`; let corteX='(indefinido)'; if(m!==0)corteX=`(${-(b/m)},0)`;
-      ecuacionTexto.innerHTML=`Ecuación: <code>${eq}</code> • Corte Y: <code>(0, ${b})</code> • Corte X: <code>${corteX}</code>`;
+      const eq=`y = ${m}x${b===0?'':bx}`;
+      ecuacionTexto.innerHTML=`Ecuación: <code>${eq}</code>`;
     }
 
     function drawAll(){
@@ -238,7 +229,7 @@
     window.addEventListener('resize',drawAll);
     drawAll();
 
-    // Mini-quiz ICFES
+    // Mini-quiz
     const rRecta = document.getElementById('rRecta');
     const btnCheckRecta = document.getElementById('btnCheckRecta');
     const btnResetRecta = document.getElementById('btnResetRecta');
@@ -246,8 +237,8 @@
     function verificarRecta() {
       const sel = document.querySelector('input[name="pRecta"]:checked');
       if (!sel) { rRecta.textContent = 'Selecciona una opción.'; rRecta.className = 'resultado'; }
-      else if (sel.value === 'b') { rRecta.textContent = '¡Correcto! La pendiente es 2000 y el intercepto es 5000.'; rRecta.className = 'resultado ok'; }
-      else { rRecta.textContent = 'Incorrecto. La respuesta correcta es B: y = 2000x + 5000.'; rRecta.className = 'resultado mal'; }
+      else if (sel.value === 'd') { rRecta.textContent = '¡Correcto! 2000×2 + 1000 = 5000.'; rRecta.className = 'resultado ok'; }
+      else { rRecta.textContent = 'Incorrecto. La respuesta correcta es D: $5.000.'; rRecta.className = 'resultado mal'; }
     }
     function limpiarRecta() {
       document.querySelectorAll('input[name="pRecta"]').forEach(r => r.checked = false);
